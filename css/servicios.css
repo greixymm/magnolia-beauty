@@ -1,0 +1,424 @@
+/* ═══════════════════════════════════════════════════════════════
+   MAGNOLIA BEAUTY & FASHION — v3.0
+   CSS Páginas Internas — servicios.css
+   ═══════════════════════════════════════════════════════════════
+
+   SKILLS APLICADOS:
+   ─────────────────────────────────────────
+   /design-system   → Componentes específicos de páginas internas:
+                      price-card, price-list, extras-grid,
+                      cart-sidebar, product-card, shop-section.
+   /ux-copy         → Price display prominente, estados de carrito
+                      (vacío, lleno, success), método de pago con
+                      feedback visual, mensaje de éxito de pedido.
+   /accessibility   → Cart sidebar navegable por teclado, focus en
+                      botones de qty, comprobante con label visible.
+   /handoff         → Estados: default, hover, featured, selected,
+                      active, disabled, show/hide, open/closed.
+   /design-critique → Price tag display grande (jerarquía de info),
+                      badge de "más pedido", grid adaptable.
+
+   ESTRUCTURA:
+   ─────────────────────────────────────────
+   1.  Sticky tabs de categorías
+   2.  Secciones de categoría
+   3.  Price cards (catálogo de servicios)
+   4.  Price list (tabla de precios)
+   5.  Extras/pills grid
+   6.  Obsequio banner
+   7.  Cart sidebar (tienda)
+   8.  Cart: items, header, footer
+   9.  Métodos de pago (selección)
+   10. Comprobante upload
+   11. Float cart button
+   12. Shop sections
+   13. Product cards
+   14. Filter bar
+   15. Responsive
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ══════════════════════════════════════════════════════════════
+   1. STICKY TABS — Navegación de categorías
+   /design-critique: Sticky debajo del nav para siempre saber
+   en qué categoría está el usuario (orientación espacial).
+   /accessibility: Links con href a IDs — scroll nativo.
+   ══════════════════════════════════════════════════════════════ */
+.srv-tabs{
+  position:sticky;
+  top:72px; /* Debajo del nav fixed (logo dorado más grande) */
+  z-index:500;
+  background:var(--d2);
+  border-bottom:1px solid var(--gold-border);
+  display:flex;
+  overflow-x:auto; /* Scroll horizontal en mobile */
+  scrollbar-width:none; /* Ocultar scrollbar (decorativo) */
+  -webkit-overflow-scrolling:touch;
+}
+.srv-tabs::-webkit-scrollbar{display:none;}
+.srv-tab{
+  flex-shrink:0;padding:14px 24px;
+  font-size:11px;font-weight:500;letter-spacing:2px;text-transform:uppercase;
+  color:var(--muted);text-decoration:none;
+  border-bottom:2px solid transparent; /* Indicador activo */
+  transition:color var(--t-base),border-color var(--t-base);white-space:nowrap;
+}
+/* Estado activo: color gold + underline */
+.srv-tab:hover,.srv-tab.active{color:var(--gold);border-color:var(--gold);}
+
+/* ══════════════════════════════════════════════════════════════
+   2. SERVICE CATEGORY SECTIONS
+   /design-critique: Alternar background negro/d1 para
+   separar visualmente cada categoría sin necesidad de bordes.
+   ══════════════════════════════════════════════════════════════ */
+.srv-category{padding:80px 0;background:var(--black);scroll-margin-top:160px;}
+.srv-category.srv-alt{background:var(--d1);} /* Alternado */
+
+/* Header de categoría: texto + imagen thumbnail derecha */
+.srv-cat-header{display:grid;grid-template-columns:1fr auto;gap:40px;align-items:start;margin-bottom:48px;}
+.srv-cat-img{width:220px;height:160px;object-fit:cover;filter:brightness(.75);}
+
+/* ══════════════════════════════════════════════════════════════
+   3. PRICE CARDS — Catálogo de servicios
+   /design-system: Componente reutilizable en todo el catálogo.
+   /design-critique: Imagen arriba, precio display grande, CTA abajo.
+   /ux-copy: Precio grande y prominente — reducción de fricción.
+   /handoff: Estados: default, hover, featured (borde más visible).
+   ══════════════════════════════════════════════════════════════ */
+.price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+.price-card{
+  background:var(--d2);border:1px solid var(--gold-border);
+  overflow:hidden;transition:border-color var(--t-base),transform var(--t-base);
+  position:relative;
+}
+/* Estado hover: leve elevación */
+.price-card:hover{border-color:var(--gold-hover);transform:translateY(-3px);}
+/* Variante featured: borde más visible, badge */
+.price-card.featured{border-color:rgba(201,168,76,.45);}
+/* Badge: etiqueta flotante (★ más pedido, VIP, etc.) */
+.price-card-badge{
+  position:absolute;top:12px;right:12px;
+  background:var(--gold);color:var(--black);
+  font-size:9px;font-weight:600;letter-spacing:1px;
+  padding:4px 10px;text-transform:uppercase;z-index:2;
+}
+/* Imagen con zoom en hover */
+.price-card-img-wrap{position:relative;overflow:hidden;height:180px;}
+.price-card-img-wrap img{
+  width:100%;height:100%;object-fit:cover;filter:brightness(.72);
+  transition:transform .5s var(--t-slow),filter .4s;
+}
+.price-card:hover .price-card-img-wrap img{transform:scale(1.05);filter:brightness(.55);}
+.price-card-body{padding:20px 18px;}
+/* /ux-copy: Precio grande y display — primera cosa que se lee */
+.price-tag{font-family:var(--font-d);font-size:32px;font-weight:300;color:var(--gold);margin-bottom:6px;line-height:1;}
+.price-name{font-family:var(--font-d);font-size:18px;color:var(--white);margin-bottom:8px;line-height:1.3;}
+.price-desc{font-size:12px;color:var(--muted);line-height:1.6;margin-bottom:16px;}
+/* Lista de includes */
+.srv-incl{list-style:none;margin-bottom:16px;display:flex;flex-direction:column;gap:5px;}
+.srv-incl li{font-size:12px;color:rgba(248,245,238,.72);display:flex;align-items:center;gap:7px;}
+.srv-incl li::before{content:'';width:4px;height:4px;background:var(--gold);border-radius:50%;flex-shrink:0;}
+
+/* ══════════════════════════════════════════════════════════════
+   4. PRICE LIST — Tabla de precios (depilaciones, pestañas)
+   /design-system: Layout precio | valor en 2 columnas.
+   /design-critique: Featured row con fondo sutil destaca el
+   servicio más popular sin romper consistencia visual.
+   ══════════════════════════════════════════════════════════════ */
+.srv-two-col{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start;}
+.srv-subsection-title{font-size:12px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:16px;}
+.price-list{display:flex;flex-direction:column;gap:2px;}
+/* Cada fila: nombre | precio */
+.price-row{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:10px 14px;border-bottom:1px solid rgba(201,168,76,.07);
+  font-size:14px;color:rgba(248,245,238,.8);transition:background .2s;
+}
+.price-row:hover{background:var(--gold-pale);}
+/* Featured: fondo sutil, texto blanco */
+.price-row.featured-row{background:var(--gold-pale);color:var(--white);}
+/* /ux-copy: Precio display grande, visible a distancia */
+.price-val{font-family:var(--font-d);font-size:18px;color:var(--gold);font-weight:300;white-space:nowrap;}
+
+/* ══════════════════════════════════════════════════════════════
+   5. EXTRAS GRID — Servicios adicionales como pills
+   /design-critique: Pills con hover para indicar interacción.
+   En contexto de catálogo, sirven para mostrar alcance.
+   ══════════════════════════════════════════════════════════════ */
+.extras-grid{display:flex;flex-wrap:wrap;gap:8px;}
+.extra-item{
+  background:var(--d3);border:1px solid var(--gold-border);
+  padding:8px 16px;font-size:13px;color:rgba(248,245,238,.75);
+  transition:border-color var(--t-base),color var(--t-base);cursor:default;
+}
+.extra-item:hover{border-color:var(--gold);color:var(--white);}
+
+/* ══════════════════════════════════════════════════════════════
+   6. OBSEQUIO BANNER
+   /ux-copy: Destaca el regalo incluido para reducir fricciones.
+   Borde izquierdo dorado = highlight visual de valor añadido.
+   ══════════════════════════════════════════════════════════════ */
+.srv-obsequio{
+  background:linear-gradient(135deg,rgba(201,168,76,.12),rgba(201,168,76,.06));
+  border:1px solid var(--gold-border);
+  border-left:3px solid var(--gold); /* Borde izquierdo reforzado = énfasis */
+  padding:16px 20px;font-size:13px;color:rgba(248,245,238,.85);margin-top:28px;
+}
+.srv-obsequio strong{color:var(--gold);}
+.srv-extras{margin-top:36px;padding-top:28px;border-top:1px solid var(--gold-border);}
+
+/* ══════════════════════════════════════════════════════════════
+   7. CART OVERLAY + SIDEBAR
+   /accessibility: El sidebar es un complemento accesible:
+   - Overlay captura click fuera para cerrar (UX estándar)
+   - Sidebar tiene aria-label en HTML
+   - Cerrar con Escape gestionado por JS
+   /handoff: Estado open controlado por clase .open en JS.
+   ══════════════════════════════════════════════════════════════ */
+/* Overlay: fondo oscuro detrás del sidebar */
+.cart-overlay{
+  position:fixed;inset:0;background:rgba(0,0,0,.6);
+  z-index:2000;opacity:0;visibility:hidden;transition:all var(--t-base);
+}
+.cart-overlay.open{opacity:1;visibility:visible;}
+/* Sidebar: panel lateral derecho */
+.cart-sidebar{
+  position:fixed;top:0;right:0;width:400px;max-width:95vw;
+  height:100vh;background:var(--d2);border-left:1px solid var(--gold-border);
+  z-index:2001;transform:translateX(100%); /* Oculto fuera del viewport */
+  transition:transform .4s cubic-bezier(0.16,1,0.3,1);
+  display:flex;flex-direction:column;overflow:hidden;
+}
+/* Estado open: slide in desde la derecha */
+.cart-sidebar.open{transform:translateX(0);}
+
+/* ══════════════════════════════════════════════════════════════
+   8. CART: HEADER, ITEMS, FOOTER
+   /ux-copy: Estado vacío con instrucción clara de qué hacer.
+   /handoff: Todos los estados del carrito documentados:
+   vacío (cart-empty), con items (cart-item), éxito (order-success).
+   ══════════════════════════════════════════════════════════════ */
+.cart-header{
+  padding:24px 20px;border-bottom:1px solid var(--gold-border);
+  display:flex;align-items:center;justify-content:space-between;
+}
+.cart-title{font-family:var(--font-d);font-size:22px;color:var(--white);}
+.cart-close{
+  width:36px;height:36px;background:none;border:1px solid var(--gold-border);
+  color:var(--muted);cursor:pointer;font-size:18px;display:flex;
+  align-items:center;justify-content:center;transition:all var(--t-base);
+}
+.cart-close:hover{border-color:var(--gold);color:var(--gold);}
+
+/* Items container con scroll */
+.cart-items{flex:1;overflow-y:auto;padding:20px;scrollbar-width:thin;scrollbar-color:var(--gold-border) transparent;}
+
+/* /ux-copy: Estado vacío — icono + mensaje + instrucción */
+.cart-empty{text-align:center;padding:60px 20px;color:var(--muted);}
+.cart-empty-icon{font-size:48px;margin-bottom:12px;}
+
+/* Item individual en el carrito */
+.cart-item{display:flex;gap:14px;padding:14px 0;border-bottom:1px solid rgba(201,168,76,.1);}
+.cart-item-img{width:70px;height:70px;object-fit:cover;filter:brightness(.8);flex-shrink:0;}
+.cart-item-info{flex:1;}
+.cart-item-name{font-size:14px;color:var(--white);margin-bottom:4px;}
+.cart-item-price{font-family:var(--font-d);font-size:18px;color:var(--gold);}
+.cart-item-remove{
+  background:none;border:none;color:var(--muted);
+  cursor:pointer;font-size:16px;padding:4px;
+  transition:color var(--t-fast);align-self:flex-start;
+}
+/* Estado hover de eliminar: color error */
+.cart-item-remove:hover{color:var(--error);}
+/* Controles de cantidad */
+.cart-item-qty{display:flex;align-items:center;gap:10px;margin-top:8px;}
+.qty-btn{
+  width:26px;height:26px;background:var(--d4);border:1px solid var(--gold-border);
+  color:var(--gold);cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;
+  transition:all .2s;
+}
+/* Estado hover de qty: fill dorado */
+.qty-btn:hover{background:var(--gold);color:var(--black);}
+.qty-num{font-size:14px;color:var(--white);min-width:20px;text-align:center;}
+
+/* Footer del carrito: total + pago + CTA */
+.cart-footer{padding:20px;border-top:1px solid var(--gold-border);}
+.cart-total-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;}
+.cart-total-label{font-size:14px;color:var(--muted);}
+.cart-total-val{font-family:var(--font-d);font-size:28px;color:var(--gold);}
+
+/* ══════════════════════════════════════════════════════════════
+   9. MÉTODOS DE PAGO — Selección en carrito
+   /ux-copy: Opciones visuales claras, estado selected obvio.
+   /handoff: Estados: default, hover, selected.
+   ══════════════════════════════════════════════════════════════ */
+.pay-select-title{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:10px;}
+.pay-options{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px;}
+.pay-opt{
+  border:1px solid var(--gold-border);background:var(--d4);
+  padding:8px 10px;cursor:pointer;transition:all var(--t-base);
+  font-size:12px;color:var(--muted);text-align:center;
+}
+/* Hover: más visible */
+.pay-opt:hover{border-color:var(--gold);color:var(--gold);}
+/* Estado selected: fondo dorado sutil — clase añadida por JS */
+.pay-opt.selected{border-color:var(--gold);color:var(--gold);background:var(--gold-pale);}
+
+/* ══════════════════════════════════════════════════════════════
+   10. COMPROBANTE UPLOAD
+   /ux-copy: Area de drop/click clara. Preview del archivo
+   confirma que fue recibido (feedback inmediato).
+   /accessibility: Input file real dentro — accesible.
+   ══════════════════════════════════════════════════════════════ */
+/* Visible solo cuando pago electrónico seleccionado */
+.comprobante-wrap{display:none;margin-bottom:16px;}
+.comprobante-wrap.show{display:block;}
+/* Área de drop con borde punteado */
+.comprobante-upload{
+  border:2px dashed var(--gold-border);padding:20px;
+  text-align:center;cursor:pointer;transition:border-color var(--t-base);
+  position:relative;
+}
+.comprobante-upload:hover{border-color:var(--gold);}
+/* Input file real — posición absoluta para clicar área completa */
+.comprobante-upload input{
+  position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;
+}
+.comprobante-upload-text{font-size:12px;color:var(--muted);}
+.comprobante-upload-icon{font-size:24px;margin-bottom:6px;}
+/* /ux-copy: Preview confirma archivo recibido */
+.comprobante-preview{margin-top:8px;font-size:12px;color:var(--gold);display:none;}
+
+/* ══════════════════════════════════════════════════════════════
+   11. FLOAT CART BUTTON
+   /accessibility WCAG 2.5.5: 54px > 44px mínimo.
+   Badge numérico muestra cantidad de items.
+   aria-label descriptivo en HTML.
+   ══════════════════════════════════════════════════════════════ */
+.cart-float{
+  position:fixed;bottom:100px;right:28px;z-index:900;
+  background:var(--gold);color:var(--black);
+  width:54px;height:54px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;box-shadow:0 4px 20px rgba(201,168,76,.4);
+  transition:transform var(--t-base),box-shadow var(--t-base);border:none;
+}
+.cart-float:hover{transform:scale(1.1);box-shadow:0 6px 28px rgba(201,168,76,.5);}
+.cart-float svg{width:24px;height:24px;}
+/* Badge de cantidad: rojo llamativo, oculto si carrito vacío */
+.cart-float-badge{
+  position:absolute;top:-4px;right:-4px;background:#CF6679;color:white;
+  width:20px;height:20px;border-radius:50%;font-size:11px;font-weight:700;
+  display:flex;align-items:center;justify-content:center;display:none;
+}
+/* Estado show: clase añadida por JS cuando cart.length > 0 */
+.cart-float-badge.show{display:flex;}
+
+/* ══════════════════════════════════════════════════════════════
+   12. SHOP SECTIONS — Tienda por categoría
+   /design-critique: Alternar bg para separar lencería,
+   perfumes, deportiva, etc. sin necesidad de separadores.
+   ══════════════════════════════════════════════════════════════ */
+.shop-section{padding:60px 0;background:var(--black);}
+.shop-section.shop-alt{background:var(--d1);}
+.shop-header{margin-bottom:36px;}
+
+/* ══════════════════════════════════════════════════════════════
+   13. PRODUCT CARDS — Tarjetas de producto en tienda
+   /design-system: Componente de producto con imagen,
+   badge, body con precio y acciones.
+   /ux-copy: "🛍 Agregar al carrito" — acción específica + emoji
+   reduce fricciones cognitivas.
+   /handoff: Estados: default, hover (img zoom + overlay con CTA).
+   ══════════════════════════════════════════════════════════════ */
+.products-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
+.product-card{
+  background:var(--d2);border:1px solid var(--gold-border);
+  overflow:hidden;transition:border-color var(--t-base),transform var(--t-base);
+}
+.product-card:hover{border-color:var(--gold-hover);transform:translateY(-3px);}
+/* Imagen con overlay de acciones — visible en hover */
+.product-img-wrap{position:relative;height:240px;overflow:hidden;}
+.product-img-wrap img{
+  width:100%;height:100%;object-fit:cover;filter:brightness(.78);
+  transition:transform .5s var(--t-slow),filter .4s;
+}
+.product-card:hover .product-img-wrap img{transform:scale(1.06);filter:brightness(.58);}
+/* Overlay con botón "Agregar" — aparece en hover */
+.product-img-overlay{
+  position:absolute;inset:0;background:rgba(6,6,6,.45);
+  opacity:0;transition:opacity var(--t-base);
+  display:flex;align-items:center;justify-content:center;gap:10px;
+}
+.product-card:hover .product-img-overlay{opacity:1;}
+/* Badge sobre imagen (Promo, Popular, Nike, etc.) */
+.product-badge{
+  position:absolute;top:10px;left:10px;background:var(--gold);color:var(--black);
+  font-size:9px;font-weight:600;padding:4px 8px;letter-spacing:1px;text-transform:uppercase;
+}
+.product-body{padding:16px 14px;}
+.product-cat{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:5px;}
+.product-name{font-family:var(--font-d);font-size:16px;color:var(--white);margin-bottom:4px;line-height:1.3;}
+.product-desc{font-size:11px;color:var(--muted);line-height:1.5;margin-bottom:8px;}
+/* /ux-copy: Precio display — prominente */
+.product-price{font-family:var(--font-d);font-size:22px;color:var(--gold);margin-bottom:12px;}
+.product-actions{display:flex;gap:8px;}
+/* Botón de añadir al carrito — primario, ancho completo */
+.add-cart-btn{
+  flex:1;padding:9px;background:var(--gold);color:var(--black);
+  border:none;font-size:10px;font-weight:600;letter-spacing:2px;
+  text-transform:uppercase;cursor:pointer;
+  transition:background var(--t-base),transform .2s;font-family:var(--font-b);
+}
+/* Estado hover */
+.add-cart-btn:hover{background:var(--gold3);}
+/* Estado active: micro-scale */
+.add-cart-btn:active{transform:scale(.95);}
+
+/* ══════════════════════════════════════════════════════════════
+   14. FILTER BAR — Filtro por subcategoría en tienda
+   /ux-copy: Botones de filtro con estado activo claro.
+   /handoff: Estado: default, hover, active.
+   ══════════════════════════════════════════════════════════════ */
+.product-filter-bar{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px;}
+.filter-btn{
+  padding:7px 18px;border:1px solid var(--gold-border);
+  background:transparent;color:var(--muted);
+  font-size:11px;letter-spacing:2px;text-transform:uppercase;
+  cursor:pointer;transition:all var(--t-base);font-family:var(--font-b);
+}
+.filter-btn:hover{border-color:var(--gold);color:var(--gold);}
+/* Estado activo: fondo dorado sutil */
+.filter-btn.active{border-color:var(--gold);color:var(--gold);background:var(--gold-pale);}
+
+/* Order success estado */
+.order-success{
+  display:none;text-align:center;padding:32px;
+  background:var(--d3);border:1px solid var(--gold);margin-top:16px;
+}
+/* /ux-copy: Éxito visible con icono y mensaje cálido */
+.order-success.show{display:block;}
+.order-success-icon{font-size:40px;margin-bottom:12px;}
+
+/* ══════════════════════════════════════════════════════════════
+   15. RESPONSIVE — servicios.css
+   ══════════════════════════════════════════════════════════════ */
+@media(max-width:1100px){
+  .products-grid{grid-template-columns:repeat(3,1fr);}
+}
+@media(max-width:900px){
+  /* Price grid 2 cols */
+  .price-grid{grid-template-columns:1fr 1fr;}
+  /* Columnas a stack */
+  .srv-two-col{grid-template-columns:1fr;gap:28px;}
+  .srv-cat-header{grid-template-columns:1fr;}
+  .srv-cat-img{width:100%;height:180px;}
+  .products-grid{grid-template-columns:1fr 1fr;}
+}
+@media(max-width:600px){
+  .price-grid{grid-template-columns:1fr;}
+  .products-grid{grid-template-columns:1fr;}
+  /* Cart sidebar full-width en mobile */
+  .cart-sidebar{width:100%;}
+  /* Pago: stack vertical */
+  .pay-options{grid-template-columns:1fr;}
+}

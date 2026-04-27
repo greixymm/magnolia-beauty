@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<meta name="description" content="Magnolia Beauty & Fashion — Salón de belleza, spa y tienda en CC Brisas del Valle, San Diego, Valencia. Manicura, pestañas, masajes, alisado, lencería y más."/>
+<title>Magnolia Beauty & Fashion — San Diego, Valencia</title>
+<link rel="stylesheet" href="css/style.css?v=9"/>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌸</text></svg>"/>
+</head>
+<body>
+
+<!-- Skip nav -->
+<a href="#main" class="skip-nav">Ir al contenido principal</a>
+
+<!-- Custom cursor -->
+<div class="cursor" id="cursor" aria-hidden="true"></div>
+<div class="cursor-ring" id="cursorRing" aria-hidden="true"></div>
+
+<!-- ══ WHATSAPP FLOTANTE — siempre visible ══ -->
+<a class="wa-float" href="https://wa.me/584127552659?text=Hola!%20Quiero%20información%20de%20Magnolia%20Beauty%20🌸"
+   target="_blank" rel="noopener" aria-label="Contactar por WhatsApp">
+  <div class="wa-label" aria-hidden="true">Agenda tu cita</div>
+  <div class="wa-btn" aria-hidden="true">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+  </div>
+</a>
+
+<!-- Mobile nav -->
+<nav class="mobile-nav" id="mobileNav" role="dialog" aria-modal="true" aria-label="Menú">
+  <button class="mobile-nav-close" id="mobileClose" aria-label="Cerrar menú">✕</button>
+  <a href="#nosotras" onclick="closeMob()">Nosotras</a>
+  <a href="servicios.html" onclick="closeMob()">Servicios</a>
+  <a href="#paquetes" onclick="closeMob()">Paquetes</a>
+  <a href="tienda.html" onclick="closeMob()">Tienda</a>
+  <a href="blog.html" onclick="closeMob()">Blog</a>
+  <a href="#contacto" onclick="closeMob()">Contacto</a>
+</nav>
+
+<!-- ══ NAV ══ -->
+<header>
+  <nav class="nav" id="mainNav" aria-label="Navegación principal">
+    <a href="index.html" class="nav-logo" aria-label="Magnolia Beauty & Fashion — Inicio">
+      <img src="img/logo-dorado.png" class="nav-logo-img-full" alt="Magnolia Beauty & Fashion" loading="eager"/>
+    </a>
+    <div class="nav-links">
+      <a href="#nosotras">Nosotras</a>
+      <a href="servicios.html">Servicios</a>
+      <a href="#paquetes">Paquetes</a>
+      <a href="tienda.html">Tienda</a>
+      <a href="blog.html">Blog</a>
+      <a href="#contacto">Contacto</a>
+    </div>
+    <button class="nav-ham" id="hamburger" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobileNav">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+</header>
+
+<main role="main" id="main">
+
+<!-- ══════════════════════════════════════════════
+     HERO — VIDEO BACKGROUND
+     Para cambiar el video: reemplaza VIDEO_ID_AQUI con tu YouTube video ID
+     ══════════════════════════════════════════════ -->
+<section class="hero" id="inicio" aria-labelledby="hero-h1">
+  <div class="hero-video-wrap" aria-hidden="true">
+    <!-- ╔══════════════════════════════════════════════════╗
+         ║  VIDEO DE FONDO — INSTRUCCIONES                  ║
+         ║  1. Sube tu video como "hero.mp4" a Netlify      ║
+         ║  2. El sitio lo cargará automáticamente          ║
+         ║  3. Mientras → se usa el video de spa de respaldo║
+         ╚══════════════════════════════════════════════════╝ -->
+    <video class="hero-video-el"
+           id="heroVideo"
+           autoplay muted loop playsinline preload="metadata"
+           poster="uploads/mag-01.jpg">
+      <!-- Video salón de belleza — cámbialo desde el admin en /admin -->
+      <source src="https://assets.mixkit.co/videos/preview/mixkit-women-in-a-beauty-salon-getting-their-hair-done-33170-large.mp4" type="video/mp4"/>
+      <!-- Fallback 2: tratamiento facial spa -->
+      <source src="https://assets.mixkit.co/videos/preview/mixkit-woman-getting-a-facial-treatment-in-a-spa-33184-large.mp4" type="video/mp4"/>
+      <!-- Fallback 3: imagen si no carga video -->
+      <img src="uploads/mag-01.jpg" alt="Magnolia Beauty & Fashion — Salón de belleza"/>
+</video>
+  </div>
+  <div class="hero-video-overlay" aria-hidden="true"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">San Diego · CC Brisas del Valle · Valencia, Venezuela</p>
+    <h1 id="hero-h1">
+      Tu mejor<br><em>versión</em><br>empieza aquí.
+    </h1>
+    <p class="hero-sub">
+      Belleza, spa y moda en un solo lugar. Especialistas apasionadas, productos premium y un ambiente creado para que te sientas extraordinaria.
+    </p>
+    <div class="hero-actions">
+      <a href="https://wa.me/584127552659?text=Hola!%20Quiero%20reservar%20mi%20cita%20en%20Magnolia%20🌸"
+         class="btn btn-solid" target="_blank" rel="noopener">
+        Reservar mi cita ahora <span class="arr">→</span>
+      </a>
+      <a href="servicios.html" class="btn btn-white">
+        Ver servicios <span class="arr">↓</span>
+      </a>
+    </div>
+  </div>
+  <div class="hero-scroll" aria-hidden="true">
+    <span class="hero-scroll-label">Descubrir</span>
+    <div class="hero-scroll-line"></div>
+  </div>
+</section>
+
+<!-- ══ TICKER ══ -->
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-inner" id="tickerInner">
+    <span class="ticker-item">Manicura &amp; Pedicura <span class="ticker-dot"></span></span>
+    <span class="ticker-item">Extensión de Pestañas <span class="ticker-dot"></span></span>
+    <span class="ticker-item">Alisado sin Formol <span class="ticker-dot"></span></span>
+    <span class="ticker-item">Masajes &amp; Spa <span class="ticker-dot"></span></span>
+    <span class="ticker-item">Depilaciones <span class="ticker-dot"></span></span>
+    <span class="ticker-item">Lencería Premium <span class="ticker-dot"></span></span>
+    <span class="ticker-item">Perfumes <span class="ticker-dot"></span></span>
+    <span class="ticker-item">Ropa Deportiva <span class="ticker-dot"></span></span>
+    <span class="ticker-item">Limpiezas Faciales <span class="ticker-dot"></span></span>
+    <span class="ticker-item">Paquetes Corporales <span class="ticker-dot"></span></span>
+    <span class="ticker-item">Manicura &amp; Pedicura <span class="ticker-dot"></span></span>
+    <span class="ticker-item">Extensión de Pestañas <span class="ticker-dot"></span></span>
+    <span class="ticker-item">Alisado sin Formol <span class="ticker-dot"></span></span>
+    <span class="ticker-item">Masajes &amp; Spa <span class="ticker-dot"></span></span>
+    <span class="ticker-item">Depilaciones <span class="ticker-dot"></span></span>
+    <span class="ticker-item">Lencería Premium <span class="ticker-dot"></span></span>
+    <span class="ticker-item">Perfumes <span class="ticker-dot"></span></span>
+    <span class="ticker-item">Ropa Deportiva <span class="ticker-dot"></span></span>
+    <span class="ticker-item">Limpiezas Faciales <span class="ticker-dot"></span></span>
+    <span class="ticker-item">Paquetes Corporales <span class="ticker-dot"></span></span>
+  </div>
+</div>
+
+<!-- ══ NOSOTRAS / ABOUT ══ -->
+<section class="section" id="nosotras" aria-labelledby="about-h2">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-img-wrap reveal">
+        <img src="uploads/mag-02.jpg"
+             alt="Manicura artística con detalles dorados — Magnolia Beauty & Fashion"
+             class="about-img" loading="lazy" width="800" height="1000"/>
+        <div class="about-badge" aria-hidden="true">
+          <div class="about-badge-n">2026</div>
+          <div class="about-badge-l">Tú primero</div>
+        </div>
+      </div>
+      <div class="about-text">
+        <div class="eyebrow reveal">Nosotras</div>
+        <h2 id="about-h2" class="reveal delay-1">
+          Magnolia nació para<br><span class="gold">que te sientas</span><br>extraordinaria.
+        </h2>
+        <p class="reveal delay-2">
+          Somos un centro de belleza integral ubicado en el CC Brisas del Valle, San Diego. Cada detalle de nuestro espacio fue pensado para que, desde el primer momento, sientas que estás exactamente donde mereces estar.
+        </p>
+        <p class="reveal delay-2">
+          Nuestro equipo de especialistas certificadas trabaja con productos de primera calidad, técnicas actualizadas y una atención cálida y personalizada. Porque no sólo te embellecemos — te cuidamos.
+        </p>
+        <div class="about-pillars reveal delay-3">
+          <div class="pillar">
+            <div class="pillar-icon" aria-hidden="true">
+              <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/></svg>
+            </div>
+            <div>
+              <div class="pillar-title">Especialistas certificadas</div>
+              <p class="pillar-sub">Equipo profesional en constante formación</p>
+            </div>
+          </div>
+          <div class="pillar">
+            <div class="pillar-icon" aria-hidden="true">
+              <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11.48 3.499a.562.562 0 0 1 1.04 0l2.125 5.111a.563.563 0 0 0 .475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 0 0-.182.557l1.285 5.385a.562.562 0 0 1-.84.61l-4.725-2.885a.562.562 0 0 0-.586 0L6.982 20.54a.562.562 0 0 1-.84-.61l1.285-5.386a.562.562 0 0 0-.182-.557l-4.204-3.602a.562.562 0 0 1 .321-.988l5.518-.442a.563.563 0 0 0 .475-.345L11.48 3.5Z"/></svg>
+            </div>
+            <div>
+              <div class="pillar-title">Productos premium</div>
+              <p class="pillar-sub">Solo materiales de máxima calidad</p>
+            </div>
+          </div>
+          <div class="pillar">
+            <div class="pillar-icon" aria-hidden="true">
+              <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z"/></svg>
+            </div>
+            <div>
+              <div class="pillar-title">Atención personalizada</div>
+              <p class="pillar-sub">Cada cliente, un trato único y especial</p>
+            </div>
+          </div>
+          <div class="pillar">
+            <div class="pillar-icon" aria-hidden="true">
+              <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 11.25v8.25a1.5 1.5 0 0 1-1.5 1.5H5.25a1.5 1.5 0 0 1-1.5-1.5v-8.25M12 4.875A2.625 2.625 0 1 0 9.375 7.5H12m0-2.625V7.5m0-2.625A2.625 2.625 0 1 1 14.625 7.5H12m0 0V21m-8.625-9.75h18c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125h-18c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z"/></svg>
+            </div>
+            <div>
+              <div class="pillar-title">Obsequio garantizado</div>
+              <p class="pillar-sub">Exfoliación + hidratación incluidas</p>
+            </div>
+          </div>
+        </div>
+        <a href="https://wa.me/584127552659?text=Hola!%20Quiero%20mi%20primera%20cita%20en%20Magnolia%20🌸"
+           class="btn reveal delay-4" target="_blank" rel="noopener">
+          Agenda tu primera cita <span class="arr">→</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ SERVICIOS OVERVIEW — links to servicios.html ══ -->
+<section class="services-section section" id="servicios-preview" aria-labelledby="srv-h2">
+  <div class="container">
+    <div class="services-head" style="text-align:center;flex-direction:column;align-items:center;gap:24px;">
+      <div>
+        <div class="eyebrow reveal">Nuestros servicios</div>
+        <h2 id="srv-h2" class="reveal delay-1" style="text-align:center;">Todo lo que necesitas,<br><em class="italic">en un solo lugar.</em></h2>
+      </div>
+      <a href="servicios.html" class="btn btn-solid reveal delay-2">
+        Ver todos los servicios <span class="arr">→</span>
+      </a>
+    </div>
+    <div class="services-grid" role="list">
+
+      <a class="srv-card reveal" href="servicios.html#manicura" role="listitem"
+         aria-label="Manicura y Pedicura — desde $10">
+        <img src="uploads/post-03.jpg" alt="Manicura con semipermanente en Magnolia Beauty" class="srv-card-img" loading="lazy"/>
+        <div class="srv-overlay" aria-hidden="true"></div>
+        <div class="srv-content">
+          <div class="srv-num">01</div>
+          <div class="srv-title">Manicura &amp; Pedicura</div>
+          <div class="srv-desc">Tradicional, rusa, system jelly, polly-gel, pedicure. Exfoliación e hidratación de obsequio.</div>
+          <div class="srv-price">Desde $10</div>
+        </div>
+        <div class="srv-arrow" aria-hidden="true">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25"/></svg>
+        </div>
+      </a>
+
+      <a class="srv-card reveal delay-1" href="servicios.html#pestanas" role="listitem"
+         aria-label="Pestañas y Cejas — desde $10">
+        <img src="uploads/post-06.jpg" alt="Extensión de pestañas en Magnolia Beauty" class="srv-card-img" loading="lazy"/>
+        <div class="srv-overlay" aria-hidden="true"></div>
+        <div class="srv-content">
+          <div class="srv-num">02</div>
+          <div class="srv-title">Pestañas &amp; Cejas</div>
+          <div class="srv-desc">Clásicas, rímel, brasileño YY, griego, wispy. Laminado, micro-blading y microshading.</div>
+          <div class="srv-price">Desde $10</div>
+        </div>
+        <div class="srv-arrow" aria-hidden="true">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25"/></svg>
+        </div>
+      </a>
+
+      <a class="srv-card reveal delay-2" href="servicios.html#spa" role="listitem"
+         aria-label="Spa y Masajes — desde $15">
+        <img src="uploads/post-08.jpg" alt="Masaje relajante en Magnolia Spa" class="srv-card-img" loading="lazy"/>
+        <div class="srv-overlay" aria-hidden="true"></div>
+        <div class="srv-content">
+          <div class="srv-num">03</div>
+          <div class="srv-title">Spa &amp; Masajes</div>
+          <div class="srv-desc">Masaje relajante y descontracturante. Limpiezas faciales básica, VIP y con Dermapen.</div>
+          <div class="srv-price">Desde $15</div>
+        </div>
+        <div class="srv-arrow" aria-hidden="true">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25"/></svg>
+        </div>
+      </a>
+
+      <a class="srv-card reveal delay-3" href="servicios.html#estilismo" role="listitem"
+         aria-label="Estilismo y Hair — desde $10">
+        <img src="https://images.unsplash.com/photo-1562322140-8baeececf3df?w=600&q=85"
+             alt="Alisado y tratamiento capilar en Magnolia Beauty" class="srv-card-img" loading="lazy"/>
+        <div class="srv-overlay" aria-hidden="true"></div>
+        <div class="srv-content">
+          <div class="srv-num">04</div>
+          <div class="srv-title">Estilismo &amp; Hair</div>
+          <div class="srv-desc">Color $35, alisado sin formol $40 (apto embarazadas), corte, ondas, peinados quinceañeras.</div>
+          <div class="srv-price">Desde $10</div>
+        </div>
+        <div class="srv-arrow" aria-hidden="true">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25"/></svg>
+        </div>
+      </a>
+
+      <a class="srv-card reveal" href="servicios.html#depilaciones" role="listitem"
+         aria-label="Depilaciones — desde $3">
+        <img src="uploads/mag-07.jpg?w=600&q=85"
+             alt="Depilación facial y corporal en Magnolia Beauty" class="srv-card-img" loading="lazy"/>
+        <div class="srv-overlay" aria-hidden="true"></div>
+        <div class="srv-content">
+          <div class="srv-num">05</div>
+          <div class="srv-title">Depilaciones</div>
+          <div class="srv-desc">Facial: cejas $5, bozo $3, diseño+pigmento $10. Corporal: axila $6, pierna $20, brasilero $17.</div>
+          <div class="srv-price">Desde $3</div>
+        </div>
+        <div class="srv-arrow" aria-hidden="true">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25"/></svg>
+        </div>
+      </a>
+
+      <a class="srv-card reveal delay-1" href="servicios.html#esteticos" role="listitem"
+         aria-label="Servicios Estéticos — desde $15">
+        <img src="uploads/maqu-01.jpg"
+             alt="Tratamientos estéticos faciales no invasivos en Magnolia" class="srv-card-img" loading="lazy"/>
+        <div class="srv-overlay" aria-hidden="true"></div>
+        <div class="srv-content">
+          <div class="srv-num">06</div>
+          <div class="srv-title">Servicios Estéticos</div>
+          <div class="srv-desc">Tratamientos faciales NO invasivos, piel, glúteos. Estética ontológica y más.</div>
+          <div class="srv-price">Desde $15</div>
+        </div>
+        <div class="srv-arrow" aria-hidden="true">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25"/></svg>
+        </div>
+      </a>
+
+      <a class="srv-card reveal delay-2" href="servicios.html#corporales" role="listitem"
+         aria-label="Paquetes Corporales — desde $40">
+        <img src="uploads/mag-09.jpg?w=600&q=85"
+             alt="Maderoterapia y tratamiento corporal reductivo en Magnolia" class="srv-card-img" loading="lazy"/>
+        <div class="srv-overlay" aria-hidden="true"></div>
+        <div class="srv-content">
+          <div class="srv-num">07</div>
+          <div class="srv-title">Paquetes Corporales</div>
+          <div class="srv-desc">Maderoterapia, aparatología, drenaje linfático, reductivos y levantamiento de glúteos.</div>
+          <div class="srv-price">Desde $40</div>
+        </div>
+        <div class="srv-arrow" aria-hidden="true">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25"/></svg>
+        </div>
+      </a>
+
+      <a class="srv-card reveal delay-3" href="servicios.html#maquillaje" role="listitem"
+         aria-label="Maquillaje profesional — consultar precio">
+        <img src="uploads/mag-09.jpg?w=600&q=85"
+             alt="Maquillaje profesional para eventos en Magnolia Beauty" class="srv-card-img" loading="lazy"/>
+        <div class="srv-overlay" aria-hidden="true"></div>
+        <div class="srv-content">
+          <div class="srv-num">+</div>
+          <div class="srv-title">Maquillaje</div>
+          <div class="srv-desc">Eventos, quinceañeras, bodas, fotografía. Artistas certificadas con productos premium.</div>
+          <div class="srv-price">Consultar →</div>
+        </div>
+        <div class="srv-arrow" aria-hidden="true">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25"/></svg>
+        </div>
+      </a>
+
+    </div><!-- /services-grid -->
+  </div>
+</section>
+
+<!-- ══ PAQUETES CAROUSEL ══ -->
+<section class="packages-section section" id="paquetes" aria-labelledby="pkg-h2">
+  <div class="container">
+    <div class="packages-head">
+      <div>
+        <div class="eyebrow reveal">Paquetes especiales</div>
+        <h2 id="pkg-h2" class="reveal delay-1">Escoge tu<br><em class="italic">transformación</em></h2>
+      </div>
+      <div class="car-controls reveal delay-2">
+        <button class="car-btn" onclick="carPrev()" aria-label="Paquete anterior">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5"/></svg>
+        </button>
+        <button class="car-btn" onclick="carNext()" aria-label="Paquete siguiente">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="carousel-wrap reveal delay-1" role="region" aria-label="Carrusel de paquetes">
+      <div class="carousel-track" id="carTrack">
+
+        <article class="pkg-card">
+          <img src="https://images.unsplash.com/photo-1604654894610-df63bc536371?w=600&q=80" alt="Combo Manicura + Pedicura" class="pkg-card-img" loading="lazy"/>
+          <div class="pkg-card-body">
+            <div class="pkg-badge">⭐ El más pedido</div>
+            <div class="pkg-title">Combo Mani + Pedi</div>
+            <div class="pkg-price">$22</div>
+            <ul class="pkg-list">
+              <li>Manicura rusa completa</li>
+              <li>Pedicure profesional</li>
+              <li>Exfoliación + hidratación de obsequio</li>
+            </ul>
+            <a href="https://wa.me/584127552659?text=Hola!%20Quiero%20el%20Combo%20Mani%2BPedi%20%2422" class="btn btn-solid" style="width:100%;justify-content:center;" target="_blank" rel="noopener">Reservar por $22 →</a>
+          </div>
+        </article>
+
+        <article class="pkg-card">
+          <img src="https://images.unsplash.com/photo-1560750588-73207b1ef5b8?w=600&q=80" alt="Masaje Relajante con aceites" class="pkg-card-img" loading="lazy"/>
+          <div class="pkg-card-body">
+            <div class="pkg-badge">Bienestar</div>
+            <div class="pkg-title">Masaje Relajante</div>
+            <div class="pkg-price">$25</div>
+            <ul class="pkg-list">
+              <li>Sesión completa 60 minutos</li>
+              <li>Aceites aromáticos premium</li>
+              <li>Ambiente spa con aromaterapia</li>
+            </ul>
+            <a href="https://wa.me/584127552659?text=Hola!%20Quiero%20reservar%20un%20Masaje%20Relajante%20%2425" class="btn btn-solid" style="width:100%;justify-content:center;" target="_blank" rel="noopener">Reservar por $25 →</a>
+          </div>
+        </article>
+
+        <article class="pkg-card">
+          <img src="uploads/mag-09.jpg?w=600&q=80" alt="Paquete Reductivo Básico" class="pkg-card-img" loading="lazy"/>
+          <div class="pkg-card-body">
+            <div class="pkg-badge">Corporal</div>
+            <div class="pkg-title">Reductivo Básico</div>
+            <div class="pkg-price">$80</div>
+            <ul class="pkg-list">
+              <li>6 sesiones de masaje moldeador</li>
+              <li>Drenaje linfático incluido</li>
+              <li>Aparatología en cada sesión</li>
+            </ul>
+            <a href="https://wa.me/584127552659?text=Hola!%20Quiero%20información%20del%20Paquete%20Reductivo%20Básico%20%2480" class="btn btn-solid" style="width:100%;justify-content:center;" target="_blank" rel="noopener">Consultar →</a>
+          </div>
+        </article>
+
+        <article class="pkg-card">
+          <img src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=600&q=80" alt="Masaje Reductivo Medio 10 sesiones" class="pkg-card-img" loading="lazy"/>
+          <div class="pkg-card-body">
+            <div class="pkg-badge">Corporal Plus</div>
+            <div class="pkg-title">Reductivo Medio</div>
+            <div class="pkg-price">$100</div>
+            <ul class="pkg-list">
+              <li>10 masajes moldeadores</li>
+              <li>Control de peso y medidas</li>
+              <li>Plan de alimentación + desintoxicación</li>
+              <li>Maderoterapia + aparatología</li>
+            </ul>
+            <a href="https://wa.me/584127552659?text=Hola!%20Quiero%20información%20del%20Reductivo%20Medio%20%24100" class="btn btn-solid" style="width:100%;justify-content:center;" target="_blank" rel="noopener">Consultar →</a>
+          </div>
+        </article>
+
+        <article class="pkg-card">
+          <img src="uploads/mag-07.jpg?w=600&q=80" alt="Masaje Full 12 sesiones" class="pkg-card-img" loading="lazy"/>
+          <div class="pkg-card-body">
+            <div class="pkg-badge">Transformador</div>
+            <div class="pkg-title">Masaje Full</div>
+            <div class="pkg-price">$120</div>
+            <ul class="pkg-list">
+              <li>12 masajes moldeadores</li>
+              <li>Plan alimentación + desintoxicación</li>
+              <li>Drenaje linfático + aparatología</li>
+              <li>1 sesión de nutrientes</li>
+            </ul>
+            <a href="https://wa.me/584127552659?text=Hola!%20Quiero%20información%20del%20Masaje%20Full%20%24120" class="btn btn-solid" style="width:100%;justify-content:center;" target="_blank" rel="noopener">Consultar →</a>
+          </div>
+        </article>
+
+        <article class="pkg-card">
+          <img src="https://images.unsplash.com/photo-1552693673-1bf958298935?w=600&q=80" alt="Masaje VIP todo incluido" class="pkg-card-img" loading="lazy"/>
+          <div class="pkg-card-body">
+            <div class="pkg-badge">★ Premium VIP</div>
+            <div class="pkg-title">Masaje VIP</div>
+            <div class="pkg-price">$150</div>
+            <ul class="pkg-list">
+              <li>12 masajes moldeadores personalizados</li>
+              <li>Control semanal peso y medidas</li>
+              <li>Maderoterapia + aparatología completa</li>
+              <li>Exfoliación + hidratación corporal</li>
+              <li>1 sesión de nutrientes + drenaje</li>
+            </ul>
+            <a href="https://wa.me/584127552659?text=Hola!%20Quiero%20reservar%20el%20Masaje%20VIP%20%24150" class="btn btn-solid" style="width:100%;justify-content:center;" target="_blank" rel="noopener">Reservar VIP $150 →</a>
+          </div>
+        </article>
+
+        <article class="pkg-card">
+          <img src="https://images.unsplash.com/photo-1562322140-8baeececf3df?w=600&q=80" alt="Alisado sin formol" class="pkg-card-img" loading="lazy"/>
+          <div class="pkg-card-body">
+            <div class="pkg-badge">🌿 Sin formol — apto embarazadas</div>
+            <div class="pkg-title">Alisado Premium</div>
+            <div class="pkg-price">$40</div>
+            <ul class="pkg-list">
+              <li>100% libre de formol</li>
+              <li>Apto para niñas y embarazadas</li>
+              <li>Corte de puntas incluido</li>
+              <li>Hidratación profunda post-alisado</li>
+            </ul>
+            <a href="https://wa.me/584127552659?text=Hola!%20Quiero%20reservar%20el%20Alisado%20sin%20Formol%20%2440" class="btn btn-solid" style="width:100%;justify-content:center;" target="_blank" rel="noopener">Reservar por $40 →</a>
+          </div>
+        </article>
+
+        <article class="pkg-card">
+          <img src="uploads/perf-01.jpg?w=600&q=80" alt="Levantamiento de Glúteos" class="pkg-card-img" loading="lazy"/>
+          <div class="pkg-card-body">
+            <div class="pkg-badge">Sculpt &amp; Lift</div>
+            <div class="pkg-title">Levantamiento Glúteos</div>
+            <div class="pkg-price">$220</div>
+            <ul class="pkg-list">
+              <li>12 masajes especializados</li>
+              <li>Aparatología profesional</li>
+              <li>3 sesiones de nutrientes</li>
+              <li>Maderoterapia incluida</li>
+            </ul>
+            <a href="https://wa.me/584127552659?text=Hola!%20Quiero%20información%20del%20Levantamiento%20de%20Glúteos%20%24220" class="btn btn-solid" style="width:100%;justify-content:center;" target="_blank" rel="noopener">Consultar →</a>
+          </div>
+        </article>
+
+      </div><!-- /carousel-track -->
+    </div>
+    <div class="carousel-dots" id="carDots" role="tablist" aria-label="Navegar paquetes">
+      <button class="car-dot active" onclick="carTo(0)" role="tab" aria-selected="true" aria-label="Paquete 1"></button>
+      <button class="car-dot" onclick="carTo(1)" role="tab" aria-selected="false" aria-label="Paquete 2"></button>
+      <button class="car-dot" onclick="carTo(2)" role="tab" aria-selected="false" aria-label="Paquete 3"></button>
+      <button class="car-dot" onclick="carTo(3)" role="tab" aria-selected="false" aria-label="Paquete 4"></button>
+      <button class="car-dot" onclick="carTo(4)" role="tab" aria-selected="false" aria-label="Paquete 5"></button>
+      <button class="car-dot" onclick="carTo(5)" role="tab" aria-selected="false" aria-label="Paquete 6"></button>
+      <button class="car-dot" onclick="carTo(6)" role="tab" aria-selected="false" aria-label="Paquete 7"></button>
+      <button class="car-dot" onclick="carTo(7)" role="tab" aria-selected="false" aria-label="Paquete 8"></button>
+    </div>
+  </div>
+</section>
+
+<!-- ══ PROMO BANNER CAROUSEL ══ -->
+<section class="promo-section" aria-label="Promociones y novedades Magnolia">
+  <div class="promo-track" id="promoTrack">
+
+    <div class="promo-slide">
+      <img src="https://images.unsplash.com/photo-1604654894610-df63bc536371?w=1400&q=80"
+           alt="Promo manicura Magnolia" class="promo-slide-img" loading="lazy"/>
+      <div class="promo-slide-overlay" aria-hidden="true"></div>
+      <div class="promo-slide-content">
+        <span class="promo-badge">✦ Novedad 2026</span>
+        <h3 class="promo-title">Manicura Rusa<br>con Nivelación</h3>
+        <p class="promo-desc">El acabado más duradero y profesional. Uñas perfectas que duran semanas — ahora con exfoliación de obsequio.</p>
+        <a href="https://wa.me/584127552659?text=Hola!%20Quiero%20info%20de%20la%20Manicura%20Rusa%20con%20Nivelación"
+           class="btn btn-solid" target="_blank" rel="noopener">Reservar por $17 →</a>
+      </div>
+    </div>
+
+    <div class="promo-slide">
+      <img src="https://images.unsplash.com/photo-1583001931096-959e9a1a6223?w=1400&q=80"
+           alt="Promo extensiones de pestañas Magnolia" class="promo-slide-img" loading="lazy"/>
+      <div class="promo-slide-overlay" aria-hidden="true"></div>
+      <div class="promo-slide-content">
+        <span class="promo-badge">✦ Tendencia</span>
+        <h3 class="promo-title">Efecto Wispy<br>Pestañas</h3>
+        <p class="promo-desc">El estilo más solicitado del año. Volumen dramático con movimiento natural — sin rímel por semanas.</p>
+        <a href="https://wa.me/584127552659?text=Hola!%20Quiero%20las%20Pestañas%20Wispy%20%2435"
+           class="btn btn-solid" target="_blank" rel="noopener">Reservar por $35 →</a>
+      </div>
+    </div>
+
+    <div class="promo-slide">
+      <img src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=1400&q=80"
+           alt="Promo paquete corporal Magnolia" class="promo-slide-img" loading="lazy"/>
+      <div class="promo-slide-overlay" aria-hidden="true"></div>
+      <div class="promo-slide-content">
+        <span class="promo-badge">✦ Más completo</span>
+        <h3 class="promo-title">Masaje VIP<br>Completo</h3>
+        <p class="promo-desc">12 sesiones + plan alimentación + maderoterapia + aparatología + exfoliación + hidratación. Tu transformación total.</p>
+        <a href="https://wa.me/584127552659?text=Hola!%20Quiero%20el%20Masaje%20VIP%20%24150"
+           class="btn btn-solid" target="_blank" rel="noopener">Consultar Masaje VIP $150 →</a>
+      </div>
+    </div>
+
+    <div class="promo-slide">
+      <img src="uploads/maqu-05.jpg?w=1400&q=80"
+           alt="Tienda Magnolia — lencería y moda" class="promo-slide-img" loading="lazy"/>
+      <div class="promo-slide-overlay" aria-hidden="true"></div>
+      <div class="promo-slide-content">
+        <span class="promo-badge">✦ Magnolia Fashion</span>
+        <h3 class="promo-title">Nueva colección<br>Lencería 2026</h3>
+        <p class="promo-desc">Packs de panty encaje, sets completos y lencería exclusiva. Tallas disponibles, consulta en tienda.</p>
+        <a href="tienda.html" class="btn btn-solid">Ver tienda →</a>
+      </div>
+    </div>
+
+  </div><!-- /promo-track -->
+
+  <button class="promo-arrow prev" onclick="promoPrev()" aria-label="Slide anterior">
+    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5"/></svg>
+  </button>
+  <button class="promo-arrow next" onclick="promoNext()" aria-label="Slide siguiente">
+    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5"/></svg>
+  </button>
+
+  <div class="promo-nav" role="tablist" aria-label="Navegar promociones">
+    <button class="promo-dot active" onclick="promoTo(0)" role="tab" aria-label="Slide 1"></button>
+    <button class="promo-dot" onclick="promoTo(1)" role="tab" aria-label="Slide 2"></button>
+    <button class="promo-dot" onclick="promoTo(2)" role="tab" aria-label="Slide 3"></button>
+    <button class="promo-dot" onclick="promoTo(3)" role="tab" aria-label="Slide 4"></button>
+  </div>
+</section>
+
+<!-- ══ COLABORACIONES — inspired by Expert Artists ══ -->
+<section class="colabs-section section" aria-labelledby="colabs-h2">
+  <div class="container">
+    <span class="colabs-eyebrow reveal">/ Colaboraciones</span>
+    <h2 id="colabs-h2" class="colabs-big reveal delay-1">NUESTRAS<br>ALIANZAS</h2>
+    <p class="colabs-sub reveal delay-2">
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Magnolia beauty ha sido reconocida por profesionales de la industria, influencers de belleza y clientas satisfechas por la calidad excepcional de sus servicios.
+    </p>
+    <!-- NOTA: Reemplaza los textos "Lorem Ipsum" con los nombres reales de tus colaboradores/marcas -->
+    <div class="colabs-marquee reveal delay-3" role="region" aria-label="Marcas aliadas — carrusel">
+      <div class="colabs-track">
+        <!-- Set 1 -->
+        <div class="colab-pill"><span class="colab-pill-name">Lorem Brand</span><span class="colab-pill-tag">Partner</span></div>
+        <div class="colab-pill"><span class="colab-pill-name">Ipsum Studio</span><span class="colab-pill-tag">Aliado</span></div>
+        <div class="colab-pill"><span class="colab-pill-name">Beauty Co.</span><span class="colab-pill-tag">Proveedor</span></div>
+        <div class="colab-pill"><span class="colab-pill-name">Lorem Fashion</span><span class="colab-pill-tag">Marca</span></div>
+        <div class="colab-pill"><span class="colab-pill-name">Ipsum Spa</span><span class="colab-pill-tag">Red</span></div>
+        <div class="colab-pill"><span class="colab-pill-name">Dolor Brand</span><span class="colab-pill-tag">Partner</span></div>
+        <div class="colab-pill"><span class="colab-pill-name">Sit Beauty</span><span class="colab-pill-tag">Aliado</span></div>
+        <div class="colab-pill"><span class="colab-pill-name">Amet Luxe</span><span class="colab-pill-tag">Proveedor</span></div>
+        <div class="colab-pill"><span class="colab-pill-name">Lorem Glow</span><span class="colab-pill-tag">Red</span></div>
+        <div class="colab-pill"><span class="colab-pill-name">Ipsum Pro</span><span class="colab-pill-tag">Partner</span></div>
+        <!-- Set 2 (duplicado para loop infinito sin saltos) -->
+        <div class="colab-pill" aria-hidden="true"><span class="colab-pill-name">Lorem Brand</span><span class="colab-pill-tag">Partner</span></div>
+        <div class="colab-pill" aria-hidden="true"><span class="colab-pill-name">Ipsum Studio</span><span class="colab-pill-tag">Aliado</span></div>
+        <div class="colab-pill" aria-hidden="true"><span class="colab-pill-name">Beauty Co.</span><span class="colab-pill-tag">Proveedor</span></div>
+        <div class="colab-pill" aria-hidden="true"><span class="colab-pill-name">Lorem Fashion</span><span class="colab-pill-tag">Marca</span></div>
+        <div class="colab-pill" aria-hidden="true"><span class="colab-pill-name">Ipsum Spa</span><span class="colab-pill-tag">Red</span></div>
+        <div class="colab-pill" aria-hidden="true"><span class="colab-pill-name">Dolor Brand</span><span class="colab-pill-tag">Partner</span></div>
+        <div class="colab-pill" aria-hidden="true"><span class="colab-pill-name">Sit Beauty</span><span class="colab-pill-tag">Aliado</span></div>
+        <div class="colab-pill" aria-hidden="true"><span class="colab-pill-name">Amet Luxe</span><span class="colab-pill-tag">Proveedor</span></div>
+        <div class="colab-pill" aria-hidden="true"><span class="colab-pill-name">Lorem Glow</span><span class="colab-pill-tag">Red</span></div>
+        <div class="colab-pill" aria-hidden="true"><span class="colab-pill-name">Ipsum Pro</span><span class="colab-pill-tag">Partner</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ VIDEO SECTION ══ -->
+<section class="video-section section" aria-labelledby="video-h2">
+  <div class="container">
+    <div class="video-grid">
+      <div class="video-wrap reveal">
+        <!-- VIDEO INCRUSTADO — reemplaza el src con tu video de Instagram/YouTube/TikTok -->
+        <!-- Opción A: YouTube → src="https://www.youtube.com/embed/Y3d5bsEsGSg?rel=0&autoplay=0" -->
+        <!-- Opción B: Instagram Reel → pega el código embed de Instagram aquí -->
+        <!-- Opción C: Vimeo → src="https://www.youtube.com/embed/Y3d5bsEsGSg?rel=0" -->
+        <iframe
+          src="https://www.youtube-nocookie.com/embed/3209828?rel=0&modestbranding=1"
+          title="Video Magnolia Beauty & Fashion — San Diego, Valencia"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+          loading="lazy"
+          style="position:absolute;inset:0;width:100%;height:100%;border:0;">
+        </iframe>
+        <!-- Thumbnail cover — desaparece al hacer click -->
+        <div class="video-cover" id="videoCover" onclick="this.style.display='none'" aria-label="Ver video">
+          <img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?w=800&q=85"
+               alt="Magnolia Beauty — ver video"
+               style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"/>
+          <div class="play-btn" style="position:relative;z-index:2;">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.347a1.125 1.125 0 0 1 0 1.972l-11.54 6.347a1.125 1.125 0 0 1-1.667-.986V5.653Z"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+      <div class="video-text">
+        <div class="eyebrow reveal">Detrás de cámaras</div>
+        <h2 id="video-h2" class="reveal delay-1">
+          La experiencia<br><em class="italic gold">Magnolia</em>
+        </h2>
+        <p class="reveal delay-2">
+          Descubre cómo trabajamos, conoce a nuestro equipo y ve los resultados reales que obtenemos cada día. Transparencia, profesionalismo y pasión en cada servicio.
+        </p>
+        <p class="reveal delay-2">
+          Síguenos en Instagram <strong style="color:var(--gold);">@_spamagnolia</strong> para ver más resultados, tutoriales y novedades del salón.
+        </p>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:24px;" class="reveal delay-3">
+          <a href="https://www.instagram.com/_spamagnolia/" class="btn btn-solid" target="_blank" rel="noopener">
+            Ver en Instagram <span class="arr">→</span>
+          </a>
+          <a href="servicios.html" class="btn">
+            Nuestros servicios <span class="arr">→</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ TIENDA PREVIEW ══ -->
+<section class="tienda-section section" id="tienda-preview" aria-labelledby="tienda-h2">
+  <div class="container">
+    <div class="tienda-intro">
+      <div style="text-align:center;display:flex;flex-direction:column;align-items:center;">
+        <div class="eyebrow reveal">Magnolia Fashion</div>
+        <h2 id="tienda-h2" class="reveal delay-1" style="text-align:center;margin-bottom:8px;">
+          Belleza que<br><em class="italic">también se viste.</em>
+        </h2>
+        <p class="reveal delay-2" style="text-align:center;max-width:440px;margin-top:18px;">
+          Lencería de encaje, perfumes premium, ropa deportiva y más. Porque en Magnolia, la belleza va de adentro hacia afuera.
+        </p>
+        <div style="margin-top:24px;display:flex;gap:12px;flex-wrap:wrap;justify-content:center;" class="reveal delay-3">
+          <a href="tienda.html" class="btn btn-solid">Ir a la tienda <span class="arr">→</span></a>
+          <a href="https://wa.me/584127552659?text=Hola!%20Quiero%20ver%20el%20catálogo%20de%20tienda" class="btn btn-solid" target="_blank" rel="noopener">Catálogo por WhatsApp</a>
+        </div>
+        <div class="payment-methods reveal delay-4" style="justify-content:center;">
+          <div class="pay-method"><svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18.75a60.07 60.07 0 0 1 15.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 0 1 3 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 0 0-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 0 1-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 0 0 3 15h-.75"/></svg>Efectivo USD/Bs</div>
+          <div class="pay-method"><svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M7.5 21 3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5"/></svg>Transferencia</div>
+          <div class="pay-method"><svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 0 0 8.716-6.747M12 21a9.004 9.004 0 0 1-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3"/></svg>Zelle</div>
+          <div class="pay-method"><svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 1.5H8.25A2.25 2.25 0 0 0 6 3.75v16.5a2.25 2.25 0 0 0 2.25 2.25h7.5A2.25 2.25 0 0 0 18 20.25V3.75a2.25 2.25 0 0 0-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3"/></svg>Pago Móvil</div>
+          <div class="pay-method"><svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/></svg>Binance</div>
+        </div>
+      </div>
+    </div>
+    <div class="tienda-cats reveal delay-1">
+      <a class="tienda-cat" href="tienda.html#lenceria" aria-label="Ver lencería">
+          <img src="uploads/maqu-05.jpg?w=600&q=85" alt="Lencería de encaje Magnolia Fashion" class="tienda-cat-img" loading="lazy"/>
+          <div class="tienda-cat-overlay" aria-hidden="true"></div>
+          <div class="tienda-cat-content">
+            <div class="tienda-cat-tag">Colección</div>
+            <div class="tienda-cat-name">Lencería</div>
+            <div class="tienda-cat-cta" aria-hidden="true">Ver colección →</div>
+          </div>
+        </a>
+        <a class="tienda-cat" href="tienda.html#perfumes" aria-label="Ver perfumes">
+          <img src="uploads/lenc-07.jpg?w=600&q=85" alt="Perfumes premium Magnolia Fashion" class="tienda-cat-img" loading="lazy"/>
+          <div class="tienda-cat-overlay" aria-hidden="true"></div>
+          <div class="tienda-cat-content">
+            <div class="tienda-cat-tag">Premium</div>
+            <div class="tienda-cat-name">Perfumes</div>
+            <div class="tienda-cat-cta" aria-hidden="true">Ver fragancias →</div>
+          </div>
+        </a>
+        <a class="tienda-cat" href="tienda.html#deportiva" aria-label="Ver ropa deportiva">
+          <img src="uploads/perf-07.jpg?w=600&q=85" alt="Ropa deportiva Magnolia Fashion" class="tienda-cat-img" loading="lazy"/>
+          <div class="tienda-cat-overlay" aria-hidden="true"></div>
+          <div class="tienda-cat-content">
+            <div class="tienda-cat-tag">Activa</div>
+            <div class="tienda-cat-name">Deportiva</div>
+            <div class="tienda-cat-cta" aria-hidden="true">Ver colección →</div>
+          </div>
+        </a>
+    </div>
+  </div>
+</section>
+
+<!-- ══ GALLERY ══ -->
+<section class="gallery-section section" id="galeria" aria-labelledby="gal-h2">
+  <div class="container">
+    <div class="gallery-head">
+      <div>
+        <div class="eyebrow reveal">Galería</div>
+        <h2 id="gal-h2" class="reveal delay-1">Resultados que<br><em class="italic">hablan solos.</em></h2>
+      </div>
+      <a href="https://www.instagram.com/_spamagnolia/" class="btn reveal delay-2" target="_blank" rel="noopener">
+        @_spamagnolia <span class="arr">→</span>
+      </a>
+    </div>
+    <div class="gallery-grid" role="list" aria-label="Galería de trabajos Magnolia Beauty">
+      <div class="gal-item reveal" role="listitem" tabindex="0" aria-label="Manicura — ver foto ampliada">
+        <img src="uploads/post-03.jpg" alt="Manicura artística en Magnolia Beauty" loading="lazy"/>
+        <div class="gal-overlay" aria-hidden="true"><svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"/></svg></div>
+      </div>
+      <div class="gal-item reveal delay-1" role="listitem" tabindex="0" aria-label="Pestañas — ver foto">
+        <img src="uploads/post-06.jpg" alt="Extensión de pestañas en Magnolia Beauty" loading="lazy"/>
+        <div class="gal-overlay" aria-hidden="true"><svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"/></svg></div>
+      </div>
+      <div class="gal-item reveal delay-2" role="listitem" tabindex="0" aria-label="Spa — ver foto">
+        <img src="uploads/post-08.jpg" alt="Masaje spa en Magnolia Beauty" loading="lazy"/>
+        <div class="gal-overlay" aria-hidden="true"><svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"/></svg></div>
+      </div>
+      <div class="gal-item reveal delay-3" role="listitem" tabindex="0" aria-label="Cabello — ver foto">
+        <img src="uploads/post-03.jpg" alt="Estilismo capilar en Magnolia Beauty" loading="lazy"/>
+        <div class="gal-overlay" aria-hidden="true"><svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"/></svg></div>
+      </div>
+      <div class="gal-item reveal delay-1" role="listitem" tabindex="0" aria-label="Tienda — ver foto">
+        <img src="uploads/maqu-05.jpg?w=600&q=85" alt="Tienda lencería Magnolia Fashion" loading="lazy"/>
+        <div class="gal-overlay" aria-hidden="true"><svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"/></svg></div>
+      </div>
+      <div class="gal-item reveal delay-2" role="listitem" tabindex="0" aria-label="Maquillaje — ver foto">
+        <img src="uploads/maqu-03.jpg" alt="Maquillaje profesional en Magnolia Beauty" loading="lazy"/>
+        <div class="gal-overlay" aria-hidden="true"><svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"/></svg></div>
+      </div>
+      <div class="gal-item reveal delay-3" role="listitem" tabindex="0" aria-label="Perfumes — ver foto">
+        <img src="uploads/lenc-07.jpg?w=600&q=85" alt="Perfumes premium Magnolia Fashion" loading="lazy"/>
+        <div class="gal-overlay" aria-hidden="true"><svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"/></svg></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ TESTIMONIALS ══ -->
+<section class="test-section section" aria-labelledby="test-h2">
+  <div class="container">
+    <div class="test-head">
+      <div class="eyebrow reveal" style="justify-content:center;">Reseñas de clientas</div>
+      <h2 id="test-h2" class="reveal delay-1">5 estrellas que<br><em class="italic">no mienten.</em></h2>
+    </div>
+  </div>
+  <div style="overflow:hidden;" role="region" aria-label="Testimonios de clientas">
+    <div class="test-track">
+      <div class="test-card"><div class="test-stars" aria-label="5 de 5 estrellas"><span class="test-star">★</span><span class="test-star">★</span><span class="test-star">★</span><span class="test-star">★</span><span class="test-star">★</span></div><p class="test-text">"Magnolia cambió completamente mi experiencia de belleza. Las chicas son súper profesionales y el lugar es hermoso. Mis uñas quedaron perfectas."</p><div class="test-name">Valentina R.</div><div class="test-srv">Manicura Rusa + Pedicure</div></div>
+      <div class="test-card"><div class="test-stars" aria-label="5 de 5 estrellas"><span class="test-star">★</span><span class="test-star">★</span><span class="test-star">★</span><span class="test-star">★</span><span class="test-star">★</span></div><p class="test-text">"El masaje VIP fue una experiencia increíble. Llevaba semanas con contracturas y salí completamente renovada. El equipo es muy cálido y profesional."</p><div class="test-name">María C.</div><div class="test-srv">Masaje VIP $150</div></div>
+      <div class="test-card"><div class="test-stars" aria-label="5 de 5 estrellas"><span class="test-star">★</span><span class="test-star">★</span><span class="test-star">★</span><span class="test-star">★</span><span class="test-star">★</span></div><p class="test-text">"Me hice el alisado sin formol estando embarazada y quedé maravillada. Resultado increíble y me sentí completamente segura durante todo el proceso."</p><div class="test-name">Sofía M.</div><div class="test-srv">Alisado sin Formol $40</div></div>
+      <div class="test-card"><div class="test-stars" aria-label="5 de 5 estrellas"><span class="test-star">★</span><span class="test-star">★</span><span class="test-star">★</span><span class="test-star">★</span><span class="test-star">★</span></div><p class="test-text">"Las pestañas wispy quedaron espectaculares. No tuve que usar rímel por semanas. La especialista fue muy delicada y el resultado superó mis expectativas."</p><div class="test-name">Andrea P.</div><div class="test-srv">Pestañas Wispy $35</div></div>
+      <div class="test-card"><div class="test-stars" aria-label="5 de 5 estrellas"><span class="test-star">★</span><span class="test-star">★</span><span class="test-star">★</span><span class="test-star">★</span><span class="test-star">★</span></div><p class="test-text">"Un lugar completo como ninguno en San Diego. Fui por la manicura, me encontré con una tienda de lencería increíble. Ya soy clienta fija."</p><div class="test-name">Daniela L.</div><div class="test-srv">Manicura + Tienda</div></div>
+      <!-- Duplicados para scroll infinito -->
+      <div class="test-card"><div class="test-stars" aria-label="5 de 5 estrellas"><span class="test-star">★</span><span class="test-star">★</span><span class="test-star">★</span><span class="test-star">★</span><span class="test-star">★</span></div><p class="test-text">"Magnolia cambió completamente mi experiencia de belleza. Las chicas son súper profesionales y el lugar es hermoso."</p><div class="test-name">Valentina R.</div><div class="test-srv">Manicura Rusa + Pedicure</div></div>
+      <div class="test-card"><div class="test-stars" aria-label="5 de 5 estrellas"><span class="test-star">★</span><span class="test-star">★</span><span class="test-star">★</span><span class="test-star">★</span><span class="test-star">★</span></div><p class="test-text">"El masaje VIP fue una experiencia increíble. Salí completamente renovada y el equipo muy cálido."</p><div class="test-name">María C.</div><div class="test-srv">Masaje VIP $150</div></div>
+      <div class="test-card"><div class="test-stars" aria-label="5 de 5 estrellas"><span class="test-star">★</span><span class="test-star">★</span><span class="test-star">★</span><span class="test-star">★</span><span class="test-star">★</span></div><p class="test-text">"Alisado sin formol en el embarazo. Resultado increíble y me sentí completamente segura."</p><div class="test-name">Sofía M.</div><div class="test-srv">Alisado sin Formol $40</div></div>
+      <div class="test-card"><div class="test-stars" aria-label="5 de 5 estrellas"><span class="test-star">★</span><span class="test-star">★</span><span class="test-star">★</span><span class="test-star">★</span><span class="test-star">★</span></div><p class="test-text">"Las pestañas wispy espectaculares. Sin rímel por semanas. Especialista muy delicada."</p><div class="test-name">Andrea P.</div><div class="test-srv">Pestañas Wispy $35</div></div>
+      <div class="test-card"><div class="test-stars" aria-label="5 de 5 estrellas"><span class="test-star">★</span><span class="test-star">★</span><span class="test-star">★</span><span class="test-star">★</span><span class="test-star">★</span></div><p class="test-text">"El lugar más completo en San Diego. Manicura + tienda de lencería increíble. Clienta fija."</p><div class="test-name">Daniela L.</div><div class="test-srv">Manicura + Tienda</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FAQ ══ -->
+<section class="faq-section section" aria-labelledby="faq-h2">
+  <div class="container">
+    <div class="faq-big-text" aria-hidden="true">PREGUNTAS</div>
+    <div class="faq-inner">
+      <div class="faq-grid">
+        <div class="faq-text">
+          <div class="eyebrow reveal">FAQ</div>
+          <h2 id="faq-h2" class="reveal delay-1">Todo lo que<br>necesitas<br><em class="italic">saber.</em></h2>
+          <p class="reveal delay-2">Si no encuentras tu respuesta, escríbenos directamente — respondemos en menos de 30 minutos.</p>
+          <a href="https://wa.me/584127552659?text=Hola!%20Tengo%20una%20pregunta" class="btn reveal delay-3" style="margin-top:24px;" target="_blank" rel="noopener">
+            Hacer mi pregunta <span class="arr">→</span>
+          </a>
+        </div>
+        <div class="faq-list reveal delay-2">
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false" aria-controls="faq1">¿Necesito cita previa?<span class="faq-icon"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/></svg></span></button>
+            <div class="faq-a" id="faq1"><div class="faq-a-inner">Sí, recomendamos reservar con anticipación especialmente los sábados. Puedes hacerlo por WhatsApp al <a href="https://wa.me/584127552659" style="color:var(--gold2);">0412-7552659</a>. Respondemos en menos de 30 minutos.</div></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false" aria-controls="faq2">¿Qué métodos de pago aceptan?<span class="faq-icon"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/></svg></span></button>
+            <div class="faq-a" id="faq2"><div class="faq-a-inner">Efectivo (USD y Bs.), transferencia bancaria, Zelle, pago móvil y Binance. Consulta los datos cuando hagas tu reserva.</div></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false" aria-controls="faq3">¿El alisado sin formol es seguro en el embarazo?<span class="faq-icon"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/></svg></span></button>
+            <div class="faq-a" id="faq3"><div class="faq-a-inner">Sí, completamente. Nuestra fórmula es 100% libre de formol, certificada como apta para niñas, embarazadas y lactancia. Somos uno de los pocos salones en San Diego con esta alternativa segura.</div></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false" aria-controls="faq4">¿Cuánto duran las extensiones de pestañas?<span class="faq-icon"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/></svg></span></button>
+            <div class="faq-a" id="faq4"><div class="faq-a-inner">Las clásicas 3–4 semanas. Volumen brasileño y griego 3–5 semanas. El Wispy suele ser el más duradero. Retoque recomendado cada 3–4 semanas.</div></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false" aria-controls="faq5">¿El obsequio de exfoliación tiene costo adicional?<span class="faq-icon"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/></svg></span></button>
+            <div class="faq-a" id="faq5"><div class="faq-a-inner">No — exfoliación e hidratación incluidas sin costo adicional en todos nuestros servicios de manicura y pedicura. Es nuestro regalo en cada visita.</div></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false" aria-controls="faq6">¿Hacen envíos de la tienda?<span class="faq-icon"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/></svg></span></button>
+            <div class="faq-a" id="faq6"><div class="faq-a-inner">Sí, dentro de Valencia y municipios cercanos mediante mensajería. También puedes retirar en tienda. Coordina por WhatsApp para disponibilidad y envío.</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CONTACT — diseño centrado, estilo magnolia ══ -->
+<section class="contact-section section" id="contacto" aria-labelledby="contact-h2">
+  <div class="container">
+    <div class="contact-centered">
+      <div class="eyebrow reveal" style="margin-bottom:16px;">Contáctanos</div>
+      <h2 id="contact-h2" class="reveal delay-1 contact-title">
+        Agendá tu<br><em class="italic">próxima cita.</em>
+      </h2>
+      <p class="reveal delay-2 contact-subtitle">
+        ¿Tenés preguntas o quieres reservar? Contáctanos para cualquier consulta — te respondemos en menos de 30 minutos. 🌸
+      </p>
+
+      <!-- Card del formulario -->
+      <div class="form-wrap-new reveal delay-2">
+        <form id="contactForm" novalidate>
+          <div class="f-row-new">
+            <div class="f-group-new">
+              <label class="f-label-new" for="fname">Nombre *</label>
+              <div class="f-input-wrap">
+                <input type="text" id="fname" name="nombre" class="f-input-new" placeholder="Tu nombre" required autocomplete="given-name"/>
+              </div>
+              <div class="f-error" id="errFname">Por favor ingresa tu nombre.</div>
+            </div>
+            <div class="f-group-new">
+              <label class="f-label-new" for="fphone">WhatsApp *</label>
+              <div class="f-input-wrap">
+                <input type="tel" id="fphone" name="telefono" class="f-input-new" placeholder="04XX-XXXXXXX" required autocomplete="tel"/>
+              </div>
+              <div class="f-error" id="errFphone">Por favor ingresa tu número.</div>
+            </div>
+          </div>
+
+          <div class="f-group-new">
+            <label class="f-label-new" for="fservice">Servicio que te interesa *</label>
+            <div class="f-input-wrap">
+              <select id="fservice" name="servicio" class="f-input-new f-select-new" required>
+                <option value="" disabled selected>Selecciona un servicio</option>
+                <option>Manicura &amp; Pedicura</option>
+                <option>Extensión de Pestañas</option>
+                <option>Cejas &amp; Depilación</option>
+                <option>Estilismo &amp; Hair</option>
+                <option>Spa &amp; Masajes</option>
+                <option>Paquetes Corporales</option>
+                <option>Maquillaje</option>
+                <option>Tienda — Lencería / Perfumes / Ropa</option>
+                <option>Otro</option>
+              </select>
+            </div>
+            <div class="f-error" id="errFservice">Por favor selecciona un servicio.</div>
+          </div>
+
+          <div class="f-group-new">
+            <label class="f-label-new" for="fmsg">Descripción</label>
+            <div class="f-input-wrap">
+              <textarea id="fmsg" name="mensaje" class="f-textarea-new" placeholder="Escribe tu mensaje… ¿Prefieres algún día u hora?"></textarea>
+            </div>
+          </div>
+
+          <button type="submit" class="btn-entregar">
+            Enviar mi solicitud <span class="arr">→</span>
+          </button>
+        </form>
+        <div class="form-success" id="formSuccess">
+          ✦ ¡Solicitud recibida!<br>
+          <span style="font-size:14px;font-family:var(--font-b);color:var(--muted);">Te escribimos por WhatsApp en menos de 30 minutos. 🌸</span>
+        </div>
+      </div>
+
+      <!-- Fila de contacto rápido: iconos sociales + WhatsApp pill -->
+      <div class="contact-quick-row reveal delay-3">
+        <div class="contact-social-group">
+          <a class="contact-soc-btn" href="https://instagram.com/_spamagnolia" target="_blank" rel="noopener" aria-label="Instagram @_spamagnolia">
+            <svg fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24" aria-hidden="true"><rect width="20" height="20" x="2" y="2" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+          </a>
+          <a class="contact-soc-btn" href="https://wa.me/584127552659" target="_blank" rel="noopener" aria-label="WhatsApp">
+            <svg fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+          </a>
+          <a class="contact-soc-btn" href="https://linktr.ee/spabeautymagnolia" target="_blank" rel="noopener" aria-label="Linktree">
+            <svg fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622 1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244"/></svg>
+          </a>
+        </div>
+        <div class="contact-divider" aria-hidden="true"></div>
+        <a href="https://wa.me/584127552659" target="_blank" rel="noopener" class="contact-phone-pill">
+          <svg fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 0 0 2.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 0 1-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 0 0-1.091-.852H4.5A2.25 2.25 0 0 0 2.25 4.5v2.25Z"/></svg>
+          <span>0412-7552659</span>
+        </a>
+      </div>
+
+      <!-- Detalles secundarios: ubicación + horario -->
+      <div class="contact-meta reveal delay-4">
+        <div class="contact-meta-item">
+          <div class="contact-meta-label">Ubicación</div>
+          <div class="contact-meta-val">CC Brisas del Valle, San Diego<br>Valencia, Carabobo</div>
+        </div>
+        <div class="contact-meta-divider" aria-hidden="true"></div>
+        <div class="contact-meta-item">
+          <div class="contact-meta-label">Horario</div>
+          <div class="contact-meta-val">Lun–Vie 10am–7pm<br>Sáb 9am–7pm · Dom cerrado</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- Map -->
+<div class="map-wrap" role="region" aria-label="Ubicación Magnolia Beauty en San Diego">
+  <iframe
+    title="Ubicación Magnolia Beauty & Fashion — CC Brisas del Valle, San Diego"
+    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15685.3!2d-67.985!3d10.295!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e806e7e7c7c7c7c%3A0x1!2sSan%20Diego%2C%20Carabobo!5e0!3m2!1ses!2sve"
+    allowfullscreen="" loading="lazy">
+  </iframe>
+  <div class="map-overlay" aria-hidden="true"></div>
+  <div class="map-label"><span>📍 CC Brisas del Valle · San Diego · Valencia</span></div>
+</div>
+
+<!-- Footer -->
+<footer role="contentinfo">
+  <div class="footer-bg-text" aria-hidden="true">MAGNOLIA</div>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <img src="img/logo-dorado.png"
+           alt="Magnolia Beauty &amp; Fashion"
+           style="max-width:140px;width:100%;height:auto;margin-bottom:14px;display:block;"
+           loading="lazy"
+           width="140"/>
+        <p class="footer-desc">Centro de belleza integral, spa y moda en San Diego, Valencia. Donde la belleza encuentra su lugar.</p>
+        <div class="social-row">
+          <a class="soc-btn" href="https://instagram.com/_spamagnolia" target="_blank" rel="noopener" aria-label="Instagram @_spamagnolia"><svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true"><rect width="20" height="20" x="2" y="2" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg></a>
+          <a class="soc-btn" href="https://wa.me/584127552659" target="_blank" rel="noopener" aria-label="WhatsApp"><svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h5>Servicios</h5>
+        <nav class="footer-links">
+          <a href="servicios.html#manicura">Manicura &amp; Pedicura</a>
+          <a href="servicios.html#pestanas">Pestañas &amp; Cejas</a>
+          <a href="servicios.html#spa">Spa &amp; Masajes</a>
+          <a href="servicios.html#estilismo">Estilismo</a>
+          <a href="servicios.html#depilaciones">Depilaciones</a>
+          <a href="servicios.html#corporales">Paquetes Corporales</a>
+        </nav>
+      </div>
+      <div class="footer-col">
+        <h5>Tienda</h5>
+        <nav class="footer-links">
+          <a href="tienda.html#lenceria">Lencería</a>
+          <a href="tienda.html#perfumes">Perfumes</a>
+          <a href="tienda.html#deportiva">Ropa Deportiva</a>
+          <a href="tienda.html#maquillaje">Maquillaje</a>
+          <a href="blog.html">Blog de belleza</a>
+        </nav>
+      </div>
+      <div class="footer-col">
+        <h5>Info</h5>
+        <nav class="footer-links">
+          <a href="#nosotras">Nosotras</a>
+          <a href="#contacto">Contacto</a>
+          <a href="https://wa.me/584127552659" target="_blank">WhatsApp directo</a>
+          <a href="admin/">Panel Admin</a>
+        </nav>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Magnolia Beauty &amp; Fashion · CC Brisas del Valle, San Diego, Venezuela</p>
+      <div class="footer-btm-links">
+        <a href="admin/">Admin</a>
+        <a href="#inicio">↑ Inicio</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js?v=1777231143"></script>
+
+
+
+<script>
+document.querySelectorAll('img[loading="lazy"]').forEach(img=>{
+  if(img.complete) img.classList.add('loaded');
+  else img.addEventListener('load',()=>img.classList.add('loaded'));
+});
+</script>
+</body>
+</html>

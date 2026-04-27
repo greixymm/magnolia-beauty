@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<meta name="description" content="Blog de belleza Magnolia — Tips de manicura, pestañas, cabello, spa y moda de nuestras especialistas en San Diego, Valencia."/>
+<title>Blog — Magnolia Beauty & Fashion</title>
+<link rel="stylesheet" href="css/style.css?v=6"/>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌸</text></svg>"/>
+</head>
+<body>
+
+<a class="wa-float" href="https://wa.me/584125944627?text=Hola!%20Quiero%20reservar%20mi%20cita%20en%20Magnolia%20🌸" target="_blank" rel="noopener" aria-label="Reservar cita por WhatsApp">
+  <div class="wa-label" aria-hidden="true">Reservar cita</div>
+  <div class="wa-btn" aria-hidden="true">
+    <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+  </div>
+</a>
+
+<nav class="mobile-nav" id="mobileNav" role="dialog" aria-modal="true">
+  <button class="mobile-nav-close" id="mobileClose" aria-label="Cerrar">✕</button>
+  <a href="index.html#nosotras" onclick="closeMob()">Nosotras</a>
+  <a href="servicios.html" onclick="closeMob()">Servicios</a>
+  <a href="index.html#paquetes" onclick="closeMob()">Paquetes</a>
+  <a href="tienda.html" onclick="closeMob()">Tienda</a>
+  <a href="blog.html" onclick="closeMob()">Blog</a>
+  <a href="index.html#contacto" onclick="closeMob()">Contacto</a>
+</nav>
+
+<header>
+  <nav class="nav" id="mainNav">
+    <a href="index.html" class="nav-logo" aria-label="Magnolia Beauty & Fashion — Inicio">
+      <img src="img/logo-dorado.png" class="nav-logo-img-full" alt="Magnolia Beauty & Fashion" loading="eager"/>
+    </a>
+    <div class="nav-links">
+      <a href="index.html#nosotras">Nosotras</a>
+      <a href="servicios.html">Servicios</a>
+      <a href="index.html#paquetes">Paquetes</a>
+      <a href="tienda.html">Tienda</a>
+      <a href="blog.html" class="active">Blog</a>
+      <a href="index.html#contacto">Contacto</a>
+    </div>
+    <button class="nav-ham" id="hamburger" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobileNav">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+</header>
+
+<main id="main">
+
+<section class="page-hero">
+  <div class="page-hero-bg" style="background-image:url('https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=1400&q=85');"></div>
+  <div class="container">
+    <div class="page-hero-content">
+      <div class="breadcrumb"><a href="index.html">Inicio</a><span class="sep">›</span><span>Blog</span></div>
+      <div class="eyebrow">Blog de belleza</div>
+      <h1>Tips que sí<br><em class="italic gold">funcionan.</em></h1>
+      <p>Consejos reales de nuestras especialistas sobre manicura, pestañas, cabello, spa y moda.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Blog categories filter -->
+<div class="srv-tabs" style="top:60px;">
+  <button class="srv-tab active" onclick="filterBlog('all',this)">Todos</button>
+  <button class="srv-tab" onclick="filterBlog('unas',this)">Uñas</button>
+  <button class="srv-tab" onclick="filterBlog('cabello',this)">Cabello</button>
+  <button class="srv-tab" onclick="filterBlog('pestanas',this)">Pestañas</button>
+  <button class="srv-tab" onclick="filterBlog('spa',this)">Spa &amp; Piel</button>
+  <button class="srv-tab" onclick="filterBlog('moda',this)">Moda</button>
+</div>
+
+<!-- Blog grid -->
+<section style="background:var(--black);padding:72px 0;">
+  <div class="container">
+    <div class="blog-grid" id="blogGrid">
+
+      <a class="blog-card reveal" href="#" data-cat="unas">
+        <img src="https://images.unsplash.com/photo-1604654894610-df63bc536371?w=600&q=80" alt="Manicura duradera tips" class="blog-card-img" loading="lazy"/>
+        <div class="blog-card-body">
+          <div class="blog-cat">Uñas</div>
+          <div class="blog-title">5 secretos para que tu manicura dure más de 3 semanas</div>
+          <p class="blog-excerpt">Los trucos que usan nuestras especialistas para mantener uñas perfectas después del servicio.</p>
+          <div class="blog-date">15 Abril 2026</div>
+        </div>
+      </a>
+
+      <a class="blog-card reveal delay-1" href="#" data-cat="pestanas">
+        <img src="https://images.unsplash.com/photo-1583001931096-959e9a1a6223?w=600&q=80" alt="Extensiones de pestañas guía" class="blog-card-img" loading="lazy"/>
+        <div class="blog-card-body">
+          <div class="blog-cat">Pestañas</div>
+          <div class="blog-title">¿Cuál extensión de pestañas es ideal para tu forma de ojos?</div>
+          <p class="blog-excerpt">Clásicas, rímel, brasileño, griego, wispy — guía completa para elegir según tu mirada.</p>
+          <div class="blog-date">10 Abril 2026</div>
+        </div>
+      </a>
+
+      <a class="blog-card reveal delay-2" href="#" data-cat="cabello">
+        <img src="https://images.unsplash.com/photo-1562322140-8baeececf3df?w=600&q=80" alt="Alisado sin formol embarazo" class="blog-card-img" loading="lazy"/>
+        <div class="blog-card-body">
+          <div class="blog-cat">Cabello</div>
+          <div class="blog-title">Alisado sin formol en el embarazo: todo lo que debes saber</div>
+          <p class="blog-excerpt">Por qué el alisado sin formol es seguro para niñas y embarazadas, y los mitos que debes ignorar.</p>
+          <div class="blog-date">5 Abril 2026</div>
+        </div>
+      </a>
+
+      <a class="blog-card reveal" href="#" data-cat="spa">
+        <img src="https://images.unsplash.com/photo-1560750588-73207b1ef5b8?w=600&q=80" alt="Limpieza facial beneficios" class="blog-card-img" loading="lazy"/>
+        <div class="blog-card-body">
+          <div class="blog-cat">Spa &amp; Piel</div>
+          <div class="blog-title">Por qué tu piel necesita una limpieza facial profesional cada mes</div>
+          <p class="blog-excerpt">Los beneficios reales de una limpieza facial profunda y cómo elegir entre básica, VIP o con Dermapen.</p>
+          <div class="blog-date">28 Marzo 2026</div>
+        </div>
+      </a>
+
+      <a class="blog-card reveal delay-1" href="#" data-cat="unas">
+        <img src="https://images.unsplash.com/photo-1604654894610-df63bc536371?w=600&q=80" alt="Polly gel vs jelly cuál elegir" class="blog-card-img" loading="lazy"/>
+        <div class="blog-card-body">
+          <div class="blog-cat">Uñas</div>
+          <div class="blog-title">Polly-Gel vs Jelly Tips: ¿cuál técnica es la mejor para ti?</div>
+          <p class="blog-excerpt">Comparamos las dos técnicas de extensión más populares para que elijas según tu estilo de vida y presupuesto.</p>
+          <div class="blog-date">20 Marzo 2026</div>
+        </div>
+      </a>
+
+      <a class="blog-card reveal delay-2" href="#" data-cat="moda">
+        <img src="https://images.unsplash.com/photo-1589302168068-964664d93dc0?w=600&q=80" alt="Lencería cómo escoger" class="blog-card-img" loading="lazy"/>
+        <div class="blog-card-body">
+          <div class="blog-cat">Moda</div>
+          <div class="blog-title">Cómo elegir lencería que te haga sentir bien todos los días</div>
+          <p class="blog-excerpt">Guía práctica para escoger materiales, estilos y tallas de lencería según tu cuerpo y comodidad.</p>
+          <div class="blog-date">15 Marzo 2026</div>
+        </div>
+      </a>
+
+      <a class="blog-card reveal" href="#" data-cat="spa">
+        <img src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=600&q=80" alt="Masajes corporales beneficios" class="blog-card-img" loading="lazy"/>
+        <div class="blog-card-body">
+          <div class="blog-cat">Spa</div>
+          <div class="blog-title">Masaje relajante vs descontracturante: cuál necesitas</div>
+          <p class="blog-excerpt">Aprende a identificar qué tipo de masaje beneficia más tu cuerpo según los síntomas que sientes.</p>
+          <div class="blog-date">8 Marzo 2026</div>
+        </div>
+      </a>
+
+      <a class="blog-card reveal delay-1" href="#" data-cat="cabello">
+        <img src="https://images.unsplash.com/photo-1562322140-8baeececf3df?w=600&q=80" alt="Coloración proteger cabello" class="blog-card-img" loading="lazy"/>
+        <div class="blog-card-body">
+          <div class="blog-cat">Cabello</div>
+          <div class="blog-title">Antes y después de colorarte el cabello: cuidados esenciales</div>
+          <p class="blog-excerpt">Cómo preparar tu cabello para la coloración y cómo mantener el color vibrante por más tiempo.</p>
+          <div class="blog-date">1 Marzo 2026</div>
+        </div>
+      </a>
+
+      <a class="blog-card reveal delay-2" href="#" data-cat="pestanas">
+        <img src="https://images.unsplash.com/photo-1583001931096-959e9a1a6223?w=600&q=80" alt="Cuidado micro-blading cejas" class="blog-card-img" loading="lazy"/>
+        <div class="blog-card-body">
+          <div class="blog-cat">Pestañas &amp; Cejas</div>
+          <div class="blog-title">Micro-blading y microshading: guía completa de cejas 2026</div>
+          <p class="blog-excerpt">Todo sobre las técnicas más modernas para diseño de cejas: qué son, cuánto duran y cómo cuidarlas.</p>
+          <div class="blog-date">22 Febrero 2026</div>
+        </div>
+      </a>
+
+    </div><!-- /blog-grid -->
+
+    <!-- Load more -->
+    <div style="text-align:center;margin-top:48px;">
+      <a href="https://www.instagram.com/_spamagnolia/" class="btn" target="_blank" rel="noopener">
+        Más tips en Instagram @_spamagnolia <span class="arr">→</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Newsletter CTA -->
+<section style="background:var(--d1);padding:72px 0;text-align:center;border-top:1px solid var(--gold-border);">
+  <div class="container">
+    <div class="eyebrow reveal" style="justify-content:center;">Síguenos</div>
+    <h2 class="reveal delay-1" style="color:var(--white);margin-bottom:12px;">Consejos de belleza<br><em class="italic">directo de Magnolia.</em></h2>
+    <p class="reveal delay-2" style="max-width:500px;margin:0 auto 32px;">Síguenos en Instagram para tips diarios, resultados reales y novedades del salón antes que nadie.</p>
+    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;" class="reveal delay-3">
+      <a href="https://www.instagram.com/_spamagnolia/" class="btn btn-solid" target="_blank" rel="noopener">Seguir @_spamagnolia →</a>
+      <a href="https://wa.me/584125944627?text=Hola!%20Quiero%20agendar%20una%20cita%20🌸" class="btn" target="_blank" rel="noopener">Agendar mi cita →</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer style="background:var(--d1);border-top:1px solid var(--gold-border);padding:32px 0;text-align:center;">
+  <div class="container">
+    <div style="margin-bottom:16px;">
+      <span style="font-family:var(--font-d);font-size:18px;letter-spacing:4px;text-transform:uppercase;color:var(--white);">Magnolia</span>
+      <span style="font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);display:block;margin-top:2px;">Beauty &amp; Fashion</span>
+    </div>
+    <p style="font-size:11px;color:var(--muted2);">CC Brisas del Valle, San Diego · Valencia · 0412-7552659</p>
+    <p style="font-size:11px;color:var(--muted2);margin-top:8px;"><a href="index.html" style="color:var(--gold);">← Inicio</a> · <a href="servicios.html" style="color:var(--muted);">Servicios</a> · <a href="tienda.html" style="color:var(--muted);">Tienda</a></p>
+  </div>
+</footer>
+
+<script>
+function filterBlog(cat, btn) {
+  document.querySelectorAll('.srv-tab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.blog-card').forEach(card => {
+    if (cat === 'all' || card.dataset.cat === cat) {
+      card.style.display = 'block';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+}
+</script>
+<script src="js/main.js"></script>
+
+</body>
+</html>

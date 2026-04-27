@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<meta name="description" content="Tienda Magnolia Beauty & Fashion — Lencería, perfumes y ropa deportiva en San Diego, Valencia. Compra en línea o retira en tienda."/>
+<title>Tienda — Magnolia Beauty & Fashion</title>
+<link rel="stylesheet" href="css/style.css?v=6"/>
+<link rel="stylesheet" href="css/servicios.css?v=6"/>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌸</text></svg>"/>
+</head>
+<body>
+
+<!-- WhatsApp flotante -->
+<a class="wa-float" href="https://wa.me/584125944627?text=Hola!%20Quiero%20ver%20el%20catálogo%20de%20tienda%20Magnolia%20🌸" target="_blank" rel="noopener" aria-label="Consultar por WhatsApp">
+  <div class="wa-label" aria-hidden="true">Consultar tienda</div>
+  <div class="wa-btn" aria-hidden="true">
+    <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+  </div>
+</a>
+
+<!-- Cart Float Button -->
+<button class="cart-float" onclick="openCart()" id="cartFloat" aria-label="Ver carrito de compras">
+  <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z"/>
+  </svg>
+  <span class="cart-float-badge" id="cartBadge">0</span>
+</button>
+
+<!-- Cart overlay -->
+<div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
+
+<!-- Cart Sidebar -->
+<aside class="cart-sidebar" id="cartSidebar" aria-label="Carrito de compras">
+  <div class="cart-header">
+    <div class="cart-title">Tu carrito</div>
+    <button class="cart-close" onclick="closeCart()" aria-label="Cerrar carrito">✕</button>
+  </div>
+
+  <div class="cart-items" id="cartItems">
+    <div class="cart-empty" id="cartEmpty">
+      <div class="cart-empty-icon">🛍️</div>
+      <p>Tu carrito está vacío</p>
+      <p style="font-size:12px;margin-top:8px;">Agrega productos para continuar</p>
+    </div>
+  </div>
+
+  <div class="cart-footer" id="cartFooter" style="display:none;">
+    <div class="cart-total-row">
+      <span class="cart-total-label">Total:</span>
+      <span class="cart-total-val" id="cartTotal">$0</span>
+    </div>
+
+    <div class="pay-select-title">Método de pago</div>
+    <div class="pay-options" id="payOptions">
+      <div class="pay-opt" onclick="selectPay(this,'Efectivo USD')" data-pay="Efectivo USD">💵 Efectivo USD</div>
+      <div class="pay-opt" onclick="selectPay(this,'Efectivo Bs')" data-pay="Efectivo Bs">🇻🇪 Efectivo Bs</div>
+      <div class="pay-opt" onclick="selectPay(this,'Transferencia')" data-pay="Transferencia">🏦 Transferencia</div>
+      <div class="pay-opt" onclick="selectPay(this,'Zelle')" data-pay="Zelle">💳 Zelle</div>
+      <div class="pay-opt" onclick="selectPay(this,'Pago Móvil')" data-pay="Pago Móvil">📱 Pago Móvil</div>
+    </div>
+
+    <!-- Comprobante upload (mostrar si pago electrónico) -->
+    <div class="comprobante-wrap" id="comprobanteWrap">
+      <div class="f-label" style="margin-bottom:8px;">Subir comprobante (opcional)</div>
+      <div class="comprobante-upload">
+        <input type="file" id="comprobanteFile" accept="image/*,.pdf" onchange="previewComprobante(this)"/>
+        <div class="comprobante-upload-icon">📎</div>
+        <div class="comprobante-upload-text">Toca para subir tu comprobante<br><small>JPG, PNG o PDF</small></div>
+      </div>
+      <div class="comprobante-preview" id="comprobantePreview"></div>
+    </div>
+
+    <!-- CTA checkout -->
+    <button class="btn btn-solid" style="width:100%;justify-content:center;" onclick="checkout()" id="checkoutBtn">
+      Confirmar pedido por WhatsApp →
+    </button>
+
+    <!-- Order success -->
+    <div class="order-success" id="orderSuccess">
+      <div class="order-success-icon">✅</div>
+      <div style="font-family:var(--font-d);font-size:18px;color:var(--gold);margin-bottom:8px;">¡Pedido enviado!</div>
+      <p style="font-size:13px;color:var(--muted);">Te contactamos para confirmar disponibilidad y coordinar el pago y entrega. 🌸</p>
+      <button onclick="clearCart()" class="btn btn-sm" style="margin-top:12px;">Seguir comprando</button>
+    </div>
+  </div>
+</aside>
+
+<!-- Mobile nav -->
+<nav class="mobile-nav" id="mobileNav" role="dialog" aria-modal="true">
+  <button class="mobile-nav-close" id="mobileClose" aria-label="Cerrar">✕</button>
+  <a href="index.html#nosotras" onclick="closeMob()">Nosotras</a>
+  <a href="servicios.html" onclick="closeMob()">Servicios</a>
+  <a href="index.html#paquetes" onclick="closeMob()">Paquetes</a>
+  <a href="tienda.html" onclick="closeMob()">Tienda</a>
+  <a href="blog.html" onclick="closeMob()">Blog</a>
+  <a href="index.html#contacto" onclick="closeMob()">Contacto</a>
+</nav>
+
+<header>
+  <nav class="nav" id="mainNav">
+    <a href="index.html" class="nav-logo" aria-label="Magnolia Beauty & Fashion — Inicio">
+      <img src="img/logo-dorado.png" class="nav-logo-img-full" alt="Magnolia Beauty & Fashion" loading="eager"/>
+    </a>
+    <div class="nav-links">
+      <a href="index.html#nosotras">Nosotras</a>
+      <a href="servicios.html">Servicios</a>
+      <a href="index.html#paquetes">Paquetes</a>
+      <a href="tienda.html" class="active">Tienda</a>
+      <a href="blog.html">Blog</a>
+      <a href="index.html#contacto">Contacto</a>
+    </div>
+    <button class="nav-ham" id="hamburger" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobileNav">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+</header>
+
+<main id="main">
+
+<!-- Page Hero -->
+<section class="page-hero">
+  <div class="page-hero-bg" style="background-image:url('https://images.unsplash.com/photo-1589302168068-964664d93dc0?w=1400&q=85');"></div>
+  <div class="container">
+    <div class="page-hero-content">
+      <div class="breadcrumb"><a href="index.html">Inicio</a><span class="sep">›</span><span>Tienda</span></div>
+      <div class="eyebrow">Magnolia Fashion</div>
+      <h1>Nuestra<br><em class="italic gold">Tienda</em></h1>
+      <p>Lencería, perfumes y ropa deportiva. Agrega al carrito y coordina tu pedido.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Shop tabs -->
+<div class="srv-tabs">
+  <a href="#lenceria" class="srv-tab">Lencería</a>
+  <a href="#perfumes" class="srv-tab">Perfumes</a>
+  <a href="#deportiva" class="srv-tab">Ropa Deportiva</a>
+  <a href="#maquillaje" class="srv-tab">Maquillaje</a>
+  <a href="#promos" class="srv-tab">Promos</a>
+</div>
+
+<!-- ══ LENCERÍA ══ -->
+<section class="shop-section" id="lenceria">
+  <div class="container">
+    <div class="shop-header">
+      <div class="eyebrow">Colección</div>
+      <h2 style="color:var(--white);margin-bottom:12px;">Lencería</h2>
+      <p style="max-width:500px;">Diseños elegantes, telas premium y tallas disponibles. Consulta disponibilidad antes de ordenar.</p>
+    </div>
+    <div class="product-filter-bar" id="lenceriaFilters">
+      <button class="filter-btn active" onclick="filterProducts('lenceria','all',this)">Todos</button>
+      <button class="filter-btn" onclick="filterProducts('lenceria','conjunto',this)">Conjuntos</button>
+      <button class="filter-btn" onclick="filterProducts('lenceria','pack',this)">Packs</button>
+      <button class="filter-btn" onclick="filterProducts('lenceria','pijama',this)">Pijamas</button>
+    </div>
+    <div class="products-grid" id="lenceriaGrid">
+
+      <div class="product-card" data-cat="conjunto">
+        <div class="product-img-wrap">
+          <img src="https://images.unsplash.com/photo-1589302168068-964664d93dc0?w=500&q=80" alt="Set Lencería Rojo" loading="lazy"/>
+          <div class="product-badge">Popular</div>
+          <div class="product-img-overlay">
+            <button onclick="addToCart({id:'lenc-001',name:'Set Lencería Rojo',price:25,img:'https://images.unsplash.com/photo-1589302168068-964664d93dc0?w=200&q=60',cat:'Lencería'})" class="add-cart-btn" style="width:140px;">+ Carrito</button>
+          </div>
+        </div>
+        <div class="product-body">
+          <div class="product-cat">Lencería · Conjunto</div>
+          <div class="product-name">Set Lencería Rojo</div>
+          <div class="product-desc">Conjunto completo en rojo pasión. Encaje fino, muy elegante. Talla L disponible.</div>
+          <div class="product-price">$25</div>
+          <div class="product-actions">
+            <button onclick="addToCart({id:'lenc-001',name:'Set Lencería Rojo',price:25,img:'https://images.unsplash.com/photo-1589302168068-964664d93dc0?w=200&q=60',cat:'Lencería'})" class="add-cart-btn">🛍 Agregar al carrito</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card" data-cat="conjunto">
+        <div class="product-img-wrap">
+          <img src="https://images.unsplash.com/photo-1589302168068-964664d93dc0?w=500&q=80" alt="Lencería 013 Encaje" loading="lazy"/>
+          <div class="product-img-overlay">
+            <button onclick="addToCart({id:'lenc-013',name:'Lencería 013 — Encaje',price:30,img:'https://images.unsplash.com/photo-1589302168068-964664d93dc0?w=200&q=60',cat:'Lencería'})" class="add-cart-btn" style="width:140px;">+ Carrito</button>
+          </div>
+        </div>
+        <div class="product-body">
+          <div class="product-cat">Lencería · Conjunto</div>
+          <div class="product-name">Lencería 013 — Encaje</div>
+          <div class="product-desc">Encaje premium, diseño sofisticado. Talla L. Consultar colores disponibles.</div>
+          <div class="product-price">$30</div>
+          <div class="product-actions">
+            <button onclick="addToCart({id:'lenc-013',name:'Lencería 013 — Encaje',price:30,img:'https://images.unsplash.com/photo-1589302168068-964664d93dc0?w=200&q=60',cat:'Lencería'})" class="add-cart-btn">🛍 Agregar al carrito</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card" data-cat="conjunto">
+        <div class="product-img-wrap">
+          <img src="https://images.unsplash.com/photo-1589302168068-964664d93dc0?w=500&q=80" alt="Lencería 021" loading="lazy"/>
+          <div class="product-img-overlay">
+            <button onclick="addToCart({id:'lenc-021',name:'Lencería 021',price:15,img:'https://images.unsplash.com/photo-1589302168068-964664d93dc0?w=200&q=60',cat:'Lencería'})" class="add-cart-btn" style="width:140px;">+ Carrito</button>
+          </div>
+        </div>
+        <div class="product-body">
+          <div class="product-cat">Lencería</div>
+          <div class="product-name">Lencería 021</div>
+          <div class="product-desc">Diseño delicado y elegante. Talla L. Ideal para regalo.</div>
+          <div class="product-price">$15</div>
+          <div class="product-actions">
+            <button onclick="addToCart({id:'lenc-021',name:'Lencería 021',price:15,img:'https://images.unsplash.com/photo-1589302168068-964664d93dc0?w=200&q=60',cat:'Lencería'})" class="add-cart-btn">🛍 Agregar al carrito</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card" data-cat="conjunto">
+        <div class="product-img-wrap">
+          <img src="https://images.unsplash.com/photo-1589302168068-964664d93dc0?w=500&q=80" alt="Lencería con Bordado" loading="lazy"/>
+          <div class="product-img-overlay">
+            <button onclick="addToCart({id:'lenc-bord',name:'Lencería con Bordado',price:25,img:'https://images.unsplash.com/photo-1589302168068-964664d93dc0?w=200&q=60',cat:'Lencería'})" class="add-cart-btn" style="width:140px;">+ Carrito</button>
+          </div>
+        </div>
+        <div class="product-body">
+          <div class="product-cat">Lencería</div>
+          <div class="product-name">Lencería con Bordado</div>
+          <div class="product-desc">Detalles bordados exclusivos. Diseño único y sofisticado. Consultar tallas.</div>
+          <div class="product-price">$25</div>
+          <div class="product-actions">
+            <button onclick="addToCart({id:'lenc-bord',name:'Lencería con Bordado',price:25,img:'https://images.unsplash.com/photo-1589302168068-964664d93dc0?w=200&q=60',cat:'Lencería'})" class="add-cart-btn">🛍 Agregar al carrito</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card" data-cat="pack">
+        <div class="product-img-wrap">
+          <img src="https://images.unsplash.com/photo-1589302168068-964664d93dc0?w=500&q=80" alt="Pack Panty Encaje" loading="lazy"/>
+          <div class="product-badge">Pack</div>
+          <div class="product-img-overlay">
+            <button onclick="addToCart({id:'pack-panty',name:'Pack Panty Encaje',price:30,img:'https://images.unsplash.com/photo-1589302168068-964664d93dc0?w=200&q=60',cat:'Lencería'})" class="add-cart-btn" style="width:140px;">+ Carrito</button>
+          </div>
+        </div>
+        <div class="product-body">
+          <div class="product-cat">Lencería · Pack</div>
+          <div class="product-name">Pack Panty Encaje</div>
+          <div class="product-desc">Pack especial de pantys de encaje premium. Variedad de colores y diseños incluidos.</div>
+          <div class="product-price">$30</div>
+          <div class="product-actions">
+            <button onclick="addToCart({id:'pack-panty',name:'Pack Panty Encaje',price:30,img:'https://images.unsplash.com/photo-1589302168068-964664d93dc0?w=200&q=60',cat:'Lencería'})" class="add-cart-btn">🛍 Agregar al carrito</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card" data-cat="pack">
+        <div class="product-img-wrap">
+          <img src="https://images.unsplash.com/photo-1589302168068-964664d93dc0?w=500&q=80" alt="Promo Pantys 2x$5" loading="lazy"/>
+          <div class="product-badge">🔥 Promo</div>
+          <div class="product-img-overlay">
+            <button onclick="addToCart({id:'promo-panty',name:'Promo Pantys 2x$5',price:5,img:'https://images.unsplash.com/photo-1589302168068-964664d93dc0?w=200&q=60',cat:'Lencería'})" class="add-cart-btn" style="width:140px;">+ Carrito</button>
+          </div>
+        </div>
+        <div class="product-body">
+          <div class="product-cat">Lencería · Promo</div>
+          <div class="product-name">Promo Pantys</div>
+          <div class="product-desc">¡Oferta especial! 2 pantys por $5. Variedad de colores disponibles. Stock limitado.</div>
+          <div class="product-price">2x$5</div>
+          <div class="product-actions">
+            <button onclick="addToCart({id:'promo-panty',name:'Promo Pantys 2x$5',price:5,img:'https://images.unsplash.com/photo-1589302168068-964664d93dc0?w=200&q=60',cat:'Lencería'})" class="add-cart-btn">🛍 Agregar al carrito</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card" data-cat="pijama">
+        <div class="product-img-wrap">
+          <img src="https://images.unsplash.com/photo-1589302168068-964664d93dc0?w=500&q=80" alt="Pijama con Top" loading="lazy"/>
+          <div class="product-img-overlay">
+            <button onclick="addToCart({id:'pijama-top',name:'Pijama con Top',price:15,img:'https://images.unsplash.com/photo-1589302168068-964664d93dc0?w=200&q=60',cat:'Lencería'})" class="add-cart-btn" style="width:140px;">+ Carrito</button>
+          </div>
+        </div>
+        <div class="product-body">
+          <div class="product-cat">Lencería · Pijama</div>
+          <div class="product-name">Pijama con Top</div>
+          <div class="product-desc">Cómodo y elegante. Colores: Rosado, Negro, Gris. Tela suave de primera calidad.</div>
+          <div class="product-price">$15</div>
+          <div class="product-actions">
+            <button onclick="addToCart({id:'pijama-top',name:'Pijama con Top',price:15,img:'https://images.unsplash.com/photo-1589302168068-964664d93dc0?w=200&q=60',cat:'Lencería'})" class="add-cart-btn">🛍 Agregar al carrito</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card" data-cat="conjunto">
+        <div class="product-img-wrap">
+          <img src="https://images.unsplash.com/photo-1589302168068-964664d93dc0?w=500&q=80" alt="Lencería 018" loading="lazy"/>
+          <div class="product-img-overlay">
+            <button onclick="addToCart({id:'lenc-018',name:'Lencería 018',price:25,img:'https://images.unsplash.com/photo-1589302168068-964664d93dc0?w=200&q=60',cat:'Lencería'})" class="add-cart-btn" style="width:140px;">+ Carrito</button>
+          </div>
+        </div>
+        <div class="product-body">
+          <div class="product-cat">Lencería</div>
+          <div class="product-name">Lencería 018</div>
+          <div class="product-desc">Colores: Rojo y Negro. Diseño sensual y elegante. Consultar disponibilidad de talla.</div>
+          <div class="product-price">$25</div>
+          <div class="product-actions">
+            <button onclick="addToCart({id:'lenc-018',name:'Lencería 018',price:25,img:'https://images.unsplash.com/photo-1589302168068-964664d93dc0?w=200&q=60',cat:'Lencería'})" class="add-cart-btn">🛍 Agregar al carrito</button>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /lenceria grid -->
+  </div>
+</section>
+
+<!-- ══ PERFUMES ══ -->
+<section class="shop-section shop-alt" id="perfumes">
+  <div class="container">
+    <div class="shop-header">
+      <div class="eyebrow">Premium</div>
+      <h2 style="color:var(--white);margin-bottom:12px;">Perfumes</h2>
+      <p style="max-width:500px;">Fragancias selectas para cada ocasión. Consulta nuestro catálogo completo de perfumes disponibles.</p>
+    </div>
+    <div class="products-grid">
+
+      <div class="product-card">
+        <div class="product-img-wrap">
+          <img src="uploads/lenc-07.jpg?w=500&q=80" alt="Perfume Premium Mujer" loading="lazy"/>
+          <div class="product-badge">Premium</div>
+          <div class="product-img-overlay">
+            <button onclick="addToCart({id:'perf-001',name:'Perfume Premium Mujer',price:0,img:'uploads/lenc-07.jpg?w=200&q=60',cat:'Perfumes',consult:true})" class="add-cart-btn" style="width:140px;">+ Consultar</button>
+          </div>
+        </div>
+        <div class="product-body">
+          <div class="product-cat">Perfumes · Mujer</div>
+          <div class="product-name">Fragancias Premium</div>
+          <div class="product-desc">Selección de perfumes premium para mujer. Consultar precios y disponibilidad actuales.</div>
+          <div class="product-price" style="font-size:16px;">Consultar precio</div>
+          <div class="product-actions">
+            <a href="https://wa.me/584125944627?text=Hola!%20Quiero%20ver%20el%20catálogo%20de%20perfumes" class="add-cart-btn" target="_blank" rel="noopener" style="text-align:center;text-decoration:none;display:flex;align-items:center;justify-content:center;">Ver catálogo →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-img-wrap">
+          <img src="uploads/lenc-07.jpg?w=500&q=80" alt="Perfume Premium Hombre" loading="lazy"/>
+          <div class="product-img-overlay">
+            <button class="add-cart-btn" style="width:140px;" onclick="window.open('https://wa.me/584125944627?text=Hola!%20Quiero%20ver%20perfumes%20para%20hombre','_blank')">Consultar</button>
+          </div>
+        </div>
+        <div class="product-body">
+          <div class="product-cat">Perfumes · Hombre</div>
+          <div class="product-name">Fragancias Hombre</div>
+          <div class="product-desc">Selección de perfumes masculinos premium. Consultar disponibilidad y precios actuales.</div>
+          <div class="product-price" style="font-size:16px;">Consultar precio</div>
+          <div class="product-actions">
+            <a href="https://wa.me/584125944627?text=Hola!%20Quiero%20ver%20perfumes%20para%20hombre" class="add-cart-btn" target="_blank" rel="noopener" style="text-align:center;text-decoration:none;display:flex;align-items:center;justify-content:center;">Ver catálogo →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-img-wrap">
+          <img src="uploads/lenc-07.jpg?w=500&q=80" alt="Mini Perfumes" loading="lazy"/>
+          <div class="product-img-overlay">
+            <button class="add-cart-btn" style="width:140px;" onclick="window.open('https://wa.me/584125944627?text=Hola!%20Quiero%20ver%20mini%20perfumes','_blank')">Consultar</button>
+          </div>
+        </div>
+        <div class="product-body">
+          <div class="product-cat">Perfumes · Mini</div>
+          <div class="product-name">Minis y Sets</div>
+          <div class="product-desc">Minis perfectos para regalo o para llevar. Sets ideales para cualquier ocasión especial.</div>
+          <div class="product-price" style="font-size:16px;">Consultar precio</div>
+          <div class="product-actions">
+            <a href="https://wa.me/584125944627?text=Hola!%20Quiero%20ver%20minis%20y%20sets%20de%20perfumes" class="add-cart-btn" target="_blank" rel="noopener" style="text-align:center;text-decoration:none;display:flex;align-items:center;justify-content:center;">Ver catálogo →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card" style="background:var(--d3);border-style:dashed;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:320px;text-align:center;padding:24px;">
+        <div style="font-size:32px;margin-bottom:12px;">🌸</div>
+        <div style="font-family:var(--font-d);font-size:18px;color:var(--white);margin-bottom:8px;">Catálogo completo</div>
+        <p style="font-size:13px;color:var(--muted);margin-bottom:20px;">Contamos con una selección mayor de perfumes. Consulta disponibilidad por WhatsApp.</p>
+        <a href="https://wa.me/584125944627?text=Hola!%20Quiero%20ver%20el%20catálogo%20completo%20de%20perfumes%20🌸" class="btn btn-solid btn-sm" target="_blank" rel="noopener">Ver catálogo completo →</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══ ROPA DEPORTIVA ══ -->
+<section class="shop-section" id="deportiva">
+  <div class="container">
+    <div class="shop-header">
+      <div class="eyebrow">Colección Activa</div>
+      <h2 style="color:var(--white);margin-bottom:12px;">Ropa Deportiva</h2>
+      <p style="max-width:500px;">Colección Magnolia 2026. Sets, enterizos y conjuntos premium para tu vida activa.</p>
+    </div>
+    <div class="products-grid">
+
+      <div class="product-card">
+        <div class="product-img-wrap">
+          <img src="uploads/perf-04.jpg?w=500&q=80" alt="Set Deportivo $12" loading="lazy"/>
+          <div class="product-badge">🔥 Promo</div>
+          <div class="product-img-overlay">
+            <button onclick="addToCart({id:'dep-set-12',name:'Set Deportivo',price:12,img:'uploads/perf-04.jpg?w=200&q=60',cat:'Deportiva'})" class="add-cart-btn" style="width:140px;">+ Carrito</button>
+          </div>
+        </div>
+        <div class="product-body">
+          <div class="product-cat">Deportiva</div>
+          <div class="product-name">Set Deportivo</div>
+          <div class="product-desc">Combo a precio especial. Cómodo y versátil para entrenamiento o uso casual. Consultar colores.</div>
+          <div class="product-price">$12</div>
+          <div class="product-actions">
+            <button onclick="addToCart({id:'dep-set-12',name:'Set Deportivo',price:12,img:'uploads/perf-04.jpg?w=200&q=60',cat:'Deportiva'})" class="add-cart-btn">🛍 Agregar al carrito</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-img-wrap">
+          <img src="uploads/perf-04.jpg?w=500&q=80" alt="Vestido-Short" loading="lazy"/>
+          <div class="product-img-overlay">
+            <button onclick="addToCart({id:'dep-vest',name:'Vestido-Short',price:25,img:'uploads/perf-04.jpg?w=200&q=60',cat:'Deportiva'})" class="add-cart-btn" style="width:140px;">+ Carrito</button>
+          </div>
+        </div>
+        <div class="product-body">
+          <div class="product-cat">Deportiva</div>
+          <div class="product-name">Vestido-Short</div>
+          <div class="product-desc">Colores disponibles: Azul, Blanco, Beige, Gris. Diseño moderno y funcional.</div>
+          <div class="product-price">$25</div>
+          <div class="product-actions">
+            <button onclick="addToCart({id:'dep-vest',name:'Vestido-Short',price:25,img:'uploads/perf-04.jpg?w=200&q=60',cat:'Deportiva'})" class="add-cart-btn">🛍 Agregar al carrito</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-img-wrap">
+          <img src="uploads/perf-04.jpg?w=500&q=80" alt="Set Short Coral/Beige" loading="lazy"/>
+          <div class="product-img-overlay">
+            <button onclick="addToCart({id:'dep-short',name:'Set Short',price:25,img:'uploads/perf-04.jpg?w=200&q=60',cat:'Deportiva'})" class="add-cart-btn" style="width:140px;">+ Carrito</button>
+          </div>
+        </div>
+        <div class="product-body">
+          <div class="product-cat">Deportiva</div>
+          <div class="product-name">Set Short</div>
+          <div class="product-desc">Colores: Coral y Beige. Acabado premium, muy cómodo. Consultar tallas disponibles.</div>
+          <div class="product-price">$25–$30</div>
+          <div class="product-actions">
+            <button onclick="addToCart({id:'dep-short',name:'Set Short',price:25,img:'uploads/perf-04.jpg?w=200&q=60',cat:'Deportiva'})" class="add-cart-btn">🛍 Agregar al carrito</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-img-wrap">
+          <img src="uploads/perf-04.jpg?w=500&q=80" alt="Enterizo Deportivo" loading="lazy"/>
+          <div class="product-img-overlay">
+            <button onclick="addToCart({id:'dep-ent',name:'Enterizo Deportivo',price:30,img:'uploads/perf-04.jpg?w=200&q=60',cat:'Deportiva'})" class="add-cart-btn" style="width:140px;">+ Carrito</button>
+          </div>
+        </div>
+        <div class="product-body">
+          <div class="product-cat">Deportiva</div>
+          <div class="product-name">Enterizo Deportivo</div>
+          <div class="product-desc">Colores: Marrón y Verde Oliva. También en Rojo y Negro. Tela de alta calidad.</div>
+          <div class="product-price">$30</div>
+          <div class="product-actions">
+            <button onclick="addToCart({id:'dep-ent',name:'Enterizo Deportivo',price:30,img:'uploads/perf-04.jpg?w=200&q=60',cat:'Deportiva'})" class="add-cart-btn">🛍 Agregar al carrito</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-img-wrap">
+          <img src="uploads/perf-04.jpg?w=500&q=80" alt="Conjunto Nike" loading="lazy"/>
+          <div class="product-badge">Nike</div>
+          <div class="product-img-overlay">
+            <button onclick="addToCart({id:'dep-nike',name:'Conjunto Nike',price:20,img:'uploads/perf-04.jpg?w=200&q=60',cat:'Deportiva'})" class="add-cart-btn" style="width:140px;">+ Carrito</button>
+          </div>
+        </div>
+        <div class="product-body">
+          <div class="product-cat">Deportiva · Nike</div>
+          <div class="product-name">Conjunto Nike Pro</div>
+          <div class="product-desc">Colores Negro y Blanco. Conjunto completo estilo Nike Pro. Consultar tallas disponibles.</div>
+          <div class="product-price">$20–$30</div>
+          <div class="product-actions">
+            <button onclick="addToCart({id:'dep-nike',name:'Conjunto Nike',price:20,img:'uploads/perf-04.jpg?w=200&q=60',cat:'Deportiva'})" class="add-cart-btn">🛍 Agregar al carrito</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-img-wrap">
+          <img src="uploads/perf-04.jpg?w=500&q=80" alt="Conjunto Adidas" loading="lazy"/>
+          <div class="product-badge">Adidas</div>
+          <div class="product-img-overlay">
+            <button onclick="window.open('https://wa.me/584125944627?text=Hola!%20Quiero%20info%20del%20Set%20Adidas','_blank')" class="add-cart-btn" style="width:140px;">Consultar</button>
+          </div>
+        </div>
+        <div class="product-body">
+          <div class="product-cat">Deportiva · Adidas</div>
+          <div class="product-name">Set Adidas</div>
+          <div class="product-desc">Colores Blanco y Negro. Consultar disponibilidad y precio actualizado por WhatsApp.</div>
+          <div class="product-price" style="font-size:16px;">Consultar precio</div>
+          <div class="product-actions">
+            <a href="https://wa.me/584125944627?text=Hola!%20Quiero%20info%20del%20Set%20Adidas" class="add-cart-btn" target="_blank" rel="noopener" style="text-align:center;text-decoration:none;display:flex;align-items:center;justify-content:center;">Consultar →</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══ MAQUILLAJE ══ -->
+<section class="shop-section shop-alt" id="maquillaje">
+  <div class="container">
+    <div class="shop-header">
+      <div class="eyebrow">Belleza</div>
+      <h2 style="color:var(--white);margin-bottom:12px;">Maquillaje</h2>
+      <p style="max-width:500px;">Productos de maquillaje y accesorios. Consulta disponibilidad y precios actualizados.</p>
+    </div>
+    <div style="text-align:center;padding:60px 0;">
+      <div style="font-size:48px;margin-bottom:16px;">💄</div>
+      <h3 style="color:var(--white);margin-bottom:12px;">Catálogo disponible por WhatsApp</h3>
+      <p style="max-width:400px;margin:0 auto 28px;">Contamos con una selección de productos de maquillaje y accesorios. Consulta disponibilidad y precios directamente.</p>
+      <a href="https://wa.me/584125944627?text=Hola!%20Quiero%20ver%20el%20catálogo%20de%20maquillaje" class="btn btn-solid" target="_blank" rel="noopener">Ver catálogo de maquillaje →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══ PROMOS ══ -->
+<section class="shop-section" id="promos">
+  <div class="container">
+    <div class="shop-header">
+      <div class="eyebrow">🔥 Ofertas</div>
+      <h2 style="color:var(--white);margin-bottom:12px;">Promociones</h2>
+    </div>
+    <div class="products-grid">
+      <div class="product-card">
+        <div class="product-img-wrap">
+          <img src="https://images.unsplash.com/photo-1589302168068-964664d93dc0?w=500&q=80" alt="Promo Pantys 2x5" loading="lazy"/>
+          <div class="product-badge">🔥 Promo</div>
+          <div class="product-img-overlay">
+            <button onclick="addToCart({id:'promo-p2x5',name:'Promo Pantys 2x$5',price:5,img:'https://images.unsplash.com/photo-1589302168068-964664d93dc0?w=200&q=60',cat:'Promo'})" class="add-cart-btn" style="width:140px;">+ Carrito</button>
+          </div>
+        </div>
+        <div class="product-body">
+          <div class="product-cat">Promo · Lencería</div>
+          <div class="product-name">Promo Pantys 2x$5</div>
+          <div class="product-desc">Dos pantys de encaje por solo $5. Variedad de colores. Stock muy limitado.</div>
+          <div class="product-price" style="color:#CF6679;">2x$5</div>
+          <div class="product-actions">
+            <button onclick="addToCart({id:'promo-p2x5',name:'Promo Pantys 2x$5',price:5,img:'https://images.unsplash.com/photo-1589302168068-964664d93dc0?w=200&q=60',cat:'Promo'})" class="add-cart-btn">🛍 Aprovechar oferta</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Payment info footer -->
+<section style="background:var(--d2);padding:48px 0;border-top:1px solid var(--gold-border);">
+  <div class="container" style="text-align:center;">
+    <div class="eyebrow" style="justify-content:center;margin-bottom:20px;">Métodos de pago</div>
+    <div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-bottom:28px;">
+      <div class="pay-method">💵 Efectivo USD</div>
+      <div class="pay-method">🇻🇪 Efectivo Bs.</div>
+      <div class="pay-method">🏦 Transferencia bancaria</div>
+      <div class="pay-method">💳 Zelle</div>
+      <div class="pay-method">📱 Pago Móvil</div>
+    </div>
+    <p style="font-size:13px;color:var(--muted);max-width:600px;margin:0 auto 20px;">Los pedidos se coordinan por WhatsApp. Te enviamos los datos de pago al confirmar tu orden. Entrega en tienda o mensajería dentro de Valencia.</p>
+    <a href="https://wa.me/584125944627?text=Hola!%20Tengo%20una%20consulta%20sobre%20un%20pedido%20de%20tienda" class="btn" target="_blank" rel="noopener">Consultar pedido →</a>
+  </div>
+</section>
+
+</main>
+
+<footer style="background:var(--d1);border-top:1px solid var(--gold-border);padding:32px 0;text-align:center;">
+  <div class="container">
+    <div style="margin-bottom:16px;">
+      <span style="font-family:var(--font-d);font-size:18px;letter-spacing:4px;text-transform:uppercase;color:var(--white);">Magnolia</span>
+      <span style="font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);display:block;margin-top:2px;">Beauty &amp; Fashion</span>
+    </div>
+    <p style="font-size:11px;color:var(--muted2);">CC Brisas del Valle, San Diego · Valencia · 0412-7552659</p>
+    <p style="font-size:11px;color:var(--muted2);margin-top:8px;"><a href="index.html" style="color:var(--gold);">← Inicio</a> · <a href="servicios.html" style="color:var(--muted);">Servicios</a> · <a href="blog.html" style="color:var(--muted);">Blog</a></p>
+  </div>
+</footer>
+
+<script src="js/cart.js?v=1777231157"></script>
+<script src="js/main.js?v=1777231157"></script>
+
+</body>
+</html>

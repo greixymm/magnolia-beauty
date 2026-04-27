@@ -1,0 +1,1495 @@
+/* ═══════════════════════════════════════════════════════════════
+   MAGNOLIA BEAUTY & FASHION — v3.0
+   CSS Global — style.css
+   ═══════════════════════════════════════════════════════════════
+
+   SKILLS APLICADOS (design-weplash plugin):
+   ─────────────────────────────────────────
+   /design-system   → Variables CSS (tokens), tipografía, spacing
+                      scale, componentes reutilizables, estados.
+   /accessibility   → WCAG 2.1 AA: skip-nav, focus-visible,
+                      prefers-reduced-motion, cursor solo pointer,
+                      touch targets 44x44px, contraste 4.5:1.
+   /design-critique → Jerarquía visual, lectura natural, whitespace,
+                      énfasis correcto, consistencia de elementos.
+   /ux-copy         → Estados de botones, error, success, empty;
+                      mensajes claros y orientados a acción.
+   /handoff         → Todos los estados: default, hover, active,
+                      focus, disabled, error, open, empty.
+
+   ESTRUCTURA DEL ARCHIVO:
+   ─────────────────────────────────────────
+   1.  Design Tokens (:root)
+   2.  Reset + Base
+   3.  Accesibilidad global (skip-nav, cursor, focus)
+   4.  Tipografía
+   5.  Layout (container, section, eyebrow)
+   6.  Componente: Button (todos los estados)
+   7.  Animación de entrada (reveal)
+   8.  NAV
+   9.  HERO VIDEO
+   10. TICKER
+   11. ABOUT
+   12. SERVICES PREVIEW
+   13. PACKAGES CAROUSEL
+   14. PROMO CAROUSEL
+   15. COLABORACIONES
+   16. VIDEO SECTION
+   17. TIENDA PREVIEW
+   18. GALLERY
+   19. TESTIMONIALS
+   20. FAQ
+   21. CONTACT + FORM
+   22. MAP
+   23. FOOTER
+   24. WHATSAPP FLOAT
+   25. EVENTS / BLOG
+   26. INNER PAGE HERO (pages)
+   27. Keyframes
+   28. Responsive
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ─── IMPORT ─────────────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Jost:wght@200;300;400;500;600&display=swap');
+
+/* ══════════════════════════════════════════════════════════════
+   1. DESIGN TOKENS
+   /design-system: Fuente única de verdad para todos los valores.
+   Usar SIEMPRE estas variables — nunca hardcoded.
+   ══════════════════════════════════════════════════════════════ */
+:root{
+  /* ── Colores Brand ── */
+  --gold:#C9A84C;                     /* Oro primario — CTAs, acentos */
+  --gold2:#D9BC6F;                    /* Oro claro — links en oscuro */
+  --gold3:#EDD08A;                    /* Oro hover en estado sólido */
+  --gold-pale:rgba(201,168,76,.12);   /* Fondo sutil dorado */
+  --gold-border:rgba(201,168,76,.2);  /* Bordes sutiles */
+  --gold-hover:rgba(201,168,76,.4);   /* Bordes en hover */
+
+  /* ── Superficies (escala de oscuridad) ── */
+  --black:#060606; /* Fondo base del sitio */
+  --d1:#0E0E0E;    /* Secciones alternadas oscuras */
+  --d2:#141414;    /* Cards y contenedores */
+  --d3:#1C1C1C;    /* Form wrap, cart sidebar */
+  --d4:#252525;    /* Inputs, fondos internos */
+  --d5:#2E2E2E;    /* Hover en elementos oscuros */
+
+  /* ── Texto (/accessibility: --muted pasa 4.5:1 sobre --d2) ── */
+  --white:#F8F5EE;   /* Texto principal */
+  --white2:#EDE9DF;  /* Texto secundario */
+  --muted:#8A8480;   /* Apagado — verificado 4.5:1 AA */
+  --muted2:#696461;  /* Solo decorativo (no texto informativo) */
+
+  /* ── Estados semánticos (/ux-copy: feedback de acciones) ── */
+  --success:#4CAF75; /* Confirmación, pedido exitoso */
+  --error:#CF6679;   /* Error de validación, eliminar */
+  --info:#4A90D9;    /* Info neutral */
+
+  /* ── Tipografía (/design-system: rol estricto por familia) ── */
+  --font-d:'Cormorant Garamond',Georgia,serif; /* Sólo para headings y display */
+  --font-b:'Jost','Segoe UI',sans-serif;       /* UI, body, botones */
+
+  /* ── Transiciones (/handoff: duraciones estandarizadas) ── */
+  --t-fast:200ms ease;                        /* Micro: hover rápido */
+  --t-base:300ms ease;                        /* Estándar */
+  --t-slow:500ms cubic-bezier(0.16,1,0.3,1); /* Modales, reveals */
+
+  /* ── Spacing scale (/design-system: múltiplos de 4px) ── */
+  --sp-2:8px; --sp-3:12px; --sp-4:16px; --sp-5:20px; --sp-6:24px;
+  --sp-8:32px; --sp-10:40px; --sp-12:48px;
+  --sp-16:64px; --sp-20:80px; --sp-30:120px;
+
+  /* ── Border radius (/design-critique: look minimalista) ── */
+  --radius:2px;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   2. RESET + BASE
+   /design-system: Normalización mínima necesaria.
+   ══════════════════════════════════════════════════════════════ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;scroll-padding-top:96px;}
+section[id]{scroll-margin-top:96px;}
+body{background:var(--black);color:var(--white);font-family:var(--font-b);font-weight:300;line-height:1.7;overflow-x:hidden;}
+a{text-decoration:none;color:inherit;}
+img{display:block;max-width:100%;}
+ul{list-style:none;}
+button{font-family:var(--font-b);}
+
+/* ══════════════════════════════════════════════════════════════
+   3. ACCESIBILIDAD GLOBAL
+   /accessibility: Requisitos WCAG 2.1 AA de base que aplican
+   a toda la experiencia del sitio.
+   ══════════════════════════════════════════════════════════════ */
+
+/* /accessibility WCAG 2.3.3: Respeta preferencias del SO.
+   Si el usuario prefiere menos movimiento, desactiva TODAS
+   las animaciones y transiciones del sitio. */
+@media(prefers-reduced-motion:reduce){
+  *{animation-duration:.01ms!important;transition-duration:.01ms!important;}
+}
+
+/* /accessibility WCAG 2.4.1: Skip navigation.
+   Permite a usuarios de teclado saltar el nav repetitivo.
+   Visible SOLO en focus (no ocupa espacio visual). */
+.skip-nav{
+  position:absolute;top:-100%;left:0;
+  background:var(--gold);color:var(--black);
+  padding:10px 20px;font-size:14px;font-weight:600;
+  z-index:10000;transition:top .2s;
+}
+.skip-nav:focus{top:0;}
+
+/* /accessibility: Cursor personalizado SOLO en dispositivos
+   pointer (mouse/trackpad). En touch o teclado = cursor normal.
+   cursor:none en body solo aplica si @media(pointer:fine). */
+@media(pointer:fine){
+  body{cursor:none;}
+  .cursor{
+    width:8px;height:8px;background:var(--gold);border-radius:50%;
+    position:fixed;pointer-events:none;z-index:9999;
+    transform:translate(-50%,-50%);transition:width .3s,height .3s;
+  }
+  .cursor-ring{
+    width:34px;height:34px;border:1px solid rgba(201,168,76,.5);
+    border-radius:50%;position:fixed;pointer-events:none;z-index:9998;
+    transform:translate(-50%,-50%);transition:transform .15s ease;
+  }
+}
+
+/* /accessibility WCAG 2.4.7: Focus indicator visible.
+   Solo :focus-visible para no molestar usuarios de mouse.
+   Outline gold de 2px con offset claro. */
+:focus-visible{
+  outline:2px solid var(--gold);
+  outline-offset:3px;
+  border-radius:var(--radius);
+}
+:focus:not(:focus-visible){outline:none;}
+
+/* ══════════════════════════════════════════════════════════════
+   4. TIPOGRAFÍA
+   /design-system: Escala tipográfica con clamp() para fluidez.
+   /design-critique: Jerarquía clara h1 > h2 > h3 > p.
+   ══════════════════════════════════════════════════════════════ */
+h1,h2,h3,h4{font-family:var(--font-d);font-weight:300;line-height:1.1;}
+/* clamp(min, vw, max) → responsive sin breakpoints */
+h1{font-size:clamp(44px,7vw,100px);letter-spacing:-.02em;}
+h2{font-size:clamp(32px,5vw,64px);letter-spacing:-.01em;}
+h3{font-size:clamp(20px,3vw,32px);}
+/* /accessibility WCAG 1.4.3: p usa --muted que pasa 4.5:1 */
+p{font-size:15px;line-height:1.8;color:var(--muted);}
+.gold{color:var(--gold);}
+.italic{font-style:italic;}
+.muted{color:var(--muted);}
+
+/* ══════════════════════════════════════════════════════════════
+   5. LAYOUT
+   /design-system: Contenedor máximo y espaciado consistente.
+   ══════════════════════════════════════════════════════════════ */
+.container{max-width:1280px;margin:0 auto;padding:0 var(--sp-10);}
+.section{padding:var(--sp-30) 0;}
+/* Eyebrow: label decorativo con línea de acento */
+.eyebrow{
+  display:inline-flex;align-items:center;gap:12px;
+  font-size:10px;font-weight:500;letter-spacing:4px;
+  text-transform:uppercase;color:var(--gold);
+  margin-bottom:var(--sp-5);
+}
+.eyebrow::before{content:'';width:28px;height:1px;background:var(--gold);}
+
+/* ══════════════════════════════════════════════════════════════
+   6. COMPONENTE: BUTTON
+   /design-system: Sistema de botones con variantes.
+   /handoff: Estados documentados: default, hover, active, focus.
+   /ux-copy: Clases semánticas por función (.btn-solid, .btn-sm).
+   /accessibility WCAG 2.5.5: Touch target mínimo 44x44px.
+   ══════════════════════════════════════════════════════════════ */
+.btn{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:13px 30px; /* altura ~44px — cumple WCAG 2.5.5 */
+  font-size:11px;font-weight:500;letter-spacing:3px;text-transform:uppercase;
+  border:1px solid var(--gold);color:var(--gold);
+  background:transparent;cursor:pointer;
+  transition:all var(--t-base);
+  position:relative;overflow:hidden;border-radius:var(--radius);
+}
+/* Estado hover: fill con sweep izquierda→derecha */
+.btn::before{
+  content:'';position:absolute;inset:0;
+  background:var(--gold);transform:translateX(-101%);
+  transition:transform .4s cubic-bezier(0.16,1,0.3,1);z-index:-1;
+}
+.btn:hover{color:var(--black);}
+.btn:hover::before{transform:translateX(0);}
+.btn:hover .arr{transform:translateX(5px);} /* Micro-feedback en flecha */
+.arr{transition:transform var(--t-base);display:inline-block;}
+/* Estado active: pequeño scale-down */
+.btn:active{transform:scale(.98);}
+/* Variante: filled / primario */
+.btn-solid{background:var(--gold);color:var(--black);}
+.btn-solid::before{background:var(--gold3);}
+.btn-solid:hover{color:var(--black);}
+/* Variante: compacto */
+.btn-sm{padding:8px 18px;font-size:10px;letter-spacing:2px;}
+/* Variante: sobre fondo oscuro con texto blanco */
+.btn-white{border-color:var(--white);color:var(--white);}
+.btn-white::before{background:var(--white);}
+.btn-white:hover{color:var(--black);}
+/* Variante: destructivo (eliminar, cancelar) */
+.btn-danger{border-color:var(--error);color:var(--error);}
+.btn-danger::before{background:var(--error);}
+.btn-danger:hover{color:var(--white);}
+
+/* ══════════════════════════════════════════════════════════════
+   7. SCROLL REVEAL
+   /accessibility: Respeta prefers-reduced-motion.
+   El JS no observa los elementos si hay preferencia de reducción.
+   /design-critique: Entrada desde abajo refuerza lectura lineal.
+   ══════════════════════════════════════════════════════════════ */
+.reveal{
+  opacity:0;transform:translateY(32px);
+  transition:opacity .8s var(--t-slow),transform .8s var(--t-slow);
+}
+.reveal.visible{opacity:1;transform:none;}
+/* Delays para secuencias de entrada en grupo */
+.delay-1{transition-delay:.1s;}
+.delay-2{transition-delay:.2s;}
+.delay-3{transition-delay:.3s;}
+.delay-4{transition-delay:.4s;}
+
+/* ══════════════════════════════════════════════════════════════
+   8. NAV
+   /accessibility: landmark <nav> con aria-label.
+   /design-critique: Glassmorphism al hacer scroll, fondo sólido.
+   /handoff: Estado scrolled activado desde JS con .scrolled class.
+   ══════════════════════════════════════════════════════════════ */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:1000;
+  padding:14px var(--sp-10);
+  display:flex;align-items:center;justify-content:space-between;
+  transition:background .4s,padding .4s;
+  border-bottom:1px solid transparent;
+  min-height:72px;
+}
+/* Estado scrolled — activado por JS en scroll > 60px */
+.nav.scrolled{
+  background:rgba(6,6,6,.97);backdrop-filter:blur(20px);
+  padding:10px var(--sp-10);border-color:var(--gold-border);
+  min-height:62px;
+}
+.nav-logo{display:flex;align-items:center;gap:12px;cursor:pointer;max-height:64px;overflow:hidden;}
+.nav-logo img,
+.nav-logo .nav-logo-img-full,
+header .nav .nav-logo-img-full,
+.nav-logo-img-full{
+  height:42px !important;
+  max-height:42px !important;
+  width:auto !important;
+  max-width:170px !important;
+  display:block;
+  object-fit:contain;
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,.25));
+  transition: height .4s, max-height .4s;
+}
+.nav.scrolled .nav-logo img,
+.nav.scrolled .nav-logo-img-full{height:36px !important; max-height:36px !important;}
+@media (max-width: 720px){
+  .nav-logo img,
+  .nav-logo-img-full{height:34px !important; max-height:34px !important; max-width:140px !important;}
+  .nav.scrolled .nav-logo img,
+  .nav.scrolled .nav-logo-img-full{height:30px !important; max-height:30px !important;}
+}
+@media (max-width: 420px){
+  .nav-logo img,
+  .nav-logo-img-full{height:30px !important; max-height:30px !important; max-width:120px !important;}
+  .nav.scrolled .nav-logo img,
+  .nav.scrolled .nav-logo-img-full{height:26px !important; max-height:26px !important;}
+}
+/* legacy classes — hidden in case they appear anywhere */
+.nav-logo-svg, .nav-logo-text, .nav-logo-main, .nav-logo-sub{display:none !important;}
+.nav-links{display:flex;align-items:center;gap:26px;}
+/* Links de nav — underline animado en hover */
+.nav-links a{
+  font-size:11px;font-weight:400;letter-spacing:2px;text-transform:uppercase;
+  color:rgba(248,245,238,.65);transition:color var(--t-base);position:relative;
+}
+.nav-links a::after{
+  content:'';position:absolute;bottom:-4px;left:0;
+  width:0;height:1px;background:var(--gold);transition:width var(--t-base);
+}
+.nav-links a:hover,.nav-links a.active{color:var(--white);}
+.nav-links a:hover::after,.nav-links a.active::after{width:100%;}
+/* CTA del nav — botón outline compacto */
+.nav-cta{
+  padding:9px 22px;font-size:10px;letter-spacing:3px;text-transform:uppercase;
+  border:1px solid var(--gold);color:var(--gold);font-weight:500;
+  transition:all var(--t-base);cursor:pointer;background:transparent;
+}
+.nav-cta:hover{background:var(--gold);color:var(--black);}
+/* /accessibility: Hamburger con aria-expanded gestionado por JS */
+.nav-ham{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:4px;}
+.nav-ham span{width:24px;height:1px;background:var(--white);display:block;transition:.3s;}
+/* Transformación X cuando aria-expanded="true" */
+.nav-ham[aria-expanded="true"] span:nth-child(1){transform:translateY(6px) rotate(45deg);}
+.nav-ham[aria-expanded="true"] span:nth-child(2){opacity:0;}
+.nav-ham[aria-expanded="true"] span:nth-child(3){transform:translateY(-6px) rotate(-45deg);}
+/* /accessibility: Mobile nav como dialog modal */
+.mobile-nav{
+  display:none;position:fixed;inset:0;background:rgba(6,6,6,.99);
+  z-index:990;flex-direction:column;align-items:center;justify-content:center;gap:24px;
+}
+.mobile-nav.open{display:flex;}
+.mobile-nav a{font-family:var(--font-d);font-size:32px;font-weight:300;color:var(--white);transition:color var(--t-base);}
+.mobile-nav a:hover{color:var(--gold);}
+.mobile-nav-close{position:absolute;top:20px;right:var(--sp-10);font-size:24px;color:var(--white);cursor:pointer;background:none;border:none;}
+
+/* ══════════════════════════════════════════════════════════════
+   9. HERO — VIDEO BACKGROUND
+   /design-critique: Imagen/video de fondo con overlay gradient
+   para legibilidad del texto (WCAG 1.4.3).
+   El video está en una capa separada de pointer-events:none para
+   no interferir con la interacción del usuario.
+   ══════════════════════════════════════════════════════════════ */
+.hero{position:relative;height:100vh;min-height:680px;display:flex;align-items:flex-end;overflow:hidden;}
+/* Contenedor del video — sin eventos de puntero */
+.hero-video-wrap{position:absolute;inset:0;z-index:0;overflow:hidden;background:#000;}
+/* Elemento <video> real — cubre sin letterbox */
+.hero-video-el{
+  position:absolute;
+  top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  min-width:100%;min-height:100%;
+  width:auto;height:auto;
+  object-fit:cover;
+  pointer-events:none;
+  z-index:0;
+}
+/* YouTube embed (modo iframe alternativo) — más grande que el viewport para cubrir */
+.hero-video-wrap iframe{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:180%;height:180%;min-width:100%;min-height:100%;
+  border:0;pointer-events:none; /* No captura clicks ni scroll */
+}
+/* Fallback: imagen estática si no hay video configurado */
+.hero-video-fallback{position:absolute;inset:0;background-size:cover;background-position:center;z-index:0;}
+/* Overlay gradient para legibilidad — /accessibility WCAG 1.4.3 */
+.hero-video-overlay{
+  position:absolute;inset:0;z-index:1;
+  background:linear-gradient(to bottom,
+    rgba(6,6,6,.45) 0%,    /* Top: visible pero no opaco */
+    rgba(6,6,6,.15) 40%,   /* Medio: más transparente */
+    rgba(6,6,6,.65) 75%,   /* Bajo: preparando el texto */
+    rgba(6,6,6,.97) 100%); /* Footer del hero: casi sólido */
+}
+.hero-content{position:relative;z-index:2;padding:0 var(--sp-10) var(--sp-20);max-width:860px;}
+/* Animaciones de entrada secuenciales — /design-critique: lectura de arriba a abajo */
+.hero-eyebrow{
+  display:inline-flex;align-items:center;gap:12px;font-size:10px;
+  font-weight:500;letter-spacing:5px;text-transform:uppercase;color:var(--gold);
+  margin-bottom:20px;opacity:0;animation:fadeUp 1s .3s forwards; /* delay 0.3s */
+}
+.hero-eyebrow::before{content:'✦';font-size:8px;}
+.hero h1{opacity:0;animation:fadeUp 1s .5s forwards;}          /* delay 0.5s */
+.hero h1 em{font-style:italic;color:var(--gold2);}
+.hero-sub{
+  font-size:clamp(15px,2vw,17px);color:rgba(248,245,238,.82);
+  font-weight:300;max-width:520px;margin:18px 0 36px;
+  opacity:0;animation:fadeUp 1s .7s forwards;line-height:1.7;   /* delay 0.7s */
+}
+.hero-actions{
+  display:flex;align-items:center;gap:20px;flex-wrap:wrap;
+  opacity:0;animation:fadeUp 1s .9s forwards;                    /* delay 0.9s */
+}
+.hero-scroll{
+  position:absolute;bottom:130px;left:50%;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:14px;
+  z-index:3;opacity:0;animation:fadeIn 1s 1.5s forwards;
+}
+.hero-scroll-label{font-size:10px;letter-spacing:5px;text-transform:uppercase;color:var(--gold);font-weight:500;}
+.hero-scroll-line{width:1px;height:48px;background:linear-gradient(to bottom,var(--gold),transparent);animation:scrollPulse 2s ease-in-out infinite;}
+/* Stats horizontales en barra inferior — estilo referencia */
+.hero-stats-bar{
+  position:absolute;left:0;right:0;bottom:0;z-index:3;
+  display:grid;grid-template-columns:repeat(3,1fr);
+  background:rgba(20,15,12,.92);backdrop-filter:blur(12px);
+  border-top:1px solid rgba(201,168,76,.18);
+  opacity:0;animation:fadeIn 1s 1.2s forwards;
+}
+.hero-stat-cell{padding:26px 20px;text-align:center;border-right:1px solid rgba(201,168,76,.12);}
+.hero-stat-cell:last-child{border-right:none;}
+.hero-stat-n{font-family:var(--font-d);font-size:30px;font-weight:300;color:var(--gold);line-height:1;margin-bottom:8px;}
+.hero-stat-l{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:rgba(248,245,238,.55);font-weight:400;}
+
+/* ══════════════════════════════════════════════════════════════
+   10. TICKER
+   /design-critique: Refuerza breadth de servicios sin ocupar
+   espacio informativo. aria-hidden en HTML (decorativo).
+   ══════════════════════════════════════════════════════════════ */
+.ticker{background:var(--gold);overflow:hidden;padding:13px 0;}
+/* Contenedor duplicado para scroll infinito (JS no necesario) */
+.ticker-inner{display:flex;animation:ticker 35s linear infinite;white-space:nowrap;}
+.ticker-item{
+  font-size:11px;font-weight:500;letter-spacing:3px;text-transform:uppercase;
+  color:var(--black);padding:0 32px;display:flex;align-items:center;gap:14px;
+}
+.ticker-dot{width:4px;height:4px;background:rgba(0,0,0,.4);border-radius:50%;flex-shrink:0;}
+
+/* ══════════════════════════════════════════════════════════════
+   11. ABOUT / NOSOTRAS
+   /design-critique: Grid 2-col imagen + texto. Badge dorado
+   sobre imagen crea profundidad. Pillares en 2x2 grid.
+   ══════════════════════════════════════════════════════════════ */
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-20);align-items:center;}
+.about-img-wrap{position:relative;}
+.about-img{width:100%;height:560px;object-fit:cover;filter:brightness(.88);}
+/* Badge: superpuesto, posición negativa para profundidad */
+.about-badge{position:absolute;bottom:36px;right:-18px;background:var(--gold);color:var(--black);padding:20px 28px;text-align:center;}
+.about-badge-n{font-family:var(--font-d);font-size:40px;font-weight:400;line-height:1;}
+.about-badge-l{font-size:9px;letter-spacing:2px;text-transform:uppercase;font-weight:600;font-family:var(--font-b);}
+.about-text h2 span{color:var(--gold);}
+.about-text p{margin:18px 0;max-width:430px;}
+/* Pillares: iconos + texto en 2 columnas */
+.about-pillars{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:28px 0;}
+.pillar{display:flex;align-items:flex-start;gap:12px;}
+/* /accessibility: iconos con aria-hidden en HTML */
+.pillar-icon{width:42px;height:42px;border:1px solid var(--gold-border);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.pillar-icon svg{width:19px;height:19px;color:var(--gold);}
+.pillar-title{font-size:13px;font-weight:500;color:var(--white);margin-bottom:2px;}
+.pillar-sub{font-size:12px;margin:0;}
+
+/* ══════════════════════════════════════════════════════════════
+   12. SERVICES PREVIEW (HOME)
+   /design-critique: Cards con aspecto 3:4 (retrato), hover
+   revela descripción y precio con transición suave.
+   /accessibility: Cards son <a> (links reales), no divs.
+   Keyboard navegable con focus-visible.
+   /ux-copy: Precio visible en hover elimina fricción.
+   ══════════════════════════════════════════════════════════════ */
+.services-section{background:var(--d1);}
+.services-head{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:var(--sp-16);gap:24px;flex-wrap:wrap;}
+.services-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;}
+/* Card es <a> — link real, no div. Accesible por teclado. */
+.srv-card{position:relative;overflow:hidden;aspect-ratio:3/4;cursor:pointer;display:block;text-decoration:none;}
+.srv-card-img{width:100%;height:100%;object-fit:cover;transition:transform .7s var(--t-slow),filter .4s;filter:brightness(.62);}
+/* Hover: zoom suave + más oscuro para contraste con texto */
+.srv-card:hover .srv-card-img{transform:scale(1.06);filter:brightness(.38);}
+.srv-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(6,6,6,.92) 0%,transparent 60%);}
+.srv-content{position:absolute;bottom:0;left:0;right:0;padding:24px 20px;}
+.srv-num{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:6px;}
+.srv-title{font-family:var(--font-d);font-size:20px;font-weight:400;color:var(--white);margin-bottom:5px;}
+/* Descripción oculta → reveal en hover (/handoff: max-height trick) */
+.srv-desc{font-size:12px;color:rgba(248,245,238,.68);line-height:1.6;max-height:0;overflow:hidden;transition:max-height .5s var(--t-slow),opacity .4s;opacity:0;}
+.srv-card:hover .srv-desc{max-height:80px;opacity:1;}
+/* /ux-copy: precio visible reduce fricciones al reservar */
+.srv-price{font-size:13px;color:var(--gold);margin-top:8px;opacity:0;transition:opacity .4s .1s;}
+.srv-card:hover .srv-price{opacity:1;}
+/* Flecha de navegación — indica "es clickable/linkable" */
+.srv-arrow{position:absolute;top:18px;right:18px;width:34px;height:34px;border:1px solid rgba(201,168,76,.4);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity var(--t-base);background:rgba(6,6,6,.5);}
+.srv-card:hover .srv-arrow{opacity:1;}
+.srv-arrow svg{width:16px;height:16px;color:var(--gold);}
+
+/* ══════════════════════════════════════════════════════════════
+   13. PACKAGES CAROUSEL
+   /design-system: Cards de paquete con precio display y lista.
+   /handoff: Transform controlado por JS con carIdx.
+   /ux-copy: Precio prominente arriba, lista de includes abajo.
+   ══════════════════════════════════════════════════════════════ */
+.packages-section{background:var(--black);}
+.packages-head{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:var(--sp-12);gap:24px;flex-wrap:wrap;}
+/* Overflow hidden oculta cards fuera del viewport */
+.carousel-wrap{overflow:hidden;}
+/* Transform gestionado por JS: translateX(-carIdx*(cardW+gap)) */
+.carousel-track{display:flex;gap:20px;transition:transform .5s var(--t-slow);}
+.pkg-card{background:var(--d2);border:1px solid var(--gold-border);flex:0 0 calc(33.33% - 14px);min-width:280px;overflow:hidden;transition:border-color var(--t-base),transform var(--t-base);}
+.pkg-card:hover{border-color:var(--gold-hover);transform:translateY(-4px);}
+.pkg-card-img{width:100%;height:200px;object-fit:cover;filter:brightness(.72);}
+.pkg-card-body{padding:24px 22px;}
+.pkg-badge{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:10px;font-weight:500;}
+.pkg-title{font-family:var(--font-d);font-size:22px;color:var(--white);margin-bottom:6px;}
+/* /ux-copy: Precio display grande — es lo primero que ven */
+.pkg-price{font-family:var(--font-d);font-size:38px;color:var(--gold);font-weight:300;margin-bottom:14px;line-height:1;}
+.pkg-list{display:flex;flex-direction:column;gap:6px;margin-bottom:20px;}
+.pkg-list li{display:flex;align-items:center;gap:7px;font-size:12px;color:rgba(248,245,238,.7);}
+.pkg-list li::before{content:'';width:4px;height:4px;background:var(--gold);border-radius:50%;flex-shrink:0;}
+/* Controles: botones prev/next (/accessibility: aria-label en HTML) */
+.car-controls{display:flex;gap:10px;}
+.car-btn{width:44px;height:44px;border:1px solid var(--gold-border);background:transparent;color:var(--gold);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all var(--t-base);}
+.car-btn:hover{background:var(--gold);color:var(--black);border-color:var(--gold);}
+.car-btn svg{width:18px;height:18px;}
+/* Dots: /accessibility: role=tab aria-selected en HTML */
+.carousel-dots{display:flex;gap:8px;margin-top:20px;justify-content:center;}
+.car-dot{width:6px;height:6px;border-radius:50%;background:rgba(201,168,76,.3);cursor:pointer;border:none;transition:all var(--t-base);}
+/* Estado activo: pill alargado en lugar de círculo */
+.car-dot.active{background:var(--gold);width:20px;border-radius:3px;}
+
+/* ══════════════════════════════════════════════════════════════
+   14. PROMO CAROUSEL (BANNER)
+   /design-critique: Ocupa ancho completo, texto izquierda para
+   no competir con imagen. Auto-avance en JS (4.5s).
+   ══════════════════════════════════════════════════════════════ */
+.promo-section{background:var(--d1);overflow:hidden;padding:0;position:relative;}
+/* Track: flex, transform controlado por promoIdx */
+.promo-track{display:flex;transition:transform .6s var(--t-slow);}
+/* Cada slide: 100% width del contenedor */
+.promo-slide{flex:0 0 100%;position:relative;height:460px;overflow:hidden;}
+.promo-slide-img{width:100%;height:100%;object-fit:cover;filter:brightness(.6);}
+/* Gradient lateral: texto legible sin overlay uniforme */
+.promo-slide-overlay{position:absolute;inset:0;background:linear-gradient(to right,rgba(6,6,6,.82) 0%,rgba(6,6,6,.2) 60%,transparent 100%);}
+.promo-slide-content{position:absolute;top:50%;left:var(--sp-20);transform:translateY(-50%);max-width:520px;}
+.promo-badge{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:14px;display:block;}
+.promo-title{font-family:var(--font-d);font-size:clamp(28px,4vw,52px);color:var(--white);margin-bottom:12px;line-height:1.2;}
+.promo-desc{font-size:14px;color:rgba(248,245,238,.8);margin-bottom:24px;line-height:1.7;}
+/* Navegación: dots centrados en bottom */
+.promo-nav{position:absolute;bottom:24px;left:50%;transform:translateX(-50%);display:flex;gap:8px;z-index:2;}
+.promo-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.4);cursor:pointer;border:none;transition:all var(--t-base);}
+.promo-dot.active{background:var(--gold);width:24px;border-radius:4px;}
+/* Flechas laterales */
+.promo-arrow{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;background:rgba(6,6,6,.5);border:1px solid var(--gold-border);color:var(--gold);cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:2;transition:all var(--t-base);}
+.promo-arrow:hover{background:var(--gold);color:var(--black);}
+.promo-arrow.prev{left:20px;}
+.promo-arrow.next{right:20px;}
+.promo-arrow svg{width:18px;height:18px;}
+
+/* ══════════════════════════════════════════════════════════════
+   15. COLABORACIONES
+   /design-critique: Heading display grande, grid de logos
+   inspirado en "Expert Artists" del template de referencia.
+   Texto lorem ipsum como placeholder para que el cliente llene.
+   ══════════════════════════════════════════════════════════════ */
+.colabs-section{background:var(--black);text-align:center;}
+.colabs-big{font-family:var(--font-d);font-size:clamp(48px,9vw,130px);font-weight:700;text-transform:uppercase;letter-spacing:-.02em;color:var(--white);line-height:1;margin-bottom:14px;}
+.colabs-eyebrow{font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:10px;display:block;}
+.colabs-sub{font-size:15px;color:var(--muted);max-width:580px;margin:0 auto 52px;}
+/* Carrusel infinito en una sola línea — full-bleed con fade en bordes */
+.colabs-marquee{position:relative;width:100vw;margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);overflow:hidden;padding:8px 0;mask-image:linear-gradient(90deg,transparent 0,#000 8%,#000 92%,transparent 100%);-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 8%,#000 92%,transparent 100%);}
+.colabs-track{display:flex;gap:14px;width:max-content;animation:colabs-scroll 28s linear infinite;will-change:transform;}
+.colabs-marquee:hover .colabs-track{animation-play-state:paused;}
+.colab-pill{flex:0 0 auto;display:inline-flex;align-items:center;gap:14px;padding:16px 28px;background:var(--d2);border:1px solid var(--gold-border);border-radius:999px;transition:background var(--t-base),border-color var(--t-base);}
+.colab-pill:hover{background:var(--d3);border-color:var(--gold-hover);}
+.colab-pill-name{font-family:var(--font-d);font-size:15px;font-weight:400;letter-spacing:2px;color:rgba(248,245,238,.7);text-transform:uppercase;white-space:nowrap;}
+.colab-pill-tag{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);padding-left:12px;border-left:1px solid var(--gold-border);white-space:nowrap;}
+@keyframes colabs-scroll{from{transform:translate3d(0,0,0);}to{transform:translate3d(-50%,0,0);}}
+@media (prefers-reduced-motion:reduce){.colabs-track{animation:none;}}
+
+/* (legacy grid — mantenido por compatibilidad si aparece en otras páginas) */
+.colabs-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:2px;}
+.colab-item{background:var(--d2);border:1px solid var(--gold-border);padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100px;transition:background var(--t-base),border-color var(--t-base);gap:8px;}
+.colab-item:hover{background:var(--d3);border-color:var(--gold-hover);}
+.colab-logo{font-family:var(--font-d);font-size:16px;font-weight:400;letter-spacing:2px;color:rgba(248,245,238,.5);text-transform:uppercase;transition:color var(--t-base);}
+.colab-item:hover .colab-logo{color:var(--white);}
+/* Tag que aparece en hover */
+.colab-tag{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);opacity:0;transition:opacity var(--t-base);}
+.colab-item:hover .colab-tag{opacity:1;}
+
+/* ══════════════════════════════════════════════════════════════
+   16. VIDEO SECTION
+   /design-critique: Grid 2-col imagen+texto. Play button
+   prominente con ring animation. Cover ocultable al click.
+   ══════════════════════════════════════════════════════════════ */
+.video-section{background:var(--d1);}
+.video-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-16);align-items:center;}
+.video-wrap{position:relative;aspect-ratio:16/9;background:var(--d3);overflow:hidden;}
+/* iframe cargado dinámicamente por JS al hacer click en play */
+.video-wrap iframe{position:absolute;inset:0;width:100%;height:100%;border:0;}
+/* Cover: overlay sobre la imagen/video, desaparece al play */
+.video-cover{position:absolute;inset:0;background:rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background var(--t-base);}
+.video-cover.hidden{display:none;} /* Clase agregada por JS al play */
+.play-btn{width:72px;height:72px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;transition:transform var(--t-base),box-shadow var(--t-base);}
+.play-btn:hover{transform:scale(1.1);box-shadow:0 0 0 14px rgba(201,168,76,.18);}
+.play-btn svg{width:28px;height:28px;color:var(--black);margin-left:4px;}
+.video-text h2{color:var(--white);margin-bottom:14px;}
+.video-text p{max-width:400px;margin:14px 0 26px;}
+
+/* ══════════════════════════════════════════════════════════════
+   17. TIENDA PREVIEW
+   /design-critique: Texto + 3 categorías visual en grid.
+   /ux-copy: CTA primario y secundario (WhatsApp + catálogo).
+   /accessibility: Links de categoría son <a>, navegables.
+   ══════════════════════════════════════════════════════════════ */
+.tienda-section{background:var(--d1);}
+.tienda-intro{display:flex;flex-direction:column;align-items:center;text-align:center;gap:32px;margin-bottom:var(--sp-12);max-width:780px;margin-left:auto;margin-right:auto;}
+.tienda-cats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+/* Cards de categoría — <a> links, keyboard accessible */
+.tienda-cat{position:relative;overflow:hidden;aspect-ratio:2/3;cursor:pointer;display:block;text-decoration:none;}
+.tienda-cat-img{width:100%;height:100%;object-fit:cover;transition:transform .6s var(--t-slow),filter .4s;filter:brightness(.55);}
+.tienda-cat:hover .tienda-cat-img{transform:scale(1.08);filter:brightness(.35);}
+.tienda-cat-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(6,6,6,.85) 0%,transparent 55%);}
+.tienda-cat-content{position:absolute;bottom:24px;left:20px;right:20px;}
+.tienda-cat-tag{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:6px;}
+.tienda-cat-name{font-family:var(--font-d);font-size:22px;color:var(--white);margin-bottom:8px;}
+/* CTA se revela en hover — /ux-copy: indica qué pasa al click */
+.tienda-cat-cta{display:inline-flex;align-items:center;gap:7px;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);opacity:0;transform:translateY(8px);transition:all .4s var(--t-slow);}
+.tienda-cat:hover .tienda-cat-cta{opacity:1;transform:none;}
+/* Métodos de pago — display informativo */
+.pay-method{display:flex;align-items:center;gap:8px;background:var(--d4);border:1px solid var(--gold-border);padding:8px 14px;font-size:12px;color:rgba(248,245,238,.75);}
+.pay-method svg{width:17px;height:17px;color:var(--gold);}
+.payment-methods{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px;}
+
+/* ══════════════════════════════════════════════════════════════
+   18. GALLERY
+   /design-critique: Grid asimétrico con 1 item 2x2 para romper
+   ritmo. Overlay zoom al hover. Items navegables por teclado.
+   ══════════════════════════════════════════════════════════════ */
+.gallery-section{background:var(--black);}
+.gallery-head{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:40px;gap:24px;}
+/* Grid 6 columnas, 2 filas. Item 1 span 2x2, item 4 span 2 */
+.gallery-grid{display:grid;grid-template-columns:repeat(6,1fr);grid-template-rows:repeat(2,240px);gap:3px;}
+.gal-item{overflow:hidden;position:relative;cursor:pointer;}
+.gal-item:nth-child(1){grid-column:span 2;grid-row:span 2;} /* Featured: doble tamaño */
+.gal-item:nth-child(4){grid-column:span 2;}                  /* Wide: doble ancho */
+.gal-item img{width:100%;height:100%;object-fit:cover;transition:transform .6s var(--t-slow),filter .4s;}
+.gal-item:hover img{transform:scale(1.06);filter:brightness(.65);}
+/* Overlay con lupa — reveal en hover */
+.gal-overlay{position:absolute;inset:0;background:rgba(6,6,6,.5);opacity:0;transition:opacity var(--t-base);display:flex;align-items:center;justify-content:center;}
+.gal-item:hover .gal-overlay{opacity:1;}
+.gal-overlay svg{width:26px;height:26px;color:var(--white);}
+
+/* ══════════════════════════════════════════════════════════════
+   19. TESTIMONIALS
+   /design-critique: Scroll infinito horizontal sin JS.
+   Pausa on hover — mejor UX para leer.
+   /ux-copy: Incluye nombre + servicio específico (más creíble).
+   ══════════════════════════════════════════════════════════════ */
+.test-section{background:var(--d1);overflow:hidden;}
+.test-head{text-align:center;margin-bottom:var(--sp-16);}
+/* Track duplicado x2 en HTML para scroll infinito CSS puro */
+.test-track{display:flex;gap:20px;animation:testimScroll 44s linear infinite;width:max-content;}
+/* Pausa al hover — permite leer cada testimonio */
+.test-track:hover{animation-play-state:paused;}
+.test-card{background:var(--d3);border:1px solid var(--gold-border);padding:30px 28px;width:340px;flex-shrink:0;position:relative;}
+/* Comilla decorativa con pseudoelemento — aria-hidden en HTML */
+.test-card::before{content:'"';font-family:var(--font-d);font-size:80px;color:rgba(201,168,76,.08);position:absolute;top:-12px;left:18px;line-height:1;pointer-events:none;}
+.test-stars{display:flex;gap:3px;margin-bottom:12px;}
+.test-star{color:var(--gold);font-size:12px;}
+/* /ux-copy: itálica para cita directa — diferencia del body copy */
+.test-text{font-size:14px;color:rgba(248,245,238,.75);line-height:1.75;margin-bottom:20px;font-style:italic;font-family:'Cormorant Garamond',serif;}
+.test-name{font-size:13px;font-weight:500;color:var(--white);}
+/* /ux-copy: servicio específico añade credibilidad al testimonio */
+.test-srv{font-size:11px;color:var(--gold);margin-top:2px;}
+
+/* ══════════════════════════════════════════════════════════════
+   20. FAQ
+   /accessibility: Accordion con button + aria-expanded.
+   /ux-copy: Preguntas en primera persona del visitante.
+   /design-critique: Texto decorativo de fondo "PREGUNTAS"
+   con opacity muy baja — decorativo, no informativo.
+   ══════════════════════════════════════════════════════════════ */
+.faq-section{background:var(--black);}
+/* Texto decorativo — aria-hidden en HTML */
+.faq-big-text{
+  font-family:var(--font-d);font-size:clamp(70px,13vw,190px);
+  font-weight:700;color:rgba(255,255,255,.03);text-transform:uppercase;
+  text-align:center;line-height:1;margin-bottom:-55px;
+  position:relative;z-index:0;letter-spacing:-.03em;user-select:none;
+}
+.faq-inner{position:relative;z-index:1;}
+.faq-grid{display:grid;grid-template-columns:1fr 1.4fr;gap:var(--sp-20);align-items:start;}
+.faq-text h2{color:var(--white);}
+.faq-text p{max-width:360px;margin:18px 0 32px;}
+.faq-list{display:flex;flex-direction:column;}
+.faq-item{border-bottom:1px solid rgba(201,168,76,.12);overflow:hidden;}
+/* /accessibility: <button> real con aria-expanded — gestionado por JS */
+.faq-q{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:16px 0;cursor:pointer;font-size:15px;color:var(--white);
+  transition:color var(--t-base);background:none;border:none;
+  width:100%;text-align:left;font-family:var(--font-b);font-weight:300;
+}
+.faq-q:hover{color:var(--gold);}
+/* Ícono + como indicador visual del estado cerrado/abierto */
+.faq-icon{width:24px;height:24px;border:1px solid var(--gold-border);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:transform var(--t-base),background var(--t-base);}
+.faq-icon svg{width:13px;height:13px;color:var(--gold);}
+/* Estado open — ícono rota 45° = X visual */
+.faq-item.open .faq-icon{transform:rotate(45deg);background:var(--gold);}
+.faq-item.open .faq-icon svg{color:var(--black);}
+/* Respuesta: max-height trick para animación suave */
+.faq-a{max-height:0;overflow:hidden;transition:max-height .5s var(--t-slow);}
+/* max-height seteado dinámicamente por JS: ans.scrollHeight + 'px' */
+.faq-a-inner{padding:0 0 16px;font-size:14px;color:var(--muted);line-height:1.8;}
+
+/* ══════════════════════════════════════════════════════════════
+   21. CONTACT + FORM
+   /accessibility: Labels vinculados con for/id. Inputs con
+   estados: default, focus, error. aria-required en HTML.
+   /ux-copy: Labels descriptivos, placeholders en contexto,
+   mensaje de éxito con próximo paso claro.
+   /design-critique: Formulario en card oscura, fondo d3.
+   ══════════════════════════════════════════════════════════════ */
+.contact-section{background:var(--d1);}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-20);align-items:start;}
+.c-detail{display:flex;align-items:flex-start;gap:14px;margin-bottom:20px;}
+/* Icono en borde dorado — aria-hidden en HTML */
+.c-icon{width:38px;height:38px;border:1px solid var(--gold-border);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;}
+.c-icon svg{width:17px;height:17px;color:var(--gold);}
+.c-label{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);font-weight:500;margin-bottom:3px;}
+.c-val{font-size:14px;color:rgba(248,245,238,.8);}
+.c-val a{color:var(--gold2);transition:color var(--t-fast);}
+.c-val a:hover{color:var(--gold);}
+.hours-row{display:flex;justify-content:space-between;font-size:13px;color:rgba(248,245,238,.65);padding:7px 0;border-bottom:1px solid rgba(255,255,255,.04);}
+.hours-row span:last-child{color:var(--gold);}
+.social-row{display:flex;gap:10px;}
+/* Botones sociales — aria-label en HTML (icono-only) */
+.soc-btn{width:40px;height:40px;border:1px solid var(--gold-border);display:flex;align-items:center;justify-content:center;transition:all var(--t-base);cursor:pointer;}
+.soc-btn svg{width:17px;height:17px;color:var(--muted);transition:color var(--t-base);}
+.soc-btn:hover{border-color:var(--gold);}
+.soc-btn:hover svg{color:var(--gold);}
+/* Form card */
+.form-wrap{background:var(--d3);padding:40px 36px;border:1px solid var(--gold-border);}
+.form-title{font-family:var(--font-d);font-size:24px;color:var(--white);margin-bottom:6px;}
+/* /ux-copy: subtítulo con tiempo de respuesta — reduce ansiedad */
+.form-sub{font-size:13px;color:var(--muted);margin-bottom:24px;}
+.f-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.f-group{margin-bottom:14px;}
+/* /accessibility WCAG 1.3.1: label visible y vinculada con for=id */
+.f-label{display:block;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);font-weight:500;margin-bottom:6px;}
+/* Inputs: estado default */
+.f-input,.f-select,.f-textarea{
+  width:100%;background:var(--d4);border:1px solid rgba(201,168,76,.18);
+  color:var(--white);font-family:var(--font-b);font-size:14px;font-weight:300;
+  padding:11px 14px;outline:none;transition:border-color var(--t-base);resize:vertical;
+}
+/* Estado focus: borde dorado */
+.f-input:focus,.f-select:focus,.f-textarea:focus{border-color:var(--gold);}
+.f-input::placeholder,.f-textarea::placeholder{color:var(--muted2);}
+.f-select option{background:var(--d3);}
+.f-textarea{min-height:90px;}
+/* /ux-copy: Estado error — borde rojo + mensaje descriptivo */
+.f-input.error,.f-select.error{border-color:var(--error);}
+.f-error{font-size:11px;color:var(--error);margin-top:3px;display:none;}
+.f-error.show{display:block;}
+/* /ux-copy: Estado success — mensaje cálido con próximo paso */
+.form-success{display:none;text-align:center;padding:20px;color:var(--gold);font-family:var(--font-d);font-size:18px;line-height:1.6;}
+
+/* ══════════════════════════════════════════════════════════════
+   22. MAP
+   /accessibility: iframe con title descriptivo en HTML.
+   Overlay para consistencia visual.
+   ══════════════════════════════════════════════════════════════ */
+.map-wrap{height:320px;position:relative;overflow:hidden;}
+/* Filtros: desaturado y oscuro para coherencia con paleta */
+.map-wrap iframe{width:100%;height:100%;border:0;filter:saturate(0) brightness(.62);}
+.map-overlay{position:absolute;inset:0;background:rgba(6,6,6,.18);pointer-events:none;}
+.map-label{position:absolute;top:20px;left:var(--sp-10);background:var(--black);border:1px solid var(--gold);padding:9px 16px;}
+.map-label span{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);font-weight:500;}
+
+/* ══════════════════════════════════════════════════════════════
+   23. FOOTER
+   /design-critique: Texto de fondo "MAGNOLIA" muy opaco (2.2%)
+   — decorativo, no informativo (user-select:none).
+   Grid 4 columnas: brand + 3 columnas de links.
+   ══════════════════════════════════════════════════════════════ */
+footer{background:var(--d1);border-top:1px solid var(--gold-border);padding:var(--sp-20) 0 28px;position:relative;overflow:hidden;}
+/* Texto decorativo — aria-hidden en HTML */
+.footer-bg-text{
+  position:absolute;bottom:-28px;left:50%;transform:translateX(-50%);
+  font-family:var(--font-d);font-size:clamp(90px,17vw,260px);
+  font-weight:700;color:rgba(255,255,255,.022);text-transform:uppercase;
+  white-space:nowrap;letter-spacing:-.02em;pointer-events:none;user-select:none;
+}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:52px;margin-bottom:52px;position:relative;z-index:1;}
+.footer-brand-main{font-family:var(--font-d);font-size:22px;letter-spacing:5px;text-transform:uppercase;color:var(--white);margin-bottom:4px;}
+.footer-brand-sub{font-size:9px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:16px;}
+.footer-desc{font-size:13px;max-width:280px;margin-bottom:20px;}
+.footer-col h5{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);font-weight:500;margin-bottom:16px;}
+.footer-links{display:flex;flex-direction:column;gap:8px;}
+.footer-links a{font-size:13px;color:var(--muted);transition:color var(--t-base);}
+.footer-links a:hover{color:var(--white);}
+.footer-bottom{border-top:1px solid rgba(255,255,255,.06);padding-top:22px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;position:relative;z-index:1;}
+.footer-bottom p{font-size:11px;color:var(--muted2);}
+.footer-btm-links{display:flex;gap:20px;}
+.footer-btm-links a{font-size:11px;color:var(--muted2);transition:color var(--t-base);}
+.footer-btm-links a:hover{color:var(--gold);}
+
+/* ══════════════════════════════════════════════════════════════
+   24. WHATSAPP FLOAT — SIEMPRE VISIBLE
+   /accessibility WCAG 2.5.5: Touch target 54x54px > 44px min.
+   aria-label en HTML describe destino (no solo "WhatsApp").
+   /ux-copy: Label "Agenda tu cita" → acción específica.
+   /design-critique: Posición fija bottom-right, pulse animation
+   llama la atención sin ser intrusivo.
+   ══════════════════════════════════════════════════════════════ */
+.wa-float{
+  position:fixed;bottom:28px;right:28px;z-index:9000;
+  display:flex;align-items:center;gap:10px;text-decoration:none;
+}
+/* Label tooltip — revela en hover */
+.wa-label{
+  background:var(--black);border:1px solid var(--gold);
+  padding:7px 13px;font-size:11px;letter-spacing:1px;color:var(--gold);
+  white-space:nowrap;opacity:0;transform:translateX(8px);
+  transition:all var(--t-base);pointer-events:none;
+}
+.wa-float:hover .wa-label{opacity:1;transform:none;}
+/* Botón circular verde WhatsApp */
+.wa-btn{
+  width:54px;height:54px;background:#25D366;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 20px rgba(37,211,102,.35);
+  transition:transform var(--t-base),box-shadow var(--t-base);
+  flex-shrink:0;position:relative;
+}
+.wa-btn:hover{transform:scale(1.1);box-shadow:0 6px 30px rgba(37,211,102,.45);}
+.wa-btn svg{width:30px;height:30px;fill:white;position:relative;z-index:1;}
+/* Pulse ring: expand + fade — atrae atención sin bloquear UI */
+.wa-btn::before{
+  content:'';position:absolute;width:54px;height:54px;
+  border-radius:50%;background:rgba(37,211,102,.3);
+  animation:waPulse 2s ease-out infinite;
+}
+@keyframes waPulse{
+  0%{transform:scale(1);opacity:1;}
+  100%{transform:scale(1.7);opacity:0;}
+}
+
+/* ══════════════════════════════════════════════════════════════
+   25. EVENTS + BLOG PREVIEW
+   ══════════════════════════════════════════════════════════════ */
+.events-section{background:var(--d1);}
+/* /design-critique: grid fecha | info | CTA — layout editorial */
+.event-card{display:grid;grid-template-columns:auto 1fr auto;gap:28px;align-items:center;border-bottom:1px solid var(--gold-border);padding:24px 0;}
+.event-date{text-align:center;width:72px;}
+.event-date-day{font-family:var(--font-d);font-size:38px;color:var(--gold);line-height:1;}
+.event-date-month{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);}
+.event-info-cat{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:5px;}
+.event-info-title{font-family:var(--font-d);font-size:20px;color:var(--white);margin-bottom:4px;}
+.event-info-desc{font-size:13px;color:var(--muted);}
+
+.blog-section{background:var(--black);}
+.blog-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:var(--sp-12);}
+/* Blog cards son <a> links — navegables por teclado */
+.blog-card{background:var(--d2);border:1px solid var(--gold-border);overflow:hidden;cursor:pointer;transition:border-color var(--t-base),transform var(--t-base);display:block;text-decoration:none;}
+.blog-card:hover{border-color:var(--gold-hover);transform:translateY(-3px);}
+.blog-card-img{width:100%;height:190px;object-fit:cover;filter:brightness(.8);transition:filter .4s;}
+.blog-card:hover .blog-card-img{filter:brightness(.6);}
+.blog-card-body{padding:20px 18px;}
+.blog-cat{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:7px;font-weight:500;}
+.blog-title{font-family:var(--font-d);font-size:19px;color:var(--white);margin-bottom:7px;line-height:1.3;}
+.blog-excerpt{font-size:13px;color:var(--muted);line-height:1.6;}
+.blog-date{font-size:11px;color:var(--muted2);margin-top:10px;}
+
+/* ══════════════════════════════════════════════════════════════
+   26. INNER PAGE HERO (servicios, tienda, blog)
+   /design-critique: Imagen de fondo muy oscura (22%) para que
+   el texto blanco tenga contraste suficiente.
+   ══════════════════════════════════════════════════════════════ */
+.page-hero{padding:160px 0 80px;background:var(--d1);position:relative;overflow:hidden;}
+.page-hero-bg{position:absolute;inset:0;background-size:cover;background-position:center;filter:brightness(.22);}
+.page-hero-content{position:relative;z-index:1;}
+.page-hero h1{color:var(--white);}
+.page-hero p{max-width:500px;margin-top:14px;}
+/* Breadcrumb — /accessibility: navegación contextual */
+.breadcrumb{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted);margin-bottom:16px;}
+.breadcrumb a{color:var(--muted);transition:color var(--t-base);}
+.breadcrumb a:hover{color:var(--gold);}
+.breadcrumb .sep{color:var(--gold);}
+
+/* ══════════════════════════════════════════════════════════════
+   27. KEYFRAMES
+   /accessibility: Estas animaciones son controladas por JS
+   y se desactivan con prefers-reduced-motion en la regla
+   del bloque 3 arriba.
+   ══════════════════════════════════════════════════════════════ */
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(26px);}
+  to{opacity:1;transform:none;}
+}
+@keyframes fadeIn{
+  from{opacity:0;}
+  to{opacity:1;}
+}
+@keyframes ticker{
+  from{transform:translateX(0);}
+  to{transform:translateX(-50%);} /* -50% porque el contenido está duplicado */
+}
+@keyframes scrollPulse{
+  0%,100%{opacity:1;}
+  50%{opacity:.4;}
+}
+@keyframes testimScroll{
+  from{transform:translateX(0);}
+  to{transform:translateX(-50%);} /* -50% = duplicado para infinito */
+}
+
+/* ══════════════════════════════════════════════════════════════
+   28. RESPONSIVE
+   /design-critique: Breakpoints en el comportamiento, no solo
+   en el tamaño. Stack vertical en mobile primero.
+   /handoff: 3 breakpoints: 1100, 900, 600.
+   ══════════════════════════════════════════════════════════════ */
+@media(max-width:1100px){
+  /* Services 2 cols, carousel half cards */
+  .services-grid{grid-template-columns:repeat(2,1fr);}
+  .gallery-grid{grid-template-columns:repeat(3,1fr);grid-template-rows:auto;}
+  .gal-item:nth-child(1),.gal-item:nth-child(4){grid-column:span 1;}
+  .footer-grid{grid-template-columns:1fr 1fr;gap:32px;}
+  .pkg-card{flex:0 0 calc(50% - 10px);}
+  .colabs-grid{grid-template-columns:repeat(3,1fr);}
+  .colabs-track{animation-duration:24s;}
+  .colab-pill{padding:14px 22px;gap:12px;}
+  .colab-pill-name{font-size:14px;letter-spacing:1.6px;}
+  .video-grid{grid-template-columns:1fr;}
+}
+@media(max-width:900px){
+  .container{padding:0 20px;}
+  .section{padding:72px 0;}
+  .nav{padding:16px 20px;}
+  .nav.scrolled{padding:12px 20px;}
+  /* Nav: links ocultos → hamburguer visible */
+  .nav-links,.nav-cta{display:none;}
+  .nav-ham{display:flex;}
+  /* Hero: stats compactos en mobile */
+  .hero-stats-bar{display:grid;}
+  .hero-stat-cell{padding:16px 8px;}
+  .hero-stat-n{font-size:22px;}
+  .hero-stat-l{font-size:8px;letter-spacing:2px;}
+  .hero-scroll{display:none;}
+  .about-grid,.contact-grid{grid-template-columns:1fr;gap:36px;}
+  .tienda-intro{gap:24px;}
+  .tienda-cats{grid-template-columns:1fr;}
+  .tienda-cat{aspect-ratio:3/2;} /* Más ancho que alto en mobile */
+  .blog-grid{grid-template-columns:1fr;}
+  .faq-grid{grid-template-columns:1fr;gap:32px;}
+  .services-head{flex-direction:column;align-items:flex-start;}
+  .footer-grid{grid-template-columns:1fr;}
+  .pkg-card{flex:0 0 calc(85%);}
+  .colabs-grid{grid-template-columns:repeat(2,1fr);}
+  .colabs-track{animation-duration:20s;gap:10px;}
+  .colab-pill{padding:12px 18px;gap:10px;}
+  .colab-pill-name{font-size:13px;letter-spacing:1.4px;}
+  .colab-pill-tag{font-size:8.5px;padding-left:10px;}
+  .event-card{grid-template-columns:1fr;text-align:center;gap:16px;}
+  .promo-slide{height:360px;}
+}
+@media(max-width:600px){
+  .services-grid{grid-template-columns:1fr;}
+  .gallery-grid{grid-template-columns:repeat(2,1fr);}
+  .about-img{height:300px;}
+  /* Hero: botones stack verticalmente */
+  .hero-actions{flex-direction:column;align-items:flex-start;}
+  .form-wrap{padding:26px 18px;}
+  /* Form: row → single column */
+  .f-row{grid-template-columns:1fr;}
+}
+
+/* ══════════════════════════════════════════════════════════════
+   LOGO REAL — img PNG en lugar de SVG (legacy class, no usada)
+   ══════════════════════════════════════════════════════════════ */
+.nav-logo-img {
+  width: 28px;
+  height: auto;
+  display: none;
+  object-fit: contain;
+  background: transparent;
+}
+/* Filtro dorado para versión footer si se usa blanco */
+.nav-logo-img.gold-filter {
+  filter: brightness(0) saturate(100%) invert(75%) sepia(45%) saturate(500%) hue-rotate(5deg) brightness(95%);
+}
+
+/* ══════════════════════════════════════════════════════════════
+   CONTACTO — Diseño centrado v3 (estilo referencia adaptado)
+   /design-critique: Layout single-column centrado, card grande,
+                     inputs pill, botón dorado, iconos sociales abajo.
+   ══════════════════════════════════════════════════════════════ */
+.contact-centered{
+  max-width:780px;
+  margin:0 auto;
+  text-align:center;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+.contact-title{
+  font-size:clamp(48px,6vw,84px);
+  line-height:1;
+  margin:0 0 20px;
+  color:var(--white);
+}
+.contact-subtitle{
+  font-size:15px;
+  color:rgba(248,245,238,.7);
+  max-width:540px;
+  margin:0 auto 48px;
+  line-height:1.6;
+}
+
+/* Card del formulario — grande, centrada, fondo sutil */
+.form-wrap-new{
+  width:100%;
+  background:var(--d2);
+  border:1px solid rgba(212,175,128,.15);
+  border-radius:24px;
+  padding:44px 44px;
+  box-shadow:0 30px 80px -30px rgba(0,0,0,.5),
+             0 0 0 1px rgba(212,175,128,.04);
+  margin-bottom:36px;
+  text-align:left;
+}
+
+.f-row-new{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:20px;
+  margin-bottom:20px;
+}
+.f-group-new{
+  display:flex;
+  flex-direction:column;
+  margin-bottom:20px;
+}
+.f-label-new{
+  font-size:13px;
+  color:rgba(248,245,238,.85);
+  font-family:var(--font-b);
+  font-weight:500;
+  margin-bottom:10px;
+  text-transform:none;
+  letter-spacing:0;
+}
+.f-input-wrap{
+  position:relative;
+}
+.f-input-new{
+  width:100%;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(212,175,128,.12);
+  border-radius:999px;
+  padding:16px 24px;
+  color:var(--white);
+  font-family:var(--font-b);
+  font-size:14px;
+  outline:none;
+  transition:all .25s ease;
+}
+.f-input-new::placeholder{
+  color:rgba(248,245,238,.35);
+}
+.f-input-new:focus{
+  border-color:var(--gold);
+  background:rgba(212,175,128,.06);
+  box-shadow:0 0 0 4px rgba(212,175,128,.08);
+}
+.f-select-new{
+  appearance:none;
+  -webkit-appearance:none;
+  background-image:url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23D4AF80' stroke-width='2'%3e%3cpath d='m6 9 6 6 6-6'/%3e%3c/svg%3e");
+  background-repeat:no-repeat;
+  background-position:right 22px center;
+  background-size:16px;
+  padding-right:50px;
+  cursor:pointer;
+}
+.f-select-new option{
+  background:var(--d2);
+  color:var(--white);
+}
+.f-textarea-new{
+  width:100%;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(212,175,128,.12);
+  border-radius:24px;
+  padding:18px 24px;
+  color:var(--white);
+  font-family:var(--font-b);
+  font-size:14px;
+  min-height:130px;
+  resize:vertical;
+  outline:none;
+  transition:all .25s ease;
+}
+.f-textarea-new::placeholder{
+  color:rgba(248,245,238,.35);
+}
+.f-textarea-new:focus{
+  border-color:var(--gold);
+  background:rgba(212,175,128,.06);
+  box-shadow:0 0 0 4px rgba(212,175,128,.08);
+}
+
+/* Botón "Entregar" — dorado, pill ancho, letras negras (estilo home) */
+.btn-entregar{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  width:100%;
+  padding:18px 32px;
+  margin-top:12px;
+  background:var(--gold);
+  color:var(--black);
+  border:none;
+  border-radius:999px;
+  font-family:var(--font-b);
+  font-size:13px;
+  letter-spacing:2.5px;
+  text-transform:uppercase;
+  font-weight:600;
+  cursor:pointer;
+  transition:all .3s cubic-bezier(.2,.8,.2,1);
+}
+.btn-entregar:hover{
+  background:var(--gold3);
+  transform:translateY(-1px);
+  box-shadow:0 12px 32px -10px rgba(212,175,128,.45);
+}
+.btn-entregar:active{transform:scale(.98);}
+.btn-entregar .arr{transition:transform .3s;}
+.btn-entregar:hover .arr{transform:translateX(4px);}
+
+/* Fila de iconos sociales + WhatsApp pill */
+.contact-quick-row{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:24px;
+  flex-wrap:wrap;
+  margin-bottom:48px;
+}
+.contact-social-group{
+  display:flex;
+  gap:12px;
+}
+.contact-soc-btn{
+  width:54px;
+  height:54px;
+  background:rgba(255,255,255,.03);
+  border:1px solid rgba(212,175,128,.15);
+  border-radius:14px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:var(--gold2);
+  transition:all .25s ease;
+  cursor:pointer;
+}
+.contact-soc-btn:hover{
+  background:var(--gold);
+  color:var(--black);
+  border-color:var(--gold);
+  transform:translateY(-2px);
+}
+.contact-soc-btn svg{
+  width:20px;
+  height:20px;
+}
+.contact-divider{
+  width:1px;
+  height:32px;
+  background:rgba(212,175,128,.2);
+}
+.contact-phone-pill{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:14px 24px;
+  background:rgba(255,255,255,.03);
+  border:1px solid rgba(212,175,128,.2);
+  border-radius:999px;
+  color:var(--gold);
+  font-family:var(--font-b);
+  font-size:14px;
+  font-weight:500;
+  text-decoration:none;
+  transition:all .25s ease;
+}
+.contact-phone-pill:hover{
+  background:var(--gold);
+  color:var(--black);
+  border-color:var(--gold);
+}
+.contact-phone-pill svg{
+  width:18px;
+  height:18px;
+}
+
+/* Meta secundario: ubicación + horario */
+.contact-meta{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:48px;
+  flex-wrap:wrap;
+  padding-top:32px;
+  border-top:1px solid rgba(212,175,128,.08);
+  width:100%;
+}
+.contact-meta-item{
+  text-align:center;
+}
+.contact-meta-label{
+  font-family:var(--font-d);
+  font-style:italic;
+  font-size:12px;
+  color:var(--gold);
+  letter-spacing:1px;
+  margin-bottom:6px;
+}
+.contact-meta-val{
+  font-family:var(--font-b);
+  font-size:13px;
+  color:rgba(248,245,238,.7);
+  line-height:1.5;
+}
+.contact-meta-divider{
+  width:1px;
+  height:40px;
+  background:rgba(212,175,128,.15);
+}
+
+/* Mobile */
+@media (max-width:720px){
+  .contact-title{font-size:clamp(40px,10vw,56px);}
+  .form-wrap-new{padding:28px 22px;border-radius:20px;}
+  .f-row-new{grid-template-columns:1fr;gap:0;}
+  .contact-quick-row{gap:16px;}
+  .contact-divider{display:none;}
+  .contact-meta{gap:24px;flex-direction:column;}
+  .contact-meta-divider{display:none;}
+}
+
+/* ══════════════════════════════════════════════════════════════
+   BUTTON THEMES — 3 estilos de botones para toda la web
+   .btn-theme-pill  → pill total (999px)
+   .btn-theme-sharp → minimal recto (0px)
+   .btn-theme-soft  → suavizado (8px) — default
+   Aplicar al <body>: <body class="btn-theme-pill">
+   ══════════════════════════════════════════════════════════════ */
+body.btn-theme-pill .btn,
+body.btn-theme-pill .btn-entregar,
+body.btn-theme-pill .f-input-new,
+body.btn-theme-pill .contact-phone-pill{
+  border-radius:999px !important;
+}
+body.btn-theme-pill .f-textarea-new,
+body.btn-theme-pill .form-wrap-new{border-radius:28px !important;}
+body.btn-theme-pill .contact-soc-btn{border-radius:18px !important;}
+
+body.btn-theme-sharp .btn,
+body.btn-theme-sharp .btn-entregar,
+body.btn-theme-sharp .f-input-new,
+body.btn-theme-sharp .f-textarea-new,
+body.btn-theme-sharp .contact-phone-pill,
+body.btn-theme-sharp .contact-soc-btn,
+body.btn-theme-sharp .form-wrap-new{
+  border-radius:0 !important;
+}
+body.btn-theme-sharp .btn{padding:14px 32px;letter-spacing:3.5px;}
+body.btn-theme-sharp .btn-entregar{letter-spacing:3px;}
+
+body.btn-theme-soft .btn,
+body.btn-theme-soft .btn-entregar{border-radius:8px !important;}
+body.btn-theme-soft .f-input-new,
+body.btn-theme-soft .contact-phone-pill,
+body.btn-theme-soft .contact-soc-btn{border-radius:10px !important;}
+body.btn-theme-soft .f-textarea-new{border-radius:14px !important;}
+body.btn-theme-soft .form-wrap-new{border-radius:16px !important;}
+
+/* Panel flotante de selector de estilo de botones (Tweak) */
+.btn-theme-picker{
+  position:fixed;bottom:24px;left:24px;z-index:9000;
+  background:rgba(15,15,15,.92);
+  backdrop-filter:blur(20px);
+  border:1px solid rgba(212,175,128,.25);
+  border-radius:14px;
+  padding:14px 16px;
+  display:flex;flex-direction:column;gap:10px;
+  box-shadow:0 20px 60px -10px rgba(0,0,0,.6);
+  font-family:var(--font-b);
+  max-width:200px;
+  transition:transform .35s cubic-bezier(.2,.8,.2,1),opacity .25s;
+}
+.btn-theme-picker.collapsed{
+  transform:translateX(calc(-100% + 48px));
+  opacity:.85;
+}
+.btn-theme-picker-head{
+  display:flex;align-items:center;justify-content:space-between;gap:8px;
+  font-family:var(--font-d);
+  font-size:11px;
+  letter-spacing:1.5px;
+  color:var(--gold);
+  text-transform:uppercase;
+  padding-bottom:6px;
+  border-bottom:1px solid rgba(212,175,128,.12);
+}
+.btn-theme-picker-toggle{
+  background:transparent;border:none;color:var(--gold);cursor:pointer;
+  font-size:14px;line-height:1;padding:2px 4px;
+}
+.btn-theme-options{display:flex;flex-direction:column;gap:6px;}
+.btn-theme-opt{
+  display:flex;align-items:center;gap:10px;
+  background:transparent;
+  border:1px solid rgba(212,175,128,.15);
+  color:rgba(248,245,238,.75);
+  padding:8px 12px;
+  font-family:var(--font-b);
+  font-size:11px;
+  letter-spacing:.5px;
+  cursor:pointer;
+  text-align:left;
+  transition:all .2s;
+}
+.btn-theme-opt-swatch{
+  width:22px;height:14px;background:var(--gold);
+  flex-shrink:0;
+}
+.btn-theme-opt:hover{border-color:var(--gold);color:var(--white);}
+.btn-theme-opt.active{
+  background:rgba(212,175,128,.12);
+  border-color:var(--gold);
+  color:var(--gold);
+}
+.btn-theme-opt[data-theme="pill"] .btn-theme-opt-swatch{border-radius:999px;}
+.btn-theme-opt[data-theme="soft"] .btn-theme-opt-swatch{border-radius:4px;}
+.btn-theme-opt[data-theme="sharp"] .btn-theme-opt-swatch{border-radius:0;}
+
+@media (max-width:720px){
+  .btn-theme-picker{bottom:80px;left:12px;max-width:170px;padding:10px 12px;}
+}
+
+/* ══════════════════════════════════════════════════════════════
+   GOLD GRADIENTS — 4 degradados dorados para botones
+   .btn-grad-1  → Champagne luxe (suave, claro → medio)
+   .btn-grad-2  → Royal gold (medio → profundo, clásico)
+   .btn-grad-3  → Sunrise rose (dorado → rosado, femenino)
+   .btn-grad-4  → Bronze metallic (cobrizo, intenso)
+   Aplicar al <body>: <body class="btn-grad-1">
+   ══════════════════════════════════════════════════════════════ */
+
+/* Default — sin gradiente, dorado plano (como ahora) */
+body.btn-grad-flat .btn-solid,
+body.btn-grad-flat .btn-entregar{
+  background:var(--gold);
+  color:var(--d1);
+}
+body.btn-grad-flat .btn-solid:hover,
+body.btn-grad-flat .btn-entregar:hover{
+  background:var(--gold2);
+}
+
+/* Opción 1: Champagne Luxe — suave, premium, clarito */
+body.btn-grad-1 .btn-solid,
+body.btn-grad-1 .btn-entregar{
+  background:linear-gradient(135deg,#F4E4B0 0%,#D4AF80 50%,#B8924E 100%);
+  color:var(--d5);
+  box-shadow:0 4px 20px -6px rgba(212,175,128,.5),
+             inset 0 1px 0 rgba(255,255,255,.4);
+}
+body.btn-grad-1 .btn-solid:hover,
+body.btn-grad-1 .btn-entregar:hover{
+  background:linear-gradient(135deg,#FFF0C0 0%,#E4BF8E 50%,#C9A35A 100%);
+  box-shadow:0 8px 30px -8px rgba(212,175,128,.7),
+             inset 0 1px 0 rgba(255,255,255,.5);
+}
+body.btn-grad-1 .btn-solid::before,
+body.btn-grad-1 .btn-entregar::before{display:none;}
+
+/* Opción 2: Royal Gold — clásico, balanceado, lujoso */
+body.btn-grad-2 .btn-solid,
+body.btn-grad-2 .btn-entregar{
+  background:linear-gradient(135deg,#E8C988 0%,#C9A84C 45%,#A07F2C 100%);
+  color:var(--d1);
+  box-shadow:0 4px 20px -6px rgba(201,168,76,.55),
+             inset 0 1px 0 rgba(255,255,255,.3);
+}
+body.btn-grad-2 .btn-solid:hover,
+body.btn-grad-2 .btn-entregar:hover{
+  background:linear-gradient(135deg,#F4D89E 0%,#D9BC6F 45%,#B8923A 100%);
+  box-shadow:0 8px 30px -8px rgba(201,168,76,.75),
+             inset 0 1px 0 rgba(255,255,255,.4);
+}
+body.btn-grad-2 .btn-solid::before,
+body.btn-grad-2 .btn-entregar::before{display:none;}
+
+/* Opción 3: Sunrise Rose — dorado con toque rosado, femenino */
+body.btn-grad-3 .btn-solid,
+body.btn-grad-3 .btn-entregar{
+  background:linear-gradient(135deg,#F8D5A8 0%,#E8B98C 35%,#D69B7A 75%,#B87559 100%);
+  color:#2A1810;
+  box-shadow:0 4px 20px -6px rgba(214,155,122,.55),
+             inset 0 1px 0 rgba(255,255,255,.4);
+}
+body.btn-grad-3 .btn-solid:hover,
+body.btn-grad-3 .btn-entregar:hover{
+  background:linear-gradient(135deg,#FFE5C0 0%,#F4C99E 35%,#E2A988 75%,#C68768 100%);
+  box-shadow:0 8px 30px -8px rgba(214,155,122,.75),
+             inset 0 1px 0 rgba(255,255,255,.5);
+}
+body.btn-grad-3 .btn-solid::before,
+body.btn-grad-3 .btn-entregar::before{display:none;}
+
+/* Opción 4: Bronze Metallic — intenso, cobre rico, dramático */
+body.btn-grad-4 .btn-solid,
+body.btn-grad-4 .btn-entregar{
+  background:linear-gradient(135deg,#D4B36E 0%,#B8893A 30%,#8B5E1A 70%,#6B4410 100%);
+  color:#FFF8E8;
+  box-shadow:0 4px 24px -6px rgba(184,137,58,.6),
+             inset 0 1px 0 rgba(255,220,150,.35);
+}
+body.btn-grad-4 .btn-solid:hover,
+body.btn-grad-4 .btn-entregar:hover{
+  background:linear-gradient(135deg,#E8C788 0%,#CC9D4E 30%,#A87124 70%,#85571A 100%);
+  box-shadow:0 8px 36px -8px rgba(184,137,58,.8),
+             inset 0 1px 0 rgba(255,220,150,.45);
+}
+body.btn-grad-4 .btn-solid::before,
+body.btn-grad-4 .btn-entregar::before{display:none;}
+
+/* Sección del panel para el selector de gradiente */
+.btn-grad-options{display:flex;flex-direction:column;gap:6px;margin-top:8px;padding-top:10px;border-top:1px solid rgba(212,175,128,.1);}
+.btn-grad-section-label{
+  font-family:var(--font-d);
+  font-style:italic;
+  font-size:10px;
+  color:var(--gold);
+  letter-spacing:1px;
+  margin-bottom:2px;
+  opacity:.75;
+}
+.btn-grad-opt{
+  display:flex;align-items:center;gap:10px;
+  background:transparent;
+  border:1px solid rgba(212,175,128,.15);
+  color:rgba(248,245,238,.75);
+  padding:7px 10px;
+  font-family:var(--font-b);
+  font-size:10.5px;
+  letter-spacing:.3px;
+  cursor:pointer;
+  text-align:left;
+  transition:all .2s;
+  border-radius:6px;
+}
+.btn-grad-opt:hover{border-color:var(--gold);color:var(--white);}
+.btn-grad-opt.active{
+  background:rgba(212,175,128,.12);
+  border-color:var(--gold);
+  color:var(--gold);
+}
+.btn-grad-opt-swatch{
+  width:24px;height:14px;border-radius:3px;flex-shrink:0;
+  border:1px solid rgba(255,255,255,.1);
+}
+.btn-grad-opt[data-grad="flat"] .btn-grad-opt-swatch{background:var(--gold);}
+.btn-grad-opt[data-grad="grad-1"] .btn-grad-opt-swatch{background:linear-gradient(135deg,#F4E4B0 0%,#D4AF80 50%,#B8924E 100%);}
+.btn-grad-opt[data-grad="grad-2"] .btn-grad-opt-swatch{background:linear-gradient(135deg,#E8C988 0%,#C9A84C 45%,#A07F2C 100%);}
+.btn-grad-opt[data-grad="grad-3"] .btn-grad-opt-swatch{background:linear-gradient(135deg,#F8D5A8 0%,#E8B98C 35%,#D69B7A 75%,#B87559 100%);}
+.btn-grad-opt[data-grad="grad-4"] .btn-grad-opt-swatch{background:linear-gradient(135deg,#D4B36E 0%,#B8893A 30%,#8B5E1A 70%,#6B4410 100%);}
+
+/* ── Image skeleton shimmer (design-system skill) ── */
+.img-skeleton{background:linear-gradient(90deg,var(--d3) 25%,var(--d4) 50%,var(--d3) 75%);background-size:200% 100%;animation:shimmer 1.5s infinite;}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+img[loading="lazy"]{opacity:0;transition:opacity .4s ease;}
+img[loading="lazy"].loaded{opacity:1;}
+
+/* ── Improved card hover transitions ── */
+.srv-card,.pkg-card,.product-card,.blog-card{transition:transform .3s cubic-bezier(.4,0,.2,1),box-shadow .3s ease;}
+.srv-card:hover,.product-card:hover{transform:translateY(-6px);}
+
+/* ── Better focus ring ── */
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px;}
+
+/* ── Prefers reduced motion (already had, reinforce) ── */
+@media(prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important;}}

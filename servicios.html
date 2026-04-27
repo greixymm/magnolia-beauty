@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<meta name="description" content="Todos los servicios de Magnolia Beauty & Fashion con precios: manicura, pestañas, spa, masajes, depilaciones, estilismo y más. San Diego, Valencia."/>
+<title>Servicios — Magnolia Beauty & Fashion</title>
+<link rel="stylesheet" href="css/style.css?v=6"/>
+<link rel="stylesheet" href="css/servicios.css?v=6"/>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌸</text></svg>"/>
+</head>
+<body>
+
+<!-- WhatsApp flotante -->
+<a class="wa-float" href="https://wa.me/584127552659?text=Hola!%20Quiero%20reservar%20un%20servicio%20en%20Magnolia%20🌸" target="_blank" rel="noopener" aria-label="Reservar por WhatsApp">
+  <div class="wa-label" aria-hidden="true">Reservar cita</div>
+  <div class="wa-btn" aria-hidden="true">
+    <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+  </div>
+</a>
+
+<!-- Mobile nav -->
+<nav class="mobile-nav" id="mobileNav" role="dialog" aria-modal="true" aria-label="Menú">
+  <button class="mobile-nav-close" id="mobileClose" aria-label="Cerrar">✕</button>
+  <a href="index.html#nosotras" onclick="closeMob()">Nosotras</a>
+  <a href="servicios.html" onclick="closeMob()">Servicios</a>
+  <a href="index.html#paquetes" onclick="closeMob()">Paquetes</a>
+  <a href="tienda.html" onclick="closeMob()">Tienda</a>
+  <a href="blog.html" onclick="closeMob()">Blog</a>
+  <a href="index.html#contacto" onclick="closeMob()">Contacto</a>
+</nav>
+
+<header>
+  <nav class="nav" id="mainNav">
+    <a href="index.html" class="nav-logo" aria-label="Magnolia Beauty & Fashion — Inicio">
+      <img src="img/logo-dorado.png" class="nav-logo-img-full" alt="Magnolia Beauty & Fashion" loading="eager"/>
+    </a>
+    <div class="nav-links">
+      <a href="index.html#nosotras">Nosotras</a>
+      <a href="servicios.html" class="active">Servicios</a>
+      <a href="index.html#paquetes">Paquetes</a>
+      <a href="tienda.html">Tienda</a>
+      <a href="blog.html">Blog</a>
+      <a href="index.html#contacto">Contacto</a>
+    </div>
+    <button class="nav-ham" id="hamburger" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobileNav">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+</header>
+
+<main id="main">
+
+<!-- Page Hero -->
+<section class="page-hero">
+  <div class="page-hero-bg" style="background-image:url('https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=1400&q=85');"></div>
+  <div class="container">
+    <div class="page-hero-content">
+      <div class="breadcrumb"><a href="index.html">Inicio</a><span class="sep">›</span><span>Servicios</span></div>
+      <div class="eyebrow">Catálogo completo</div>
+      <h1>Nuestros<br><em class="italic gold">Servicios</em></h1>
+    </div>
+  </div>
+</section>
+
+<!-- Sticky tabs -->
+<div class="srv-tabs" id="srvTabs" role="tablist" aria-label="Categorías de servicios">
+  <a href="#manicura" class="srv-tab" role="tab">Manicura</a>
+  <a href="#pestanas" class="srv-tab" role="tab">Pestañas</a>
+  <a href="#spa" class="srv-tab" role="tab">Spa</a>
+  <a href="#estilismo" class="srv-tab" role="tab">Estilismo</a>
+  <a href="#depilaciones" class="srv-tab" role="tab">Depilaciones</a>
+  <a href="#esteticos" class="srv-tab" role="tab">Estéticos</a>
+  <a href="#corporales" class="srv-tab" role="tab">Corporales</a>
+  <a href="#maquillaje" class="srv-tab" role="tab">Maquillaje</a>
+</div>
+
+<!-- ══ MANICURA Y PEDICURA ══ -->
+<section class="srv-category" id="manicura" aria-labelledby="mani-h2">
+  <div class="container">
+    <div class="srv-cat-header">
+      <div>
+        <div class="eyebrow">Categoría 01</div>
+        <h2 id="mani-h2">Manicura &amp; Pedicura</h2>
+        <p>La técnica más duradera y perfecta. Exfoliación e hidratación incluidas como obsequio en todos los servicios.</p>
+      </div>
+      <img src="uploads/post-03.jpg" alt="Manicura en Magnolia Beauty" class="srv-cat-img" loading="lazy"/>
+    </div>
+
+    <div class="price-grid">
+      <div class="price-card">
+        <div class="price-card-img-wrap">
+          <img src="uploads/post-03.jpg" alt="Manicura tradicional en Magnolia" loading="lazy"/>
+        </div>
+        <div class="price-card-body">
+          <div class="price-tag">$10</div>
+          <div class="price-name">Manicura Tradicional</div>
+          <p class="price-desc">Corte, limado, tratamiento de cutículas y esmaltado tradicional. Incluye exfoliación e hidratación de manos de obsequio.</p>
+          <a href="https://wa.me/584127552659?text=Hola!%20Quiero%20reservar%20Manicura%20Tradicional%20%2410" class="btn btn-solid btn-sm" target="_blank" rel="noopener">Reservar $10 →</a>
+        </div>
+      </div>
+      <div class="price-card featured">
+        <div class="price-card-badge">⭐ Más solicitada</div>
+        <div class="price-card-img-wrap">
+          <img src="uploads/post-03.jpg?w=500&q=80" alt="Manicura rusa semipermanente" loading="lazy"/>
+        </div>
+        <div class="price-card-body">
+          <div class="price-tag">$12</div>
+          <div class="price-name">Manicura Rusa + Semipermanente</div>
+          <p class="price-desc">Técnica rusa con cutícula perfecta y esmaltado semipermanente de larga duración. Hasta 3-4 semanas impecable.</p>
+          <a href="https://wa.me/584127552659?text=Hola!%20Quiero%20Manicura%20Rusa%20%2B%20Semi%20%2412" class="btn btn-solid btn-sm" target="_blank" rel="noopener">Reservar $12 →</a>
+        </div>
+      </div>
+      <div class="price-card">
+        <div class="price-card-img-wrap">
+          <img src="uploads/post-03.jpg?w=500&q=80" alt="Manicura rusa con nivelación" loading="lazy"/>
+        </div>
+        <div class="price-card-body">
+          <div class="price-tag">$17</div>
+          <div class="price-name">Manicura Rusa + Nivelación</div>
+          <p class="price-desc">Manicura rusa profesional con nivelación de uñas. Resultado más equilibrado y duradero para uñas exigentes.</p>
+          <a href="https://wa.me/584127552659?text=Hola!%20Quiero%20Manicura%20Rusa%20con%20Nivelación%20%2417" class="btn btn-solid btn-sm" target="_blank" rel="noopener">Reservar $17 →</a>
+        </div>
+      </div>
+      <div class="price-card">
+        <div class="price-card-img-wrap">
+          <img src="uploads/post-03.jpg?w=500&q=80" alt="Sistema Jelly" loading="lazy"/>
+        </div>
+        <div class="price-card-body">
+          <div class="price-tag">Desde $17</div>
+          <div class="price-name">Sistema Jelly / Jelly Tips</div>
+          <p class="price-desc">Técnica de extensión con sistema jelly. Máxima transparencia y naturalidad. Precio según diseño y longitud.</p>
+          <a href="https://wa.me/584127552659?text=Hola!%20Quiero%20info%20del%20Sistema%20Jelly" class="btn btn-solid btn-sm" target="_blank" rel="noopener">Consultar →</a>
+        </div>
+      </div>
+      <div class="price-card">
+        <div class="price-card-img-wrap">
+          <img src="uploads/post-03.jpg?w=500&q=80" alt="Polly Gel" loading="lazy"/>
+        </div>
+        <div class="price-card-body">
+          <div class="price-tag">$20</div>
+          <div class="price-name">Polly-Gel</div>
+          <p class="price-desc">Extensión de alta resistencia con polly-gel. Acabado impecable y duración superior a otras técnicas.</p>
+          <a href="https://wa.me/584127552659?text=Hola!%20Quiero%20Polly-Gel%20%2420" class="btn btn-solid btn-sm" target="_blank" rel="noopener">Reservar $20 →</a>
+        </div>
+      </div>
+      <div class="price-card">
+        <div class="price-card-img-wrap">
+          <img src="uploads/post-03.jpg?w=500&q=80" alt="Pedicure completo" loading="lazy"/>
+        </div>
+        <div class="price-card-body">
+          <div class="price-tag">$12</div>
+          <div class="price-name">Pedicure Completo</div>
+          <p class="price-desc">Limado, hidratación profunda de talones, tratamiento de cutículas y esmaltado. Tus pies perfectos.</p>
+          <a href="https://wa.me/584127552659?text=Hola!%20Quiero%20Pedicure%20%2412" class="btn btn-solid btn-sm" target="_blank" rel="noopener">Reservar $12 →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sistemas y nivelación -->
+    <div class="srv-extras">
+      <div class="eyebrow" style="margin-bottom:16px;">Sistemas y Nivelación</div>
+      <div class="extras-grid">
+        <div class="extra-item">Sistema Pollygel</div>
+        <div class="extra-item">Sistema Jelly Tips</div>
+        <div class="extra-item">Kapping de Polygel</div>
+        <div class="extra-item">Kapping de Acrílico</div>
+        <div class="extra-item">Kapping de Gel</div>
+        <div class="extra-item">Gel de construcción</div>
+        <div class="extra-item">Base Rubber</div>
+        <div class="extra-item">Reconstrucción de uña</div>
+      </div>
+      <p style="font-size:13px;color:var(--muted);margin-top:12px;">Consulta precio según tipo de sistema y diseño por WhatsApp.</p>
+    </div>
+
+    <div class="srv-obsequio">
+      🎁 <strong>OBSEQUIO EN TODOS LOS SERVICIOS:</strong> Exfoliación + Hidratación de manos y/o pies incluidas sin costo adicional.
+    </div>
+  </div>
+</section>
+
+<!-- ══ PESTAÑAS Y CEJAS ══ -->
+<section class="srv-category srv-alt" id="pestanas" aria-labelledby="pest-h2">
+  <div class="container">
+    <div class="srv-cat-header">
+      <div>
+        <div class="eyebrow">Categoría 02</div>
+        <h2 id="pest-h2">Pestañas &amp; Cejas</h2>
+        <p>Extensiones de todo tipo de volumen y efecto. Cejas con visajismo, laminado, micro-blading y más.</p>
+      </div>
+      <img src="uploads/post-06.jpg?w=600&q=85" alt="Pestañas en Magnolia" class="srv-cat-img" loading="lazy"/>
+    </div>
+
+    <div class="srv-two-col">
+      <div>
+        <div class="srv-subsection-title">✦ Pestañas — Extensiones</div>
+        <div class="price-list">
+          <div class="price-row"><span>Clásicas</span><span class="price-val">$20</span></div>
+          <div class="price-row"><span>Vol. Brasileño YY</span><span class="price-val">$25</span></div>
+          <div class="price-row"><span>Efecto Rímel</span><span class="price-val">$25</span></div>
+          <div class="price-row"><span>Vol. Griego</span><span class="price-val">$28</span></div>
+          <div class="price-row featured-row"><span>Vol. Efecto Wispy ★</span><span class="price-val">$35</span></div>
+          <div class="price-row"><span>Perfilado de Cejas</span><span class="price-val">$10</span></div>
+        </div>
+        <p style="font-size:13px;color:var(--muted);margin-top:12px;">Pestañas por punto (todo tipo de volumen). Extensiones con todo tipo de efecto. Lifting de pestañas disponible — consultar precio.</p>
+        <a href="https://wa.me/584127552659?text=Hola!%20Quiero%20reservar%20extensión%20de%20pestañas" class="btn btn-solid" style="margin-top:20px;" target="_blank" rel="noopener">Reservar ahora →</a>
+      </div>
+      <div>
+        <div class="srv-subsection-title">✦ Cejas</div>
+        <div class="extras-grid">
+          <div class="extra-item">Visajismo</div>
+          <div class="extra-item">Laminado de cejas</div>
+          <div class="extra-item">Sombreado</div>
+          <div class="extra-item">Pigmentación</div>
+          <div class="extra-item">Micro-pigmentación</div>
+          <div class="extra-item">Micro-blading</div>
+          <div class="extra-item">Microshading</div>
+        </div>
+        <img src="uploads/post-06.jpg?w=500&q=75" alt="Extensión de pestañas Magnolia" loading="lazy" style="width:100%;height:200px;object-fit:cover;margin-top:20px;filter:brightness(.8);"/>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ SPA Y MASAJES ══ -->
+<section class="srv-category" id="spa" aria-labelledby="spa-h2">
+  <div class="container">
+    <div class="srv-cat-header">
+      <div>
+        <div class="eyebrow">Categoría 03</div>
+        <h2 id="spa-h2">Spa &amp; Masajes</h2>
+        <p>Relájate, recarga y cuídate con nuestros servicios de spa. Técnicas certificadas y ambiente de bienestar total.</p>
+      </div>
+      <img src="uploads/mag-08.jpg?w=600&q=85" alt="Spa Magnolia" class="srv-cat-img" loading="lazy"/>
+    </div>
+    <div class="price-grid">
+      <div class="price-card">
+        <div class="price-card-img-wrap"><img src="uploads/post-08.jpg" alt="Masaje relajante en Magnolia" loading="lazy"/></div>
+        <div class="price-card-body">
+          <div class="price-tag">$25</div>
+          <div class="price-name">Masaje Relajante</div>
+          <p class="price-desc">Sesión completa con aceites aromáticos premium. Libera tensiones y activa la circulación en 60 minutos.</p>
+          <a href="https://wa.me/584127552659?text=Hola!%20Quiero%20Masaje%20Relajante%20%2425" class="btn btn-solid btn-sm" target="_blank" rel="noopener">Reservar $25 →</a>
+        </div>
+      </div>
+      <div class="price-card">
+        <div class="price-card-img-wrap"><img src="uploads/mag-08.jpg?w=500&q=80" alt="Masaje descontracturante" loading="lazy"/></div>
+        <div class="price-card-body">
+          <div class="price-tag">$25</div>
+          <div class="price-name">Masaje Descontracturante</div>
+          <p class="price-desc">Libera nudos musculares y tensiones profundas. Ideal después de jornadas largas o actividad física intensa.</p>
+          <a href="https://wa.me/584127552659?text=Hola!%20Quiero%20Masaje%20Descontracturante%20%2425" class="btn btn-solid btn-sm" target="_blank" rel="noopener">Reservar $25 →</a>
+        </div>
+      </div>
+      <div class="price-card">
+        <div class="price-card-img-wrap"><img src="uploads/mag-07.jpg?w=500&q=80" alt="Exfoliación corporal" loading="lazy"/></div>
+        <div class="price-card-body">
+          <div class="price-tag">$40</div>
+          <div class="price-name">Exfoliación Corporal + Hidratación</div>
+          <p class="price-desc">Tratamiento completo de exfoliación profunda seguido de hidratación intensiva. Piel renovada y suave.</p>
+          <a href="https://wa.me/584127552659?text=Hola!%20Quiero%20Exfoliación%20Corporal%20%2440" class="btn btn-solid btn-sm" target="_blank" rel="noopener">Reservar $40 →</a>
+        </div>
+      </div>
+      <div class="price-card">
+        <div class="price-card-img-wrap"><img src="https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?w=500&q=80" alt="Limpieza facial básica" loading="lazy"/></div>
+        <div class="price-card-body">
+          <div class="price-tag">$15</div>
+          <div class="price-name">Limpieza Facial Básica</div>
+          <p class="price-desc">Limpieza profunda, extracción de impurezas y tratamiento de poros. Piel fresca y sin obstrucciones.</p>
+          <a href="https://wa.me/584127552659?text=Hola!%20Quiero%20Limpieza%20Facial%20Básica%20%2415" class="btn btn-solid btn-sm" target="_blank" rel="noopener">Reservar $15 →</a>
+        </div>
+      </div>
+      <div class="price-card featured">
+        <div class="price-card-badge">VIP</div>
+        <div class="price-card-img-wrap"><img src="https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?w=500&q=80" alt="Limpieza facial VIP" loading="lazy"/></div>
+        <div class="price-card-body">
+          <div class="price-tag">$20</div>
+          <div class="price-name">Limpieza Facial VIP</div>
+          <p class="price-desc">Protocolo premium de limpieza profunda con tratamientos intensivos. Piel radiante y completamente purificada.</p>
+          <a href="https://wa.me/584127552659?text=Hola!%20Quiero%20Limpieza%20Facial%20VIP%20%2420" class="btn btn-solid btn-sm" target="_blank" rel="noopener">Reservar $20 →</a>
+        </div>
+      </div>
+      <div class="price-card">
+        <div class="price-card-img-wrap"><img src="https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?w=500&q=80" alt="Limpieza con Dermapen" loading="lazy"/></div>
+        <div class="price-card-body">
+          <div class="price-tag">$25</div>
+          <div class="price-name">Limpieza Facial con Dermapen</div>
+          <p class="price-desc">Limpieza profunda combinada con tratamiento de dermapen. Estimula colágeno y minimiza poros y marcas.</p>
+          <a href="https://wa.me/584127552659?text=Hola!%20Quiero%20Limpieza%20con%20Dermapen%20%2425" class="btn btn-solid btn-sm" target="_blank" rel="noopener">Reservar $25 →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ ESTILISMO ══ -->
+<section class="srv-category srv-alt" id="estilismo" aria-labelledby="est-h2">
+  <div class="container">
+    <div class="srv-cat-header">
+      <div>
+        <div class="eyebrow">Categoría 04</div>
+        <h2 id="est-h2">Estilismo &amp; Hair</h2>
+        <p>Alisado sin formol certificado, coloración, cortes y peinados para todas las ocasiones.</p>
+      </div>
+      <img src="https://images.unsplash.com/photo-1562322140-8baeececf3df?w=600&q=85" alt="Estilismo en Magnolia" class="srv-cat-img" loading="lazy"/>
+    </div>
+    <div class="price-grid">
+      <div class="price-card">
+        <div class="price-card-img-wrap"><img src="https://images.unsplash.com/photo-1562322140-8baeececf3df?w=500&q=80" alt="Coloración capilar" loading="lazy"/></div>
+        <div class="price-card-body">
+          <div class="price-tag">$35</div>
+          <div class="price-name">Color / Coloración</div>
+          <p class="price-desc">Incluye: aplicación de tinte, lavado, secado y corte de puntas. <strong>El tinte no está incluido en el precio.</strong></p>
+          <a href="https://wa.me/584127552659?text=Hola!%20Quiero%20info%20sobre%20Coloración%20%2435" class="btn btn-solid btn-sm" target="_blank" rel="noopener">Consultar $35 →</a>
+        </div>
+      </div>
+      <div class="price-card featured">
+        <div class="price-card-badge">🌿 Sin Formol — Apto Embarazadas</div>
+        <div class="price-card-img-wrap"><img src="https://images.unsplash.com/photo-1562322140-8baeececf3df?w=500&q=80" alt="Alisado sin formol" loading="lazy"/></div>
+        <div class="price-card-body">
+          <div class="price-tag">$40</div>
+          <div class="price-name">Alisado sin Formol</div>
+          <p class="price-desc">100% libre de formol. Incluye: alisado, corte de puntas e hidratación. <strong>Apto para niñas, mujeres embarazadas y en lactancia.</strong></p>
+          <a href="https://wa.me/584127552659?text=Hola!%20Quiero%20el%20Alisado%20sin%20Formol%20%2440" class="btn btn-solid btn-sm" target="_blank" rel="noopener">Reservar $40 →</a>
+        </div>
+      </div>
+      <div class="price-card">
+        <div class="price-card-img-wrap"><img src="https://images.unsplash.com/photo-1562322140-8baeececf3df?w=500&q=80" alt="Corte de cabello" loading="lazy"/></div>
+        <div class="price-card-body">
+          <div class="price-tag">Desde $10</div>
+          <div class="price-name">Corte de Cabello</div>
+          <p class="price-desc">Todo tipo de corte. Se recomienda traer el cabello lavado. Precio según tipo de corte — consultar para cortes especiales.</p>
+          <a href="https://wa.me/584127552659?text=Hola!%20Quiero%20un%20Corte%20de%20Cabello" class="btn btn-solid btn-sm" target="_blank" rel="noopener">Consultar →</a>
+        </div>
+      </div>
+      <div class="price-card">
+        <div class="price-card-img-wrap"><img src="https://images.unsplash.com/photo-1562322140-8baeececf3df?w=500&q=80" alt="Peinado para niñas" loading="lazy"/></div>
+        <div class="price-card-body">
+          <div class="price-tag">$10</div>
+          <div class="price-name">Peinado para Niñas</div>
+          <p class="price-desc">Peinados especiales para niñas en todo tipo de ocasión. Trenzas, moños, ondas y más.</p>
+          <a href="https://wa.me/584127552659?text=Hola!%20Quiero%20Peinado%20para%20Niñas%20%2410" class="btn btn-solid btn-sm" target="_blank" rel="noopener">Reservar $10 →</a>
+        </div>
+      </div>
+      <div class="price-card featured">
+        <div class="price-card-badge">Eventos</div>
+        <div class="price-card-img-wrap"><img src="https://images.unsplash.com/photo-1562322140-8baeececf3df?w=500&q=80" alt="Peinado quinceañeras novias" loading="lazy"/></div>
+        <div class="price-card-body">
+          <div class="price-tag">$30</div>
+          <div class="price-name">Quinceañeras &amp; Novias</div>
+          <p class="price-desc">Peinados elaborados para eventos especiales. Semirrecogidos, recogidos formales y todo estilo para tu gran día.</p>
+          <a href="https://wa.me/584127552659?text=Hola!%20Quiero%20Peinado%20para%20Quinceañera%2FNovia%20%2430" class="btn btn-solid btn-sm" target="_blank" rel="noopener">Reservar $30 →</a>
+        </div>
+      </div>
+      <div class="price-card">
+        <div class="price-card-img-wrap"><img src="https://images.unsplash.com/photo-1562322140-8baeececf3df?w=500&q=80" alt="Ondas" loading="lazy"/></div>
+        <div class="price-card-body">
+          <div class="price-tag">$15</div>
+          <div class="price-name">Ondas</div>
+          <p class="price-desc">Ondas perfectas para cualquier ocasión. Varitas, planchas rizadoras y técnicas profesionales.</p>
+          <a href="https://wa.me/584127552659?text=Hola!%20Quiero%20Ondas%20%2415" class="btn btn-solid btn-sm" target="_blank" rel="noopener">Reservar $15 →</a>
+        </div>
+      </div>
+    </div>
+    <div class="srv-extras">
+      <div class="eyebrow" style="margin-bottom:16px;">Hair Salón — también disponible</div>
+      <div class="extras-grid">
+        <div class="extra-item">Lavado e hidrataciones</div>
+        <div class="extra-item">Secado</div>
+        <div class="extra-item">Extensiones</div>
+        <div class="extra-item">Peinado</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ DEPILACIONES ══ -->
+<section class="srv-category" id="depilaciones" aria-labelledby="dep-h2">
+  <div class="container">
+    <div class="srv-cat-header">
+      <div>
+        <div class="eyebrow">Categoría 05</div>
+        <h2 id="dep-h2">Depilaciones</h2>
+        <p>Facial y corporal. Técnicas suaves y efectivas para una piel perfectamente lisa.</p>
+      </div>
+      <img src="uploads/mag-07.jpg?w=600&q=85" alt="Depilaciones Magnolia" class="srv-cat-img" loading="lazy"/>
+    </div>
+    <div class="srv-two-col">
+      <div>
+        <div class="srv-subsection-title">✦ Depilación Facial — Rostro</div>
+        <div class="price-list">
+          <div class="price-row"><span>Cejas</span><span class="price-val">$5</span></div>
+          <div class="price-row"><span>Bozo</span><span class="price-val">$3</span></div>
+          <div class="price-row"><span>Cejas + Bozo</span><span class="price-val">$7</span></div>
+          <div class="price-row"><span>Ceja + Pigmento</span><span class="price-val">$8</span></div>
+          <div class="price-row"><span>Pigmento</span><span class="price-val">$5</span></div>
+          <div class="price-row featured-row"><span>Diseño Ceja + Pigmento ★</span><span class="price-val">$10</span></div>
+          <div class="price-row"><span>Nariz</span><span class="price-val">$3</span></div>
+          <div class="price-row"><span>Oreja</span><span class="price-val">$3</span></div>
+          <div class="price-row"><span>Mejilla</span><span class="price-val">$3</span></div>
+          <div class="price-row"><span>Patilla</span><span class="price-val">$3</span></div>
+          <div class="price-row"><span>Mentón</span><span class="price-val">Consultar</span></div>
+        </div>
+      </div>
+      <div>
+        <div class="srv-subsection-title">✦ Depilación Corporal</div>
+        <div class="price-list">
+          <div class="price-row"><span>Axila</span><span class="price-val">$6</span></div>
+          <div class="price-row"><span>Pecho</span><span class="price-val">$10</span></div>
+          <div class="price-row"><span>Media Pierna</span><span class="price-val">$12</span></div>
+          <div class="price-row"><span>Pierna Completa</span><span class="price-val">$20</span></div>
+          <div class="price-row"><span>Bikini</span><span class="price-val">$10</span></div>
+          <div class="price-row featured-row"><span>Brasilero ★</span><span class="price-val">$17</span></div>
+          <div class="price-row"><span>Espalda</span><span class="price-val">Consultar</span></div>
+          <div class="price-row"><span>Glúteos</span><span class="price-val">Consultar</span></div>
+          <div class="price-row"><span>Vikini</span><span class="price-val">Consultar</span></div>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:36px;">
+      <a href="https://wa.me/584127552659?text=Hola!%20Quiero%20información%20sobre%20depilaciones" class="btn btn-solid" target="_blank" rel="noopener">Reservar depilación →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══ SERVICIOS ESTÉTICOS ══ -->
+<section class="srv-category srv-alt" id="esteticos" aria-labelledby="est2-h2">
+  <div class="container">
+    <div class="srv-cat-header">
+      <div>
+        <div class="eyebrow">Categoría 06</div>
+        <h2 id="est2-h2">Servicios Estéticos</h2>
+        <p>Tratamientos faciales no invasivos, estética corporal y masajes especializados para tu bienestar integral.</p>
+      </div>
+      <img src="https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?w=600&q=85" alt="Estética Magnolia" class="srv-cat-img" loading="lazy"/>
+    </div>
+    <div class="srv-two-col">
+      <div>
+        <div class="srv-subsection-title">✦ Tratamientos</div>
+        <div class="extras-grid">
+          <div class="extra-item">Tratamientos faciales (NO INVASIVOS)</div>
+          <div class="extra-item">Tratamiento de la piel</div>
+          <div class="extra-item">Estética Ontológica</div>
+          <div class="extra-item">Tratamiento de glúteos — $40</div>
+        </div>
+      </div>
+      <div>
+        <div class="srv-subsection-title">✦ Masajes Especializados</div>
+        <div class="extras-grid">
+          <div class="extra-item">Masajes Reductores</div>
+          <div class="extra-item">Masajes Relajantes</div>
+          <div class="extra-item">Masajes Descontracturantes</div>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:36px;">
+      <a href="https://wa.me/584127552659?text=Hola!%20Quiero%20info%20sobre%20Servicios%20Estéticos" class="btn btn-solid" target="_blank" rel="noopener">Consultar servicios →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══ PAQUETES CORPORALES ══ -->
+<section class="srv-category" id="corporales" aria-labelledby="corp-h2">
+  <div class="container">
+    <div class="eyebrow">Categoría 07</div>
+    <h2 id="corp-h2" style="margin-bottom:12px;">Paquetes Corporales</h2>
+    <p style="max-width:600px;margin-bottom:48px;">Programas completos de transformación corporal. Maderoterapia, aparatología, drenaje linfático y más.</p>
+    <div class="price-grid">
+      <div class="price-card">
+        <div class="price-card-img-wrap"><img src="https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?w=500&q=80" alt="Paquete Reductivo Básico" loading="lazy"/></div>
+        <div class="price-card-body">
+          <div class="price-tag">$80</div>
+          <div class="price-name">Reductivo Básico</div>
+          <ul class="srv-incl">
+            <li>6 sesiones masaje moldeador</li>
+            <li>Drenaje linfático</li>
+            <li>Aparatología</li>
+          </ul>
+          <a href="https://wa.me/584127552659?text=Hola!%20Quiero%20el%20Paquete%20Reductivo%20Básico%20%2480" class="btn btn-solid btn-sm" target="_blank" rel="noopener">Reservar $80 →</a>
+        </div>
+      </div>
+      <div class="price-card">
+        <div class="price-card-img-wrap"><img src="uploads/mag-14.jpg?w=500&q=80" alt="Reductivo Medio" loading="lazy"/></div>
+        <div class="price-card-body">
+          <div class="price-tag">$100</div>
+          <div class="price-name">Reductivo Medio</div>
+          <ul class="srv-incl">
+            <li>10 masajes moldeadores</li>
+            <li>Control de peso y medidas</li>
+            <li>Plan de alimentación</li>
+            <li>Plan de desintoxicación</li>
+            <li>Drenaje linfático</li>
+            <li>Rompimiento de adiposidad</li>
+            <li>Maderoterapia + aparatología</li>
+          </ul>
+          <a href="https://wa.me/584127552659?text=Hola!%20Quiero%20el%20Reductivo%20Medio%20%24100" class="btn btn-solid btn-sm" target="_blank" rel="noopener">Reservar $100 →</a>
+        </div>
+      </div>
+      <div class="price-card">
+        <div class="price-card-img-wrap"><img src="uploads/mag-07.jpg?w=500&q=80" alt="Masaje Full" loading="lazy"/></div>
+        <div class="price-card-body">
+          <div class="price-tag">$120</div>
+          <div class="price-name">Masaje Full</div>
+          <ul class="srv-incl">
+            <li>12 masajes moldeadores</li>
+            <li>Control de peso y medidas</li>
+            <li>Plan de alimentación + desintox.</li>
+            <li>Drenaje linfático</li>
+            <li>Rompimiento de adiposidad</li>
+            <li>Maderoterapia + aparatología</li>
+            <li>1 sesión de nutrientes</li>
+          </ul>
+          <a href="https://wa.me/584127552659?text=Hola!%20Quiero%20el%20Masaje%20Full%20%24120" class="btn btn-solid btn-sm" target="_blank" rel="noopener">Reservar $120 →</a>
+        </div>
+      </div>
+      <div class="price-card">
+        <div class="price-card-img-wrap"><img src="https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=500&q=80" alt="Tratamiento para Glúteos" loading="lazy"/></div>
+        <div class="price-card-body">
+          <div class="price-tag">$40</div>
+          <div class="price-name">Tratamiento para Glúteos</div>
+          <ul class="srv-incl">
+            <li>1 sesión completa</li>
+            <li>Limpieza + exfoliación</li>
+            <li>Blanqueamiento</li>
+            <li>Hidratación con Dermapen</li>
+          </ul>
+          <a href="https://wa.me/584127552659?text=Hola!%20Quiero%20el%20Tratamiento%20de%20Glúteos%20%2440" class="btn btn-solid btn-sm" target="_blank" rel="noopener">Reservar $40 →</a>
+        </div>
+      </div>
+      <div class="price-card featured">
+        <div class="price-card-badge">★ Premium VIP</div>
+        <div class="price-card-img-wrap"><img src="https://images.unsplash.com/photo-1552693673-1bf958298935?w=500&q=80" alt="Masaje VIP" loading="lazy"/></div>
+        <div class="price-card-body">
+          <div class="price-tag">$150</div>
+          <div class="price-name">Masaje VIP</div>
+          <ul class="srv-incl">
+            <li>12 masajes moldeadores</li>
+            <li>Control peso + medidas</li>
+            <li>Plan alimentación + desintox.</li>
+            <li>Drenaje linfático</li>
+            <li>Rompimiento adiposidad</li>
+            <li>Maderoterapia + aparatología</li>
+            <li>1 sesión nutrientes</li>
+            <li>1 exfoliación corporal</li>
+            <li>1 hidratación corporal</li>
+          </ul>
+          <a href="https://wa.me/584127552659?text=Hola!%20Quiero%20el%20Masaje%20VIP%20%24150" class="btn btn-solid btn-sm" target="_blank" rel="noopener">Reservar VIP $150 →</a>
+        </div>
+      </div>
+      <div class="price-card">
+        <div class="price-card-img-wrap"><img src="https://images.unsplash.com/photo-1552693673-1bf958298935?w=500&q=80" alt="Levantamiento de Glúteos" loading="lazy"/></div>
+        <div class="price-card-body">
+          <div class="price-tag">$220</div>
+          <div class="price-name">Levantamiento de Glúteos</div>
+          <ul class="srv-incl">
+            <li>12 masajes especializados</li>
+            <li>Aparatología profesional</li>
+            <li>3 sesiones de nutrientes</li>
+            <li>Maderoterapia</li>
+          </ul>
+          <a href="https://wa.me/584127552659?text=Hola!%20Quiero%20el%20Levantamiento%20de%20Glúteos%20%24220" class="btn btn-solid btn-sm" target="_blank" rel="noopener">Consultar $220 →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ MAQUILLAJE ══ -->
+<section class="srv-category srv-alt" id="maquillaje" aria-labelledby="maq-h2">
+  <div class="container">
+    <div class="srv-cat-header">
+      <div>
+        <div class="eyebrow">Categoría 08</div>
+        <h2 id="maq-h2">Maquillaje</h2>
+        <p>Artistas certificadas para todo tipo de evento. Productos de alta duración y técnicas actualizadas.</p>
+      </div>
+      <img src="https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?w=600&q=85" alt="Maquillaje Magnolia" class="srv-cat-img" loading="lazy"/>
+    </div>
+    <div class="extras-grid" style="margin-bottom:28px;">
+      <div class="extra-item">Eventos sociales</div>
+      <div class="extra-item">Quinceañeras</div>
+      <div class="extra-item">Bodas y novias</div>
+      <div class="extra-item">Fotografía profesional</div>
+      <div class="extra-item">Maquillaje artístico</div>
+      <div class="extra-item">Noche y fiestas</div>
+    </div>
+    <div style="text-align:center;">
+      <a href="https://wa.me/584127552659?text=Hola!%20Quiero%20info%20de%20maquillaje%20profesional" class="btn btn-solid" target="_blank" rel="noopener">Consultar precio y disponibilidad →</a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══ CATÁLOGO COMPLETO — OPCIÓN C MIXTO ══ -->
+<section class="srv-category" id="catalogo" aria-labelledby="cat-h2" style="background:var(--d2, #111);">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:48px;">
+      <div class="eyebrow" style="justify-content:center;">Catálogo Visual</div>
+      <h2 id="cat-h2" style="color:var(--white,#fff);">Nuestro Catálogo<br><em class="italic gold">Completo</em></h2>
+      <p style="max-width:480px;margin:16px auto 0;color:var(--muted,#aaa);">Desliza para ver todos nuestros servicios, precios y tratamientos disponibles.</p>
+    </div>
+
+    <!-- Slider del catálogo — 11 páginas PDF convertidas -->
+    <div class="cat-slider-wrap" style="position:relative;overflow:hidden;border-radius:16px;box-shadow:0 8px 40px rgba(0,0,0,.5);">
+      <div class="cat-slider-track" id="catSliderTrack" style="display:flex;transition:transform .4s cubic-bezier(.4,0,.2,1);will-change:transform;">
+        <div class="cat-slide" style="min-width:100%;position:relative;">
+          <img src="uploads/pdf-img-01.jpg" alt="Catálogo Magnolia — Página 1" style="width:100%;display:block;border-radius:16px;" loading="lazy"/>
+        </div>
+        <div class="cat-slide" style="min-width:100%;position:relative;">
+          <img src="uploads/pdf-img-02.jpg" alt="Catálogo Magnolia — Página 2" style="width:100%;display:block;border-radius:16px;" loading="lazy"/>
+        </div>
+        <div class="cat-slide" style="min-width:100%;position:relative;">
+          <img src="uploads/pdf-img-03.jpg" alt="Catálogo Magnolia — Página 3" style="width:100%;display:block;border-radius:16px;" loading="lazy"/>
+        </div>
+        <div class="cat-slide" style="min-width:100%;position:relative;">
+          <img src="uploads/pdf-img-04.jpg" alt="Catálogo Magnolia — Página 4" style="width:100%;display:block;border-radius:16px;" loading="lazy"/>
+        </div>
+        <div class="cat-slide" style="min-width:100%;position:relative;">
+          <img src="uploads/pdf-img-05.jpg" alt="Catálogo Magnolia — Página 5" style="width:100%;display:block;border-radius:16px;" loading="lazy"/>
+        </div>
+        <div class="cat-slide" style="min-width:100%;position:relative;">
+          <img src="uploads/pdf-img-06.jpg" alt="Catálogo Magnolia — Página 6" style="width:100%;display:block;border-radius:16px;" loading="lazy"/>
+        </div>
+        <div class="cat-slide" style="min-width:100%;position:relative;">
+          <img src="uploads/pdf-img-07.jpg" alt="Catálogo Magnolia — Página 7" style="width:100%;display:block;border-radius:16px;" loading="lazy"/>
+        </div>
+        <div class="cat-slide" style="min-width:100%;position:relative;">
+          <img src="uploads/pdf-img-08.jpg" alt="Catálogo Magnolia — Página 8" style="width:100%;display:block;border-radius:16px;" loading="lazy"/>
+        </div>
+        <div class="cat-slide" style="min-width:100%;position:relative;">
+          <img src="uploads/pdf-img-09.jpg" alt="Catálogo Magnolia — Página 9" style="width:100%;display:block;border-radius:16px;" loading="lazy"/>
+        </div>
+        <div class="cat-slide" style="min-width:100%;position:relative;">
+          <img src="uploads/pdf-img-10.jpg" alt="Catálogo Magnolia — Página 10" style="width:100%;display:block;border-radius:16px;" loading="lazy"/>
+        </div>
+        <div class="cat-slide" style="min-width:100%;position:relative;">
+          <img src="uploads/pdf-img-11.jpg" alt="Catálogo Magnolia — Página 11" style="width:100%;display:block;border-radius:16px;" loading="lazy"/>
+        </div>
+      </div>
+      <!-- Arrows -->
+      <button onclick="catPrev()" aria-label="Página anterior" style="position:absolute;left:12px;top:50%;transform:translateY(-50%);background:rgba(0,0,0,.7);border:1px solid rgba(201,168,76,.4);color:#C9A84C;width:44px;height:44px;border-radius:50%;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;z-index:10;transition:background .2s;">‹</button>
+      <button onclick="catNext()" aria-label="Página siguiente" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:rgba(0,0,0,.7);border:1px solid rgba(201,168,76,.4);color:#C9A84C;width:44px;height:44px;border-radius:50%;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;z-index:10;transition:background .2s;">›</button>
+      <!-- Counter -->
+      <div id="catCounter" style="position:absolute;bottom:14px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.7);color:#fff;font-size:12px;letter-spacing:2px;padding:6px 16px;border-radius:100px;border:1px solid rgba(201,168,76,.3);">1 / 11</div>
+    </div>
+
+    <!-- Thumbnails strip -->
+    <div style="display:flex;gap:8px;overflow-x:auto;padding:16px 0 8px;scrollbar-width:thin;-webkit-overflow-scrolling:touch;" id="catThumbs" role="tablist" aria-label="Páginas del catálogo">
+      <img src="uploads/pdf-img-01.jpg" alt="Pág 1" onclick="catTo(0)" role="tab" aria-label="Página 1" style="width:70px;height:90px;object-fit:cover;border-radius:6px;cursor:pointer;border:2px solid transparent;opacity:.6;flex-shrink:0;transition:all .2s;" class="cat-thumb cat-thumb-active"/>
+      <img src="uploads/pdf-img-02.jpg" alt="Pág 2" onclick="catTo(1)" role="tab" aria-label="Página 2" style="width:70px;height:90px;object-fit:cover;border-radius:6px;cursor:pointer;border:2px solid transparent;opacity:.6;flex-shrink:0;transition:all .2s;" class="cat-thumb"/>
+      <img src="uploads/pdf-img-03.jpg" alt="Pág 3" onclick="catTo(2)" role="tab" aria-label="Página 3" style="width:70px;height:90px;object-fit:cover;border-radius:6px;cursor:pointer;border:2px solid transparent;opacity:.6;flex-shrink:0;transition:all .2s;" class="cat-thumb"/>
+      <img src="uploads/pdf-img-04.jpg" alt="Pág 4" onclick="catTo(3)" role="tab" aria-label="Página 4" style="width:70px;height:90px;object-fit:cover;border-radius:6px;cursor:pointer;border:2px solid transparent;opacity:.6;flex-shrink:0;transition:all .2s;" class="cat-thumb"/>
+      <img src="uploads/pdf-img-05.jpg" alt="Pág 5" onclick="catTo(4)" role="tab" aria-label="Página 5" style="width:70px;height:90px;object-fit:cover;border-radius:6px;cursor:pointer;border:2px solid transparent;opacity:.6;flex-shrink:0;transition:all .2s;" class="cat-thumb"/>
+      <img src="uploads/pdf-img-06.jpg" alt="Pág 6" onclick="catTo(5)" role="tab" aria-label="Página 6" style="width:70px;height:90px;object-fit:cover;border-radius:6px;cursor:pointer;border:2px solid transparent;opacity:.6;flex-shrink:0;transition:all .2s;" class="cat-thumb"/>
+      <img src="uploads/pdf-img-07.jpg" alt="Pág 7" onclick="catTo(6)" role="tab" aria-label="Página 7" style="width:70px;height:90px;object-fit:cover;border-radius:6px;cursor:pointer;border:2px solid transparent;opacity:.6;flex-shrink:0;transition:all .2s;" class="cat-thumb"/>
+      <img src="uploads/pdf-img-08.jpg" alt="Pág 8" onclick="catTo(7)" role="tab" aria-label="Página 8" style="width:70px;height:90px;object-fit:cover;border-radius:6px;cursor:pointer;border:2px solid transparent;opacity:.6;flex-shrink:0;transition:all .2s;" class="cat-thumb"/>
+      <img src="uploads/pdf-img-09.jpg" alt="Pág 9" onclick="catTo(8)" role="tab" aria-label="Página 9" style="width:70px;height:90px;object-fit:cover;border-radius:6px;cursor:pointer;border:2px solid transparent;opacity:.6;flex-shrink:0;transition:all .2s;" class="cat-thumb"/>
+      <img src="uploads/pdf-img-10.jpg" alt="Pág 10" onclick="catTo(9)" role="tab" aria-label="Página 10" style="width:70px;height:90px;object-fit:cover;border-radius:6px;cursor:pointer;border:2px solid transparent;opacity:.6;flex-shrink:0;transition:all .2s;" class="cat-thumb"/>
+      <img src="uploads/pdf-img-11.jpg" alt="Pág 11" onclick="catTo(10)" role="tab" aria-label="Página 11" style="width:70px;height:90px;object-fit:cover;border-radius:6px;cursor:pointer;border:2px solid transparent;opacity:.6;flex-shrink:0;transition:all .2s;" class="cat-thumb"/>
+    </div>
+
+    <!-- Service thumbnails grid — fotos limpias por servicio -->
+    <div style="margin-top:64px;">
+      <div style="text-align:center;margin-bottom:32px;">
+        <div class="eyebrow" style="justify-content:center;">Galería de Servicios</div>
+        <h3 style="color:var(--white,#fff);font-family:var(--font-d);font-size:clamp(22px,3vw,30px);">Nuestros trabajos,<br><em class="italic gold">en imágenes reales.</em></h3>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;">
+        <div style="position:relative;border-radius:12px;overflow:hidden;aspect-ratio:3/4;cursor:pointer;" class="gal-item">
+          <img src="uploads/post-03.jpg" alt="Manicura artística" style="width:100%;height:100%;object-fit:cover;transition:transform .4s;" loading="lazy"/>
+          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.8) 0%,transparent 50%);display:flex;align-items:flex-end;padding:16px;">
+            <span style="color:#fff;font-family:var(--font-d);font-size:15px;font-weight:600;">Manicura</span>
+          </div>
+        </div>
+        <div style="position:relative;border-radius:12px;overflow:hidden;aspect-ratio:3/4;cursor:pointer;" class="gal-item">
+          <img src="uploads/post-04.jpg" alt="Pedicura profesional" style="width:100%;height:100%;object-fit:cover;transition:transform .4s;" loading="lazy"/>
+          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.8) 0%,transparent 50%);display:flex;align-items:flex-end;padding:16px;">
+            <span style="color:#fff;font-family:var(--font-d);font-size:15px;font-weight:600;">Pedicura</span>
+          </div>
+        </div>
+        <div style="position:relative;border-radius:12px;overflow:hidden;aspect-ratio:3/4;cursor:pointer;" class="gal-item">
+          <img src="uploads/post-06.jpg" alt="Extensión de pestañas" style="width:100%;height:100%;object-fit:cover;transition:transform .4s;" loading="lazy"/>
+          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.8) 0%,transparent 50%);display:flex;align-items:flex-end;padding:16px;">
+            <span style="color:#fff;font-family:var(--font-d);font-size:15px;font-weight:600;">Pestañas</span>
+          </div>
+        </div>
+        <div style="position:relative;border-radius:12px;overflow:hidden;aspect-ratio:3/4;cursor:pointer;" class="gal-item">
+          <img src="uploads/post-07.jpg" alt="Cejas y diseño" style="width:100%;height:100%;object-fit:cover;transition:transform .4s;" loading="lazy"/>
+          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.8) 0%,transparent 50%);display:flex;align-items:flex-end;padding:16px;">
+            <span style="color:#fff;font-family:var(--font-d);font-size:15px;font-weight:600;">Cejas</span>
+          </div>
+        </div>
+        <div style="position:relative;border-radius:12px;overflow:hidden;aspect-ratio:3/4;cursor:pointer;" class="gal-item">
+          <img src="uploads/post-08.jpg" alt="Masaje y spa" style="width:100%;height:100%;object-fit:cover;transition:transform .4s;" loading="lazy"/>
+          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.8) 0%,transparent 50%);display:flex;align-items:flex-end;padding:16px;">
+            <span style="color:#fff;font-family:var(--font-d);font-size:15px;font-weight:600;">Masajes</span>
+          </div>
+        </div>
+        <div style="position:relative;border-radius:12px;overflow:hidden;aspect-ratio:3/4;cursor:pointer;" class="gal-item">
+          <img src="uploads/mag-08.jpg" alt="Tratamientos corporales" style="width:100%;height:100%;object-fit:cover;transition:transform .4s;" loading="lazy"/>
+          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.8) 0%,transparent 50%);display:flex;align-items:flex-end;padding:16px;">
+            <span style="color:#fff;font-family:var(--font-d);font-size:15px;font-weight:600;">Corporales</span>
+          </div>
+        </div>
+        <div style="position:relative;border-radius:12px;overflow:hidden;aspect-ratio:3/4;cursor:pointer;" class="gal-item">
+          <img src="uploads/mag-05.jpg" alt="Estilismo capilar" style="width:100%;height:100%;object-fit:cover;transition:transform .4s;" loading="lazy"/>
+          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.8) 0%,transparent 50%);display:flex;align-items:flex-end;padding:16px;">
+            <span style="color:#fff;font-family:var(--font-d);font-size:15px;font-weight:600;">Estilismo</span>
+          </div>
+        </div>
+        <div style="position:relative;border-radius:12px;overflow:hidden;aspect-ratio:3/4;cursor:pointer;" class="gal-item">
+          <img src="uploads/maqu-03.jpg" alt="Maquillaje profesional" style="width:100%;height:100%;object-fit:cover;transition:transform .4s;" loading="lazy"/>
+          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.8) 0%,transparent 50%);display:flex;align-items:flex-end;padding:16px;">
+            <span style="color:#fff;font-family:var(--font-d);font-size:15px;font-weight:600;">Maquillaje</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="text-align:center;margin-top:48px;">
+      <a href="https://wa.me/584127552659?text=Hola!%20Vi%20el%20catálogo%20y%20quiero%20agendar%20una%20cita%20🌸" class="btn btn-solid" target="_blank" rel="noopener">
+        Agendar por WhatsApp → <span style="font-size:11px;opacity:.8;">0412-7552659</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Catalog slider JS -->
+<script>
+(function(){
+  let catIdx = 0;
+  const total = 11;
+  const track = document.getElementById('catSliderTrack');
+  const counter = document.getElementById('catCounter');
+  const thumbs = document.querySelectorAll('.cat-thumb');
+
+  function updateCat(){
+    track.style.transform = 'translateX(-' + (catIdx * 100) + '%)';
+    counter.textContent = (catIdx + 1) + ' / ' + total;
+    thumbs.forEach((t,i) => {
+      t.style.border = i === catIdx ? '2px solid #C9A84C' : '2px solid transparent';
+      t.style.opacity = i === catIdx ? '1' : '0.6';
+    });
+    // scroll thumb into view
+    if(thumbs[catIdx]) thumbs[catIdx].scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});
+  }
+
+  window.catNext = function(){ catIdx = (catIdx + 1) % total; updateCat(); };
+  window.catPrev = function(){ catIdx = (catIdx - 1 + total) % total; updateCat(); };
+  window.catTo   = function(i){ catIdx = i; updateCat(); };
+
+  // touch swipe
+  let startX = 0;
+  const wrap = document.querySelector('.cat-slider-wrap');
+  if(wrap){
+    wrap.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, {passive:true});
+    wrap.addEventListener('touchend',   e => {
+      const dx = e.changedTouches[0].clientX - startX;
+      if(Math.abs(dx) > 40){ dx < 0 ? catNext() : catPrev(); }
+    });
+  }
+  updateCat();
+})();
+</script>
+
+<style>
+.gal-item:hover img { transform: scale(1.06); }
+.cat-thumb:hover { opacity: 1 !important; border-color: rgba(201,168,76,.5) !important; }
+</style>
+
+
+<!-- CTA final -->
+<section style="background:var(--d1);padding:80px 0;text-align:center;">
+  <div class="container">
+    <div class="eyebrow" style="justify-content:center;">¿Lista?</div>
+    <h2 style="color:var(--white);margin-bottom:16px;">Agenda tu cita ahora</h2>
+    <p style="max-width:500px;margin:0 auto 36px;">Escríbenos por WhatsApp — respondemos en menos de 30 minutos para confirmar tu cita.</p>
+    <a href="https://wa.me/584127552659?text=Hola!%20Quiero%20agendar%20una%20cita%20en%20Magnolia%20Beauty%20🌸" class="btn btn-solid" target="_blank" rel="noopener">
+      Reservar por WhatsApp → <span style="font-size:11px;opacity:.8;letter-spacing:1px;">0412-7552659</span>
+    </a>
+  </div>
+</section>
+
+</main>
+
+<footer role="contentinfo" style="background:var(--d1);border-top:1px solid var(--gold-border);padding:32px 0;text-align:center;">
+  <div class="container">
+    <div style="margin-bottom:16px;">
+      <span style="font-family:var(--font-d);font-size:18px;letter-spacing:4px;text-transform:uppercase;color:var(--white);">Magnolia</span>
+      <span style="font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);display:block;margin-top:2px;">Beauty &amp; Fashion</span>
+    </div>
+    <p style="font-size:11px;color:var(--muted2);">CC Brisas del Valle, San Diego · Valencia · 0412-7552659</p>
+    <p style="font-size:11px;color:var(--muted2);margin-top:8px;"><a href="index.html" style="color:var(--gold);">← Inicio</a> · <a href="tienda.html" style="color:var(--muted);">Tienda</a> · <a href="blog.html" style="color:var(--muted);">Blog</a></p>
+  </div>
+</footer>
+
+<script src="js/main.js?v=1777231157"></script>
+
+</body>
+</html>

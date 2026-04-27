@@ -1,0 +1,1 @@
+/* panel moved to admin */

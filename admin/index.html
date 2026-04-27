@@ -1,0 +1,1762 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Magnolia Admin — Panel de Control</title>
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet"/>
+<style>
+:root{--g:#C9A84C;--g2:#E2B96F;--bk:#060606;--d1:#0E0E0E;--d2:#141414;--d3:#1C1C1C;--d4:#252525;--d5:#2E2E2E;--wh:#F8F5EE;--mu:#7A7770;--mu2:#555;--gr:#4CAF75;--re:#CF6679;--bl:#4A90D9;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--d2);color:var(--wh);font-family:'Jost',sans-serif;font-weight:300;min-height:100vh;}
+
+/* LOGIN */
+.login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--bk);position:relative;overflow:hidden;}
+.login-bg-text{position:absolute;bottom:-20px;left:50%;transform:translateX(-50%);font-family:'Cormorant Garamond',serif;font-size:clamp(120px,22vw,320px);font-weight:700;color:rgba(255,255,255,.025);white-space:nowrap;letter-spacing:-.03em;pointer-events:none;}
+.login-card{background:var(--d2);border:1px solid rgba(201,168,76,.15);padding:52px 48px;width:100%;max-width:440px;position:relative;z-index:1;}
+.login-logo{font-family:'Cormorant Garamond',serif;font-size:28px;letter-spacing:6px;text-transform:uppercase;color:var(--wh);margin-bottom:4px;}
+.login-sub{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--g);margin-bottom:40px;}
+.login-title{font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--wh);margin-bottom:28px;}
+.f-group{margin-bottom:18px;}
+.f-label{display:block;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--g);font-weight:500;margin-bottom:7px;}
+.f-input,.f-select,.f-textarea{width:100%;background:var(--d4);border:1px solid rgba(201,168,76,.15);color:var(--wh);font-family:'Jost',sans-serif;font-size:14px;font-weight:300;padding:12px 14px;outline:none;transition:border-color .3s;resize:vertical;}
+.f-input:focus,.f-select:focus,.f-textarea:focus{border-color:var(--g);}
+.f-input::placeholder,.f-textarea::placeholder{color:var(--mu2);}
+.f-select option{background:var(--d3);}
+.f-textarea{min-height:90px;}
+.login-error{font-size:12px;color:var(--re);margin-top:8px;display:none;}
+.login-error.show{display:block;}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 24px;font-family:'Jost',sans-serif;font-size:11px;font-weight:500;letter-spacing:2px;text-transform:uppercase;border:1px solid var(--g);color:var(--g);background:transparent;cursor:pointer;transition:all .3s;width:100%;margin-top:4px;}
+.btn:hover{background:var(--g);color:var(--bk);}
+.btn-solid{background:var(--g);color:var(--bk);}
+.btn-solid:hover{background:var(--g2);}
+.btn-sm{padding:7px 14px;font-size:10px;width:auto;}
+.btn-danger{border-color:var(--re);color:var(--re);}
+.btn-danger:hover{background:var(--re);color:var(--wh);}
+.btn-green{border-color:var(--gr);color:var(--gr);}
+.btn-green:hover{background:var(--gr);color:var(--bk);}
+.btn-blue{border-color:var(--bl);color:var(--bl);}
+.btn-blue:hover{background:var(--bl);color:var(--wh);}
+
+/* LAYOUT */
+.app{display:none;min-height:100vh;}
+.app.visible{display:flex;}
+.sidebar{width:240px;background:var(--d1);border-right:1px solid rgba(201,168,76,.1);display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;overflow-y:auto;z-index:100;transition:transform .3s;}
+.sidebar.hidden{transform:translateX(-100%);}
+.sidebar-logo{padding:26px 22px 18px;border-bottom:1px solid rgba(201,168,76,.08);}
+.sl-main{font-family:'Cormorant Garamond',serif;font-size:19px;letter-spacing:4px;text-transform:uppercase;}
+.sl-sub{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--g);margin-top:2px;}
+.sidebar-user{padding:14px 22px;border-bottom:1px solid rgba(201,168,76,.08);display:flex;align-items:center;gap:10px;}
+.su-avatar{width:32px;height:32px;border-radius:50%;background:rgba(201,168,76,.2);border:1px solid rgba(201,168,76,.4);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:500;color:var(--g);flex-shrink:0;}
+.su-name{font-size:12px;color:var(--wh);font-weight:400;}
+.su-role{font-size:10px;color:var(--mu);}
+.sidebar-nav{padding:14px 0;flex:1;}
+.snl{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--mu);padding:10px 22px 5px;font-weight:500;}
+.slink{display:flex;align-items:center;gap:11px;padding:10px 22px;font-size:12px;color:rgba(248,245,238,.55);cursor:pointer;transition:all .2s;border-left:2px solid transparent;background:none;border-top:none;border-right:none;border-bottom:none;width:100%;text-align:left;font-family:'Jost',sans-serif;}
+.slink:hover,.slink.active{color:var(--wh);background:rgba(201,168,76,.06);border-left-color:var(--g);}
+.slink.active{color:var(--g);}
+.slink svg{width:16px;height:16px;flex-shrink:0;}
+.sidebar-bottom{padding:16px 22px;border-top:1px solid rgba(201,168,76,.08);}
+.main{margin-left:240px;flex:1;display:flex;flex-direction:column;min-height:100vh;transition:margin .3s;}
+.main.expanded{margin-left:0;}
+.topbar{background:var(--d1);border-bottom:1px solid rgba(201,168,76,.1);padding:14px 28px;display:flex;align-items:center;justify-content:space-between;gap:12px;position:sticky;top:0;z-index:50;}
+.topbar-left{display:flex;align-items:center;gap:14px;}
+.topbar-title{font-family:'Cormorant Garamond',serif;font-size:18px;color:var(--wh);}
+.topbar-right{display:flex;align-items:center;gap:10px;}
+.status-dot{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--gr);}
+.status-dot::before{content:'';width:6px;height:6px;background:var(--gr);border-radius:50%;}
+.ham-btn{background:none;border:none;cursor:pointer;display:none;padding:4px;}
+.ham-btn svg{width:22px;height:22px;color:var(--wh);}
+.content{padding:28px;flex:1;}
+
+/* PANELS */
+.panel{display:none;}
+.panel.active{display:block;}
+
+/* CARDS */
+.card{background:var(--d3);border:1px solid rgba(201,168,76,.1);padding:22px 24px;margin-bottom:18px;}
+.card-title{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--g);font-weight:500;margin-bottom:16px;}
+.card-row{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+
+/* STATS */
+.stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-bottom:24px;}
+.stat-c{background:var(--d3);border:1px solid rgba(201,168,76,.1);border-top:2px solid var(--g);padding:18px 20px;}
+.stat-n{font-family:'Cormorant Garamond',serif;font-size:34px;color:var(--g);line-height:1;}
+.stat-l{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--mu);margin-top:3px;}
+
+/* QUICK LINKS */
+.ql-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;margin-bottom:24px;}
+.ql{background:var(--d3);border:1px solid rgba(201,168,76,.1);padding:16px 14px;cursor:pointer;transition:border-color .3s;text-align:center;border:none;width:100%;font-family:'Jost',sans-serif;}
+.ql:hover{border:1px solid rgba(201,168,76,.4);}
+.ql svg{width:22px;height:22px;color:var(--g);margin-bottom:8px;}
+.ql-text{font-size:11px;color:rgba(248,245,238,.65);}
+
+/* TABLE */
+.tbl-wrap{overflow-x:auto;}
+table{width:100%;border-collapse:collapse;}
+th{text-align:left;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--g);font-weight:500;padding:10px 12px;border-bottom:1px solid rgba(201,168,76,.18);}
+td{padding:11px 12px;font-size:13px;color:rgba(248,245,238,.75);border-bottom:1px solid rgba(255,255,255,.04);vertical-align:middle;}
+tr:hover td{background:rgba(201,168,76,.03);}
+
+/* BADGES */
+.badge{display:inline-block;padding:3px 9px;border-radius:2px;font-size:10px;font-weight:500;letter-spacing:1px;}
+.bg-gold{background:rgba(201,168,76,.15);color:var(--g);}
+.bg-gr{background:rgba(76,175,117,.15);color:var(--gr);}
+.bg-re{background:rgba(207,102,121,.12);color:var(--re);}
+.bg-bl{background:rgba(74,144,217,.12);color:var(--bl);}
+
+/* TOGGLE */
+.tgl{display:flex;align-items:center;gap:8px;cursor:pointer;background:none;border:none;font-family:'Jost',sans-serif;}
+.tgl-track{width:38px;height:20px;background:var(--d5);border-radius:10px;position:relative;transition:background .3s;flex-shrink:0;}
+.tgl-track.on{background:var(--g);}
+.tgl-thumb{width:14px;height:14px;background:var(--wh);border-radius:50%;position:absolute;top:3px;left:3px;transition:left .3s;}
+.tgl-track.on .tgl-thumb{left:21px;}
+.tgl-label{font-size:12px;color:rgba(248,245,238,.65);}
+
+/* UPLOAD */
+.upload-zone{border:2px dashed rgba(201,168,76,.2);padding:28px;text-align:center;cursor:pointer;transition:border-color .3s;background:rgba(201,168,76,.02);}
+.upload-zone:hover{border-color:var(--g);}
+.upload-zone svg{width:32px;height:32px;color:var(--mu);margin-bottom:10px;}
+.upload-zone p{font-size:13px;color:var(--mu);}
+
+/* ALERT */
+.alert{padding:10px 14px;margin-bottom:14px;border-left:3px solid;font-size:12px;display:none;}
+.alert.show{display:block;}
+.alert-ok{background:rgba(76,175,117,.1);border-color:var(--gr);color:var(--gr);}
+.alert-err{background:rgba(207,102,121,.1);border-color:var(--re);color:var(--re);}
+
+/* FORM ROW */
+.f-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.f-row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;}
+
+/* COLOR SWATCH */
+.swatch{width:36px;height:36px;border-radius:50%;border:2px solid rgba(255,255,255,.15);cursor:pointer;transition:transform .2s;display:inline-block;}
+.swatch:hover{transform:scale(1.1);}
+.swatches{display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
+
+/* TABS */
+.tabs{display:flex;border-bottom:1px solid rgba(201,168,76,.15);margin-bottom:22px;gap:0;}
+.tab{padding:10px 20px;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--mu);cursor:pointer;border-bottom:2px solid transparent;transition:all .3s;background:none;border-top:none;border-left:none;border-right:none;font-family:'Jost',sans-serif;margin-bottom:-1px;}
+.tab.active{color:var(--g);border-bottom-color:var(--g);}
+.tab-panel{display:none;}
+.tab-panel.active{display:block;}
+
+/* PREVIEW IMG */
+.prev-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px;margin-top:14px;}
+.prev-item{position:relative;aspect-ratio:1;background:var(--d4);border:1px solid rgba(201,168,76,.1);overflow:hidden;}
+.prev-item img{width:100%;height:100%;object-fit:cover;}
+.prev-del{position:absolute;top:5px;right:5px;background:rgba(0,0,0,.75);border:none;color:var(--re);cursor:pointer;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:12px;border-radius:2px;}
+
+/* RICH EDITOR (simple) */
+.rich-toolbar{display:flex;gap:4px;flex-wrap:wrap;padding:8px;background:var(--d4);border:1px solid rgba(201,168,76,.15);border-bottom:none;}
+.rtool{background:none;border:none;color:var(--mu);cursor:pointer;padding:5px 8px;font-size:13px;font-family:'Jost',sans-serif;transition:color .2s;border-radius:2px;}
+.rtool:hover{color:var(--wh);background:rgba(255,255,255,.08);}
+.rich-editor{width:100%;min-height:180px;background:var(--d4);border:1px solid rgba(201,168,76,.15);color:var(--wh);font-family:'Jost',sans-serif;font-size:14px;padding:14px;outline:none;line-height:1.7;}
+
+/* COLOR PICKER */
+.color-field{display:flex;align-items:center;gap:10px;}
+.color-preview{width:36px;height:36px;border:1px solid rgba(201,168,76,.2);}
+input[type="color"]{width:0;height:0;opacity:0;position:absolute;}
+
+/* PROGRESS */
+.progress-bar{height:4px;background:var(--d4);border-radius:2px;overflow:hidden;margin:8px 0;}
+.progress-fill{height:100%;background:var(--g);border-radius:2px;transition:width .5s;}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:5px;}
+::-webkit-scrollbar-track{background:var(--d2);}
+::-webkit-scrollbar-thumb{background:rgba(201,168,76,.25);border-radius:3px;}
+
+/* MOBILE */
+@media(max-width:768px){
+  .sidebar{transform:translateX(-100%);}
+  .sidebar.open{transform:translateX(0);}
+  .main{margin-left:0;}
+  .ham-btn{display:block;}
+  .f-row,.f-row-3{grid-template-columns:1fr;}
+  .stats-row{grid-template-columns:1fr 1fr;}
+}
+
+.sec-tpl{background:var(--d3);border:1px solid rgba(201,168,76,.12);padding:20px;border-radius:4px;cursor:pointer;transition:all .25s;}
+.sec-tpl:hover{border-color:var(--g);background:var(--d4);}
+.sec-tpl-icon{font-size:24px;margin-bottom:10px;}
+.sec-tpl-name{font-family:'Cormorant Garamond',serif;font-size:17px;color:var(--wh);margin-bottom:6px;}
+.sec-tpl-desc{font-size:12px;color:var(--mu);line-height:1.6;}
+.ticker-item-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+.faq-admin-item{background:var(--d3);border:1px solid rgba(255,255,255,.06);padding:14px 16px;margin-bottom:10px;border-radius:4px;}
+.faq-admin-q{font-size:14px;color:var(--wh);font-weight:500;margin-bottom:4px;}
+.faq-admin-a{font-size:12px;color:var(--mu);line-height:1.5;}
+.promo-admin-item{background:var(--d3);border:1px solid rgba(201,168,76,.15);padding:14px 16px;margin-bottom:12px;border-radius:4px;display:flex;gap:16px;align-items:flex-start;}
+.promo-thumb{width:80px;height:54px;object-fit:cover;border-radius:3px;flex-shrink:0;}
+.promo-info{flex:1;}
+.promo-badge-tag{font-size:10px;letter-spacing:1px;color:var(--g);text-transform:uppercase;}
+.promo-title{font-family:'Cormorant Garamond',serif;font-size:16px;color:var(--wh);}
+.sections-row{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.04);}
+.sections-row-name{font-size:14px;color:var(--wh);}
+.sections-row-hint{font-size:11px;color:var(--mu);margin-top:2px;}
+
+</style>
+</head>
+<body>
+
+<!-- ══ LOGIN ══ -->
+<div class="login-wrap" id="loginWrap">
+  <div class="login-bg-text">MAGNOLIA</div>
+  <div class="login-card">
+    <div class="login-logo">Magnolia</div>
+    <div class="login-sub">Beauty &amp; Fashion · Panel Admin</div>
+    <div class="login-title">Iniciar sesión</div>
+    <div class="f-group"><label class="f-label">Usuario</label><input type="text" class="f-input" id="loginUser" placeholder="usuario@magnolia.com" autocomplete="username"/></div>
+    <div class="f-group"><label class="f-label">Contraseña</label><input type="password" class="f-input" id="loginPass" placeholder="••••••••" autocomplete="current-password"/></div>
+    <div class="login-error" id="loginError">Usuario o contraseña incorrectos.</div>
+    <button class="btn btn-solid" onclick="doLogin()" style="margin-top:10px;">Ingresar →</button>
+    <p style="font-size:11px;color:var(--mu);margin-top:18px;text-align:center;">Demo: admin / magnolia2026</p>
+  </div>
+</div>
+
+<!-- ══ APP ══ -->
+<div class="app" id="appWrap">
+
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-logo"><div class="sl-main">Magnolia</div><div class="sl-sub">Beauty &amp; Fashion</div></div>
+  <div class="sidebar-user"><div class="su-avatar" id="suAvatar">A</div><div><div class="su-name" id="suName">Admin</div><div class="su-role" id="suRole">Administrador</div></div></div>
+  <nav class="sidebar-nav">
+    <div class="snl">Principal</div>
+    <button class="slink active" onclick="showP('dashboard',this)"><svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 0 1 6 3.75h2.25A2.25 2.25 0 0 1 10.5 6v2.25a2.25 2.25 0 0 1-2.25 2.25H6a2.25 2.25 0 0 1-2.25-2.25V6ZM3.75 15.75A2.25 2.25 0 0 1 6 13.5h2.25a2.25 2.25 0 0 1 2.25 2.25V18a2.25 2.25 0 0 1-2.25 2.25H6A2.25 2.25 0 0 1 3.75 18v-2.25ZM13.5 6a2.25 2.25 0 0 1 2.25-2.25H18A2.25 2.25 0 0 1 20.25 6v2.25A2.25 2.25 0 0 1 18 10.5h-2.25a2.25 2.25 0 0 1-2.25-2.25V6ZM13.5 15.75a2.25 2.25 0 0 1 2.25-2.25H18a2.25 2.25 0 0 1 2.25 2.25V18A2.25 2.25 0 0 1 18 20.25h-2.25A2.25 2.25 0 0 1 13.5 18v-2.25Z"/></svg>Dashboard</button>
+    <button class="slink" onclick="window.open('../index.html','_blank')"><svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 0 0 8.716-6.747M12 21a9.004 9.004 0 0 1-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 0 1 7.843 4.582M12 3a8.997 8.997 0 0 0-7.843 4.582m15.686 0A11.953 11.953 0 0 1 12 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0 1 21 12c0 .778-.099 1.533-.284 2.253"/></svg>Ver sitio web</button>
+    <div class="snl">Contenido</div>
+    <button class="slink" onclick="showP('apariencia',this)"><svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.098 19.902a3.75 3.75 0 0 0 5.304 0l6.401-6.402M6.75 21A3.75 3.75 0 0 1 3 17.25V4.125C3 3.504 3.504 3 4.125 3h5.25c.621 0 1.125.504 1.125 1.125v4.072M6.75 21a3.75 3.75 0 0 0 3.75-3.75V8.197M6.75 21h13.125c.621 0 1.125-.504 1.125-1.125v-5.25c0-.621-.504-1.125-1.125-1.125h-4.072M10.5 8.197l2.88-2.88c.438-.439 1.15-.439 1.59 0l3.712 3.713c.44.44.44 1.152 0 1.59l-2.879 2.88M6.75 17.25h.008v.008H6.75v-.008Z"/></svg>Apariencia</button>
+    <button class="slink" onclick="showP('hero',this)"><svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z"/></svg>Hero / Portada</button>
+    <button class="slink" onclick="showP('servicios',this)"><svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11.48 3.499a.562.562 0 0 1 1.04 0l2.125 5.111a.563.563 0 0 0 .475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 0 0-.182.557l1.285 5.385a.562.562 0 0 1-.84.61l-4.725-2.885a.562.562 0 0 0-.586 0L6.982 20.54a.562.562 0 0 1-.84-.61l1.285-5.386a.562.562 0 0 0-.182-.557l-4.204-3.602a.562.562 0 0 1 .321-.988l5.518-.442a.563.563 0 0 0 .475-.345L11.48 3.5Z"/></svg>Servicios</button>
+    <button class="slink" onclick="showP('paquetes',this)"><svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m21 7.5-9-5.25L3 7.5m18 0-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9"/></svg>Paquetes</button>
+    <button class="slink" onclick="showP('tienda',this)"><svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007Z"/></svg>Tienda</button>
+    <button class="slink" onclick="showP('galeria',this)"><svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z"/></svg>Galería</button>
+    <button class="slink" onclick="showP('testimonios',this)"><svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.625 9.75a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375m-13.5 3.01c0 1.6 1.123 2.994 2.707 3.227 1.087.16 2.185.283 3.293.369V21l4.184-4.183a1.14 1.14 0 0 1 .778-.332 48.294 48.294 0 0 0 5.83-.498c1.585-.233 2.708-1.626 2.708-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z"/></svg>Testimonios</button>
+    <button class="slink" onclick="showP('blog',this)"><svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 7.5h1.5m-1.5 3h1.5m-7.5 3h7.5m-7.5 3h7.5m3-9h3.375c.621 0 1.125.504 1.125 1.125V18a2.25 2.25 0 0 1-2.25 2.25M16.5 7.5V18a2.25 2.25 0 0 0 2.25 2.25M16.5 7.5V4.875c0-.621-.504-1.125-1.125-1.125H4.125C3.504 3.75 3 4.254 3 4.875V18a2.25 2.25 0 0 0 2.25 2.25h13.5M6 7.5h3v3H6v-3Z"/></svg>Blog</button>
+    <button class="slink" onclick="showP('nosotras',this)"><svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"/></svg>Nosotras</button>
+    <button class="slink" onclick="showP('ticker',this)"><svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.087.16 2.185.283 3.293.369V21l4.184-4.183a1.14 1.14 0 0 1 .778-.332 48.294 48.294 0 0 0 5.83-.498c1.585-.233 2.708-1.626 2.708-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z"/></svg>Ticker</button>
+    <button class="slink" onclick="showP('faq',this)"><svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 5.25h.008v.008H12v-.008Z"/></svg>FAQ</button>
+    <button class="slink" onclick="showP('promos',this)"><svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10.34 15.84c-.688-.06-1.386-.09-2.09-.09H7.5a4.5 4.5 0 1 1 0-9h.75c.704 0 1.402-.03 2.09-.09m0 9.18c.253.962.584 1.892.985 2.783.247.55.06 1.21-.463 1.511l-.657.38c-.551.318-1.26.117-1.527-.461a20.845 20.845 0 0 1-1.44-4.282m3.102.069a18.03 18.03 0 0 1-.59-4.59c0-1.586.205-3.124.59-4.59m0 9.18a23.848 23.848 0 0 1 8.835 2.535M10.34 6.66a23.847 23.847 0 0 1 8.835-2.535m0 0A23.74 23.74 0 0 1 18.795 3m.38 1.125a23.91 23.91 0 0 1 1.014 5.395m-1.014 8.855c-.118.38-.245.754-.38 1.125m.38-1.125a23.91 23.91 0 0 0 1.014-5.395m0-3.46c.495.413.811 1.035.811 1.73 0 .695-.316 1.317-.811 1.73m0-3.46a24.347 24.347 0 0 1 0 3.46"/></svg>Promos / Banners</button>
+    <button class="slink" onclick="showP('contacto',this)"><svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 0 0 2.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 0 1-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 0 0-1.091-.852H4.5A2.25 2.25 0 0 0 2.25 4.5v2.25Z"/></svg>Contacto</button>
+    <button class="slink" onclick="showP('secciones',this)"><svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 0 1 6 3.75h2.25A2.25 2.25 0 0 1 10.5 6v2.25a2.25 2.25 0 0 1-2.25 2.25H6a2.25 2.25 0 0 1-2.25-2.25V6ZM3.75 15.75A2.25 2.25 0 0 1 6 13.5h2.25a2.25 2.25 0 0 1 2.25 2.25V18a2.25 2.25 0 0 1-2.25 2.25H6A2.25 2.25 0 0 1 3.75 18v-2.25ZM13.5 6a2.25 2.25 0 0 1 2.25-2.25H18A2.25 2.25 0 0 1 20.25 6v2.25A2.25 2.25 0 0 1 18 10.5h-2.25a2.25 2.25 0 0 1-2.25-2.25V6ZM13.5 15.75a2.25 2.25 0 0 1 2.25-2.25H18a2.25 2.25 0 0 1 2.25 2.25V18A2.25 2.25 0 0 1 18 20.25h-2.25A2.25 2.25 0 0 1 13.5 18v-2.25Z"/></svg>Secciones</button>
+    <button class="slink" onclick="showP('eventos',this)"><svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5"/></svg>Eventos / Cursos</button>
+    <div class="snl">Configuración</div>
+    <button class="slink" onclick="showP('info',this)"><svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z"/></svg>Info del negocio</button>
+    <button class="slink" onclick="showP('usuarios',this)"><svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z"/></svg>Usuarios</button>
+    <button class="slink" onclick="showP('pixeles',this)"><svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17.25v1.007a3 3 0 0 1-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0 1 15 18.257V17.25m6-12V15a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 15V5.25m18 0A2.25 2.25 0 0 0 18.75 3H5.25A2.25 2.25 0 0 0 3 5.25m18 0H3"/></svg>Píxeles &amp; SEO</button>
+    <button class="slink" onclick="showP('deploy',this)"><svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5m-13.5-9L12 3m0 0 4.5 4.5M12 3v13.5"/></svg>Publicar / Deploy</button>
+    <button class="slink" onclick="showP('backup',this)"><svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375m16.5 0v3.75m-16.5-3.75v3.75m16.5 0v3.75M3.75 13.5v3.75"/></svg>Backup</button>
+  </nav>
+  <div class="sidebar-bottom"><button onclick="doLogout()" style="background:none;border:none;cursor:pointer;font-size:12px;color:var(--mu);display:flex;align-items:center;gap:8px;font-family:'Jost',sans-serif;"><svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" style="width:15px;height:15px;"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15M12 9l-3 3m0 0 3 3m-3-3h12.75"/></svg>Cerrar sesión</button></div>
+</aside>
+
+<div class="main" id="mainArea">
+  <div class="topbar">
+    <div class="topbar-left">
+      <button class="ham-btn" id="hamBtn"><svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/></svg></button>
+      <div class="topbar-title" id="topbarTitle">Dashboard</div>
+    </div>
+    <div class="topbar-right">
+      <span class="status-dot">Sitio activo</span>
+      <button class="btn btn-solid btn-sm" onclick="saveAll()">💾 Guardar todo</button>
+    </div>
+  </div>
+
+  <div class="content">
+    <!-- ════ DASHBOARD ════ -->
+    <div class="panel active" id="panel-dashboard">
+      <div class="stats-row">
+        <div class="stat-c"><div class="stat-n" id="s-srv">8</div><div class="stat-l">Servicios activos</div></div>
+        <div class="stat-c"><div class="stat-n" id="s-pkg">6</div><div class="stat-l">Paquetes</div></div>
+        <div class="stat-c"><div class="stat-n" id="s-prod">3</div><div class="stat-l">Productos tienda</div></div>
+        <div class="stat-c"><div class="stat-n" id="s-blog">3</div><div class="stat-l">Posts blog</div></div>
+        <div class="stat-c"><div class="stat-n" id="s-usr">1</div><div class="stat-l">Usuarios</div></div>
+      </div>
+      <div class="ql-grid">
+        <button class="ql" onclick="showP('apariencia',null)"><svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.098 19.902a3.75 3.75 0 0 0 5.304 0l6.401-6.402M6.75 21A3.75 3.75 0 0 1 3 17.25V4.125C3 3.504 3.504 3 4.125 3h5.25c.621 0 1.125.504 1.125 1.125v4.072M6.75 21a3.75 3.75 0 0 0 3.75-3.75V8.197M6.75 21h13.125c.621 0 1.125-.504 1.125-1.125v-5.25c0-.621-.504-1.125-1.125-1.125h-4.072M10.5 8.197l2.88-2.88c.438-.439 1.15-.439 1.59 0l3.712 3.713c.44.44.44 1.152 0 1.59l-2.879 2.88M6.75 17.25h.008v.008H6.75v-.008Z"/></svg><div class="ql-text">Apariencia</div></button>
+        <button class="ql" onclick="showP('hero',null)"><svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z"/></svg><div class="ql-text">Portada</div></button>
+        <button class="ql" onclick="showP('servicios',null)"><svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11.48 3.499a.562.562 0 0 1 1.04 0l2.125 5.111a.563.563 0 0 0 .475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 0 0-.182.557l1.285 5.385a.562.562 0 0 1-.84.61l-4.725-2.885a.562.562 0 0 0-.586 0L6.982 20.54a.562.562 0 0 1-.84-.61l1.285-5.386a.562.562 0 0 0-.182-.557l-4.204-3.602a.562.562 0 0 1 .321-.988l5.518-.442a.563.563 0 0 0 .475-.345L11.48 3.5Z"/></svg><div class="ql-text">Servicios</div></button>
+        <button class="ql" onclick="showP('tienda',null)"><svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007Z"/></svg><div class="ql-text">Tienda</div></button>
+        <button class="ql" onclick="showP('blog',null)"><svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 7.5h1.5m-1.5 3h1.5m-7.5 3h7.5m-7.5 3h7.5m3-9h3.375c.621 0 1.125.504 1.125 1.125V18a2.25 2.25 0 0 1-2.25 2.25M16.5 7.5V18a2.25 2.25 0 0 0 2.25 2.25M16.5 7.5V4.875c0-.621-.504-1.125-1.125-1.125H4.125C3.504 3.75 3 4.254 3 4.875V18a2.25 2.25 0 0 0 2.25 2.25h13.5M6 7.5h3v3H6v-3Z"/></svg><div class="ql-text">Blog</div></button>
+        <button class="ql" onclick="showP('pixeles',null)"><svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17.25v1.007a3 3 0 0 1-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0 1 15 18.257V17.25m6-12V15a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 15V5.25m18 0A2.25 2.25 0 0 0 18.75 3H5.25A2.25 2.25 0 0 0 3 5.25m18 0H3"/></svg><div class="ql-text">Píxeles</div></button>
+        <button class="ql" onclick="showP('usuarios',null)"><svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"/></svg><div class="ql-text">Usuarios</div></button>
+        <button class="ql" onclick="showP('deploy',null)"><svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5m-13.5-9L12 3m0 0 4.5 4.5M12 3v13.5"/></svg><div class="ql-text">Publicar</div></button>
+      </div>
+      <div class="card">
+        <div class="card-title">Guía rápida</div>
+        <div class="tbl-wrap"><table><thead><tr><th>Sección</th><th>Qué puedes hacer</th><th>Rol mínimo</th></tr></thead><tbody>
+          <tr><td>🎨 Apariencia</td><td>Colores, tipografía, logo, botones</td><td><span class="badge bg-re">Admin</span></td></tr>
+          <tr><td>🖼️ Portada</td><td>Imagen hero, título, subtítulo, CTA</td><td><span class="badge bg-re">Admin</span></td></tr>
+          <tr><td>💅 Servicios</td><td>Agregar, editar, precios, imágenes</td><td><span class="badge bg-gold">Editor</span></td></tr>
+          <tr><td>📦 Paquetes</td><td>Carrusel de paquetes con precios</td><td><span class="badge bg-gold">Editor</span></td></tr>
+          <tr><td>🛍️ Tienda</td><td>Productos, precios, categorías</td><td><span class="badge bg-gold">Editor</span></td></tr>
+          <tr><td>📸 Galería</td><td>Agregar fotos reales del salón</td><td><span class="badge bg-gold">Editor</span></td></tr>
+          <tr><td>💬 Testimonios</td><td>Reseñas de clientas</td><td><span class="badge bg-gold">Editor</span></td></tr>
+          <tr><td>📝 Blog</td><td>Artículos, tips de belleza</td><td><span class="badge bg-gold">Editor</span></td></tr>
+          <tr><td>📅 Eventos</td><td>Activar/desactivar eventos y cursos</td><td><span class="badge bg-gold">Editor</span></td></tr>
+          <tr><td>👤 Usuarios</td><td>Crear, editar, eliminar usuarios</td><td><span class="badge bg-re">Admin</span></td></tr>
+          <tr><td>📊 Píxeles</td><td>Meta Pixel, Google Analytics, GTM</td><td><span class="badge bg-re">Admin</span></td></tr>
+          <tr><td>🚀 Deploy</td><td>Publicar cambios a Netlify/GitHub</td><td><span class="badge bg-re">Admin</span></td></tr>
+        </tbody></table></div>
+      </div>
+    </div>
+
+    <!-- ════ APARIENCIA ════ -->
+    <div class="panel" id="panel-apariencia">
+      <div class="alert alert-ok" role="status" aria-live="polite" id="al-apariencia">✓ Cambios de apariencia guardados.</div>
+      <div class="tabs"><button class="tab active" onclick="switchTab(this,'at-colores')">Colores</button><button class="tab" onclick="switchTab(this,'at-tipografia')">Tipografía</button><button class="tab" onclick="switchTab(this,'at-logo')">Logo &amp; Navbar</button><button class="tab" onclick="switchTab(this,'at-botones')">Botones</button></div>
+      <div class="tab-panel active" id="at-colores">
+        <div class="card"><div class="card-title">Paleta de colores</div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;">
+            <div class="f-group"><label class="f-label">Gold principal</label><div class="color-field"><div class="color-preview" id="cp-gold" style="background:#C9A84C;"></div><input type="color" id="ci-gold" value="#C9A84C" onchange="updateColor('gold','cp-gold',this.value)"/><input class="f-input" id="cv-gold" value="#C9A84C" oninput="updateColorText('gold','cp-gold','ci-gold',this.value)" style="flex:1;"/></div></div>
+            <div class="f-group"><label class="f-label">Fondo negro base</label><div class="color-field"><div class="color-preview" id="cp-black" style="background:#060606;"></div><input type="color" id="ci-black" value="#060606" onchange="updateColor('black','cp-black',this.value)"/><input class="f-input" id="cv-black" value="#060606" oninput="updateColorText('black','cp-black','ci-black',this.value)" style="flex:1;"/></div></div>
+            <div class="f-group"><label class="f-label">Superficie oscura</label><div class="color-field"><div class="color-preview" id="cp-d2" style="background:#141414;"></div><input class="f-input" value="#141414" style="flex:1;"/></div></div>
+            <div class="f-group"><label class="f-label">Texto blanco cálido</label><div class="color-field"><div class="color-preview" id="cp-wh" style="background:#F8F5EE;border:1px solid #333;"></div><input class="f-input" value="#F8F5EE" style="flex:1;"/></div></div>
+            <div class="f-group"><label class="f-label">Gold ticker / Banner</label><div class="color-field"><div class="color-preview" id="cp-ticker" style="background:#C9A84C;"></div><input class="f-input" value="#C9A84C" style="flex:1;"/></div></div>
+            <div class="f-group"><label class="f-label">Color texto muted</label><div class="color-field"><div class="color-preview" style="background:#7A7770;"></div><input class="f-input" value="#7A7770" style="flex:1;"/></div></div>
+          </div>
+          <div style="margin-top:16px;"><div class="card-title" style="margin-bottom:12px;">Presets rápidos</div>
+            <div class="swatches">
+              <div class="swatch" style="background:#C9A84C;" title="Gold clásico" onclick="setPreset('#C9A84C')"></div>
+              <div class="swatch" style="background:#E2B96F;" title="Gold suave" onclick="setPreset('#E2B96F')"></div>
+              <div class="swatch" style="background:#D4A0C0;" title="Rose gold" onclick="setPreset('#D4A0C0')"></div>
+              <div class="swatch" style="background:#8B9E6B;" title="Sage green" onclick="setPreset('#8B9E6B')"></div>
+              <div class="swatch" style="background:#7BADB0;" title="Teal" onclick="setPreset('#7BADB0')"></div>
+            </div>
+          </div>
+          <button class="btn btn-solid btn-sm" onclick="saveSection('al-apariencia')" style="margin-top:16px;">Guardar colores</button>
+        </div>
+      </div>
+      <div class="tab-panel" id="at-tipografia">
+        <div class="card"><div class="card-title">Tipografías</div>
+          <div class="f-row">
+            <div class="f-group"><label class="f-label">Fuente Display (títulos)</label><select class="f-select"><option selected>Cormorant Garamond</option><option>Playfair Display</option><option>Libre Baskerville</option><option>DM Serif Display</option></select></div>
+            <div class="f-group"><label class="f-label">Fuente Body (texto)</label><select class="f-select"><option selected>Jost</option><option>Inter</option><option>Nunito</option><option>Raleway</option></select></div>
+          </div>
+          <div class="f-row">
+            <div class="f-group"><label class="f-label">Tamaño H1 (escritorio)</label><input class="f-input" value="105px"/></div>
+            <div class="f-group"><label class="f-label">Tamaño H2 (escritorio)</label><input class="f-input" value="68px"/></div>
+          </div>
+          <div class="f-row">
+            <div class="f-group"><label class="f-label">Tamaño párrafo</label><input class="f-input" value="15px"/></div>
+            <div class="f-group"><label class="f-label">Tamaño nav links</label><input class="f-input" value="11px"/></div>
+          </div>
+          <button class="btn btn-solid btn-sm" onclick="saveSection('al-apariencia')" style="margin-top:8px;">Guardar tipografía</button>
+        </div>
+      </div>
+      <div class="tab-panel" id="at-logo">
+        <div class="card"><div class="card-title">Logo y Navegación</div>
+          <div class="f-row">
+            <div class="f-group"><label class="f-label">Nombre principal del logo</label><input class="f-input" value="Magnolia"/></div>
+            <div class="f-group"><label class="f-label">Subtítulo del logo</label><input class="f-input" value="Beauty &amp; Fashion"/></div>
+          </div>
+          <div class="f-group"><label class="f-label">URL del logo (imagen SVG/PNG opcional)</label><input class="f-input" placeholder="Dejar vacío para usar texto"/></div>
+          <div class="f-row">
+            <div class="f-group"><label class="f-label">Texto botón CTA del nav</label><input class="f-input" value="Agenda tu cita"/></div>
+            <div class="f-group"><label class="f-label">Link del CTA nav</label><input class="f-input" value="https://wa.me/584125944627"/></div>
+          </div>
+          <button class="btn btn-solid btn-sm" onclick="saveSection('al-apariencia')" style="margin-top:8px;">Guardar</button>
+        </div>
+      </div>
+      <div class="tab-panel" id="at-botones">
+        <div class="card"><div class="card-title">Estilos de botones</div>
+          <div class="f-row">
+            <div class="f-group"><label class="f-label">Border radius</label><input class="f-input" value="0px" placeholder="ej: 4px, 24px"/></div>
+            <div class="f-group"><label class="f-label">Padding</label><input class="f-input" value="14px 32px"/></div>
+          </div>
+          <div class="f-row">
+            <div class="f-group"><label class="f-label">Tamaño letra botones</label><input class="f-input" value="11px"/></div>
+            <div class="f-group"><label class="f-label">Letter spacing</label><input class="f-input" value="3px"/></div>
+          </div>
+          <p style="font-size:13px;color:var(--mu);margin-top:8px;">Preview: <span style="display:inline-flex;align-items:center;gap:8px;padding:12px 28px;border:1px solid #C9A84C;color:#C9A84C;font-size:11px;letter-spacing:3px;text-transform:uppercase;">RESERVAR CITA →</span></p>
+          <button class="btn btn-solid btn-sm" onclick="saveSection('al-apariencia')" style="margin-top:16px;">Guardar botones</button>
+        </div>
+      </div>
+    </div>
+
+      <div class="card" id="at-margenes"><div class="card-title">Márgenes y espaciado del sitio</div>
+        <p style="font-size:13px;color:var(--mu);margin-bottom:16px;">Controla el ancho, padding y espaciado de todas las secciones del sitio.</p>
+        <div class="f-row">
+          <div class="f-group"><label class="f-label">Ancho máx. contenedor</label>
+            <select class="f-select" id="ap-max-width">
+              <option value="1100px">1100px — compacto</option>
+              <option value="1200px" selected>1200px — estándar</option>
+              <option value="1320px">1320px — amplio</option>
+              <option value="1440px">1440px — full</option>
+            </select>
+          </div>
+          <div class="f-group"><label class="f-label">Padding lateral móvil</label>
+            <select class="f-select" id="ap-pad-mobile">
+              <option value="16px">16px — ajustado</option>
+              <option value="20px" selected>20px — estándar</option>
+              <option value="24px">24px — cómodo</option>
+            </select>
+          </div>
+        </div>
+        <div class="f-row">
+          <div class="f-group"><label class="f-label">Espacio entre secciones</label>
+            <select class="f-select" id="ap-section-gap">
+              <option value="60px">60px — compacto</option>
+              <option value="80px" selected>80px — estándar</option>
+              <option value="100px">100px — amplio</option>
+              <option value="120px">120px — muy amplio</option>
+            </select>
+          </div>
+          <div class="f-group"><label class="f-label">Padding lateral desktop</label>
+            <select class="f-select" id="ap-pad-desktop">
+              <option value="20px">20px</option>
+              <option value="40px" selected>40px — estándar</option>
+              <option value="60px">60px</option>
+            </select>
+          </div>
+        </div>
+        <div class="f-row">
+          <div class="f-group"><label class="f-label">Border radius (tarjetas)</label>
+            <select class="f-select" id="ap-radius">
+              <option value="0px">0px — cuadrado</option>
+              <option value="4px" selected>4px — suave</option>
+              <option value="8px">8px — redondeado</option>
+              <option value="12px">12px — pill</option>
+            </select>
+          </div>
+          <div class="f-group"><label class="f-label">Tamaño base del texto</label>
+            <select class="f-select" id="ap-font-size">
+              <option value="14px">14px — compacto</option>
+              <option value="15px">15px</option>
+              <option value="16px" selected>16px — estándar</option>
+              <option value="17px">17px</option>
+              <option value="18px">18px — accesible</option>
+            </select>
+          </div>
+        </div>
+        <button class="btn btn-solid btn-sm" onclick="saveMargenes()" style="margin-top:8px;">Aplicar espaciado</button>
+        <div class="alert alert-ok" role="status" aria-live="polite" id="al-margenes" style="margin-top:10px;">Espaciado aplicado.</div>
+      </div>
+
+    <!-- ════ HERO / PORTADA ════ -->
+    <div class="panel" id="panel-hero">
+      <div class="alert alert-ok" role="status" aria-live="polite" id="al-hero">✓ Portada actualizada.</div>
+      <div class="card"><div class="card-title">🎬 Video de fondo (portada)</div>
+        <p style="font-size:13px;color:var(--mu);margin-bottom:14px;">Pega una URL de video MP4 directo. Para YouTube/Vimeo usa la URL de embed. Se recomienda un video de salón de belleza, spa o lifestyle femenino.</p>
+        <div class="f-group"><label class="f-label">URL video MP4 (recomendado)</label>
+          <input class="f-input" id="hero-video-url" value="https://assets.mixkit.co/videos/preview/mixkit-women-in-a-beauty-salon-getting-their-hair-done-33170-large.mp4" placeholder="https://.../video.mp4"/>
+        </div>
+        <div class="f-group" style="margin-top:8px;">
+          <label class="f-label">— O — URL imagen de fondo (fallback si no hay video)</label>
+          <input class="f-input" id="hero-img" value="https://images.unsplash.com/photo-1560066984-138dadb4c035?w=1920&q=85" placeholder="https://images.unsplash.com/..."/>
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:14px;">
+          <button class="btn btn-sm" onclick="previewHeroMedia()">👁 Previsualizar</button>
+          <button class="btn btn-solid btn-sm" onclick="applyHeroVideo()">✅ Aplicar video en portada</button>
+        </div>
+        <div id="hero-media-preview" style="margin-top:12px;display:none;">
+          <video id="hero-vid-prev" autoplay muted loop playsinline style="width:100%;max-width:480px;height:220px;object-fit:cover;border-radius:6px;"></video>
+        </div>
+        <div style="margin-top:14px;padding:12px;background:var(--d4);border-radius:4px;">
+          <p style="font-size:12px;color:var(--mu);margin:0 0 8px;font-weight:500;">Videos de salón de belleza gratuitos (copia la URL):</p>
+          <div style="display:flex;flex-direction:column;gap:6px;">
+            <button class="btn btn-sm" style="font-size:11px;text-align:left;justify-content:flex-start;" onclick="setHeroVideo('https://assets.mixkit.co/videos/preview/mixkit-women-in-a-beauty-salon-getting-their-hair-done-33170-large.mp4')">💅 Salón — mujeres en sesión de belleza</button>
+            <button class="btn btn-sm" style="font-size:11px;text-align:left;justify-content:flex-start;" onclick="setHeroVideo('https://assets.mixkit.co/videos/preview/mixkit-woman-getting-a-hair-treatment-in-a-beauty-salon-33168-large.mp4')">💇 Tratamiento capilar en salón</button>
+            <button class="btn btn-sm" style="font-size:11px;text-align:left;justify-content:flex-start;" onclick="setHeroVideo('https://assets.mixkit.co/videos/preview/mixkit-woman-getting-a-facial-treatment-in-a-spa-33184-large.mp4')">🌿 Tratamiento facial / spa</button>
+            <button class="btn btn-sm" style="font-size:11px;text-align:left;justify-content:flex-start;" onclick="setHeroVideo('https://assets.mixkit.co/videos/preview/mixkit-close-up-of-a-manicure-32812-large.mp4')">💅 Close-up manicura</button>
+            <button class="btn btn-sm" style="font-size:11px;text-align:left;justify-content:flex-start;" onclick="setHeroVideo('https://assets.mixkit.co/videos/preview/mixkit-young-woman-getting-a-head-massage-in-a-spa-33176-large.mp4')">💆 Masaje y spa relajante</button>
+          </div>
+        </div>
+      </div>
+      <div class="card"><div class="card-title">Textos del hero</div>
+        <div class="f-group"><label class="f-label">Eyebrow (texto pequeño arriba)</label><input class="f-input" value="San Diego · CC Brisas del Valle · Valencia"/></div>
+        <div class="f-group"><label class="f-label">Título principal (usa | para salto de línea)</label><textarea class="f-textarea" style="min-height:70px;">Donde la | &lt;em&gt;belleza&lt;/em&gt; | encuentra | su lugar.</textarea></div>
+        <div class="f-group"><label class="f-label">Subtítulo</label><textarea class="f-textarea" style="min-height:60px;">Centro de belleza integral, spa y moda. Todo lo que mereces, en un solo espacio diseñado para ti.</textarea></div>
+        <div class="f-row">
+          <div class="f-group"><label class="f-label">Texto botón principal</label><input class="f-input" value="Reservar cita"/></div>
+          <div class="f-group"><label class="f-label">Texto botón secundario</label><input class="f-input" value="Ver servicios"/></div>
+        </div>
+        <button class="btn btn-solid btn-sm" onclick="saveSection('al-hero')">Guardar portada</button>
+      </div>
+    </div>
+
+    <!-- ════ SERVICIOS ════ -->
+    <div class="panel" id="panel-servicios">
+      <div class="card-row" style="margin-bottom:20px;"><span style="font-family:'Cormorant Garamond',serif;font-size:22px;">Servicios</span><button class="btn btn-solid btn-sm" onclick="addServicio()">+ Agregar</button></div>
+      <div class="alert alert-ok" role="status" aria-live="polite" id="al-srv">✓ Servicio guardado.</div>
+      <div class="tbl-wrap"><table><thead><tr><th>#</th><th>Nombre</th><th>Precio</th><th>Estado</th><th>Acciones</th></tr></thead><tbody id="srv-tbody"></tbody></table></div>
+      <div class="card" style="margin-top:20px;" id="srv-form">
+        <div class="card-title" id="srv-form-title">Agregar servicio</div>
+        <div class="f-row"><div class="f-group"><label class="f-label">Nombre</label><input class="f-input" id="sf-nombre" placeholder="Nombre del servicio (ej: Manicura Rusa)"/></div><div class="f-group"><label class="f-label">Precio</label><input class="f-input" id="sf-precio" placeholder="Ej: Desde $12"/></div></div>
+        <div class="f-group"><label class="f-label">Descripción</label><textarea class="f-textarea" id="sf-desc"></textarea></div>
+        <div class="f-group"><label class="f-label">URL imagen</label><input class="f-input" id="sf-img" placeholder="https://images.unsplash.com/..."/></div>
+        <div style="display:flex;gap:10px;margin-top:6px;"><button class="btn btn-solid btn-sm" onclick="saveSrv()">Guardar</button><button class="btn btn-sm" onclick="cancelSrv()">Cancelar</button></div>
+      </div>
+    </div>
+
+    <!-- ════ PAQUETES ════ -->
+    <div class="panel" id="panel-paquetes">
+      <div class="card-row" style="margin-bottom:20px;"><span style="font-family:'Cormorant Garamond',serif;font-size:22px;">Paquetes (Carrusel)</span><button class="btn btn-solid btn-sm" onclick="addPkg()">+ Agregar</button></div>
+      <div class="alert alert-ok" role="status" aria-live="polite" id="al-pkg">✓ Paquete guardado.</div>
+      <div class="tbl-wrap"><table><thead><tr><th>Nombre</th><th>Precio</th><th>Badge</th><th>Estado</th><th>Acciones</th></tr></thead><tbody id="pkg-tbody"></tbody></table></div>
+      <div class="card" style="margin-top:20px;" id="pkg-form">
+        <div class="card-title">Agregar / Editar paquete</div>
+        <div class="f-row"><div class="f-group"><label class="f-label">Nombre del paquete</label><input class="f-input" id="pkf-nombre" placeholder="Nombre del paquete (ej: Masaje VIP)"/></div><div class="f-group"><label class="f-label">Precio</label><input class="f-input" id="pkf-precio" placeholder="Precio (ej: Desde $15)"/></div></div>
+        <div class="f-row"><div class="f-group"><label class="f-label">Badge / Etiqueta</label><input class="f-input" id="pkf-badge" placeholder="Etiqueta (ej: ⭐ Más popular)"/></div><div class="f-group"><label class="f-label">URL imagen</label><input class="f-input" id="pkf-img" placeholder="https://..."/></div></div>
+        <div class="f-group"><label class="f-label">Incluye (una por línea)</label><textarea class="f-textarea" id="pkf-items" placeholder="12 masajes moldeadores&#10;Control de peso&#10;Maderoterapia"></textarea></div>
+        <button class="btn btn-solid btn-sm" onclick="savePkg()" style="margin-top:6px;">Guardar paquete</button>
+      </div>
+    </div>
+
+    <!-- ════ TIENDA ════ -->
+    <div class="panel" id="panel-tienda">
+      <div class="tabs"><button class="tab active" onclick="switchTab(this,'tt-productos')">Productos</button><button class="tab" onclick="switchTab(this,'tt-categorias')">Categorías</button><button class="tab" onclick="switchTab(this,'tt-pagos')">Métodos de pago</button><button class="tab" onclick="switchTab(this,'tt-comprobantes')">Comprobantes</button></div>
+      <div class="tab-panel active" id="tt-productos">
+        <div class="card-row" style="margin-bottom:18px;"><span style="font-family:'Cormorant Garamond',serif;font-size:20px;">Productos</span><button class="btn btn-solid btn-sm" onclick="addProd()">+ Agregar producto</button></div>
+        <div class="alert alert-ok" role="status" aria-live="polite" id="al-prod">✓ Producto guardado.</div>
+        <div class="tbl-wrap"><table><thead><tr><th>Nombre</th><th>Categoría</th><th>Precio</th><th>Estado</th><th>Acciones</th></tr></thead><tbody id="prod-tbody"></tbody></table></div>
+        <div class="card" style="margin-top:18px;" id="prod-form">
+          <div class="card-title">Agregar / Editar producto</div>
+          <div class="f-row"><div class="f-group"><label class="f-label">Nombre</label><input class="f-input" id="prf-nombre" placeholder="Ej: Set Encaje Rojo"/></div><div class="f-group"><label class="f-label">Precio</label><input class="f-input" id="prf-precio" placeholder="Ej: $25"/></div></div>
+          <div class="f-row"><div class="f-group"><label class="f-label">Categoría</label><select class="f-select" id="prf-cat"><option>Lencería</option><option>Perfumes</option><option>Ropa Deportiva</option><option>Maquillaje</option></select></div><div class="f-group"><label class="f-label">URL imagen</label><input class="f-input" id="prf-img" placeholder="https://..."/></div></div>
+          <div class="f-group"><label class="f-label">Descripción corta</label><textarea class="f-textarea" id="prf-desc" style="min-height:60px;"></textarea></div>
+          <button class="btn btn-solid btn-sm" onclick="saveProd()" style="margin-top:6px;">Guardar producto</button>
+        </div>
+      </div>
+      <div class="tab-panel" id="tt-categorias">
+        <div class="card"><div class="card-title">Categorías de la tienda</div>
+          <div style="display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap;">
+            <input class="f-input" id="new-cat-name" placeholder="Ej: Skincare" style="flex:1;min-width:140px;"/>
+            <input class="f-input" id="new-cat-tag" placeholder="Tag ej: Nuevo" style="width:100px;"/>
+            <button class="btn btn-solid btn-sm" onclick="addCategory()">+ Agregar</button>
+          </div>
+          <div class="alert alert-ok" role="status" aria-live="polite" id="al-cats" style="margin-bottom:10px;">✓ Categorías guardadas.</div>
+          <div class="tbl-wrap"><table><thead><tr><th>Nombre</th><th>Tag</th><th>Acciones</th></tr></thead><tbody id="cat-tbody">
+          </tbody></table></div>
+          <button class="btn btn-solid btn-sm" onclick="saveCats()" style="margin-top:10px;">Guardar categorías</button>
+        </div>
+
+        <div class="card"><div class="card-title">Métodos de pago activos</div>
+          <div id="payments-list">
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.04);">
+              <span style="font-size:14px;">💵 Efectivo (USD y bolívares)</span>
+              <button class="tgl" onclick="this.querySelector('.tgl-track').classList.toggle('on')"><div class="tgl-track on"><div class="tgl-thumb"></div></div><span class="tgl-label">Activo</span></button>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.04);">
+              <span style="font-size:14px;">🏦 Transferencia bancaria</span>
+              <button class="tgl" onclick="this.querySelector('.tgl-track').classList.toggle('on')"><div class="tgl-track on"><div class="tgl-thumb"></div></div><span class="tgl-label">Activo</span></button>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.04);">
+              <span style="font-size:14px;">📱 Pago Móvil</span>
+              <button class="tgl" onclick="this.querySelector('.tgl-track').classList.toggle('on')"><div class="tgl-track on"><div class="tgl-thumb"></div></div><span class="tgl-label">Activo</span></button>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 0;">
+              <span style="font-size:14px;">🌐 Zelle</span>
+              <button class="tgl" onclick="this.querySelector('.tgl-track').classList.toggle('on')"><div class="tgl-track on"><div class="tgl-thumb"></div></div><span class="tgl-label">Activo</span></button>
+            </div>
+          </div>
+          <div style="margin-top:20px;border-top:1px solid rgba(201,168,76,.1);padding-top:16px;">
+            <div class="card-title">Datos bancarios (para transferencias)</div>
+            <div class="f-row">
+              <div class="f-group"><label class="f-label">Banco</label><input class="f-input" placeholder="Ej: Banco Mercantil"/></div>
+              <div class="f-group"><label class="f-label">Cuenta</label><input class="f-input" placeholder="Nro. de cuenta"/></div>
+            </div>
+            <div class="f-row">
+              <div class="f-group"><label class="f-label">Titular</label><input class="f-input" placeholder="Nombre del titular"/></div>
+              <div class="f-group"><label class="f-label">Zelle (email/teléfono)</label><input class="f-input" placeholder="email@ejemplo.com"/></div>
+            </div>
+            <button class="btn btn-solid btn-sm" onclick="showAlert2('al-pagos')" style="margin-top:6px;">Guardar datos</button>
+            <div class="alert alert-ok" role="status" aria-live="polite" id="al-pagos" style="margin-top:10px;">✓ Datos guardados.</div>
+          </div>
+        </div>
+      </div>
+      <div class="tab-panel" id="tt-comprobantes">
+        <div class="card"><div class="card-title">Comprobantes de pago recibidos</div>
+          <p style="font-size:13px;color:var(--mu);margin-bottom:16px;">Cuando un cliente sube su comprobante desde el sitio, aparece aquí para verificación. <em>(Función requiere backend — usar Netlify Forms o Formspree)</em></p>
+          <div style="background:var(--d4);border:1px solid rgba(201,168,76,.1);padding:24px;text-align:center;">
+            <p style="color:var(--mu);font-size:14px;">Para activar el sistema de comprobantes:</p>
+            <ol style="text-align:left;color:var(--mu);font-size:13px;margin:16px 0;padding-left:20px;line-height:1.8;">
+              <li>Crea cuenta en <a href="https://www.formspree.io" target="_blank" style="color:var(--g);">Formspree.io</a> (gratis hasta 50 envíos/mes)</li>
+              <li>Crea un formulario con campo de archivo</li>
+              <li>Pega tu Formspree ID aquí abajo</li>
+              <li>Los comprobantes llegarán a tu email automáticamente</li>
+            </ol>
+            <div class="f-row" style="max-width:500px;margin:0 auto;"><div class="f-group"><label class="f-label">ID de Formspree</label><input class="f-input" placeholder="xpwzqrkj"/></div><div class="f-group"><label class="f-label">Email de notificaciones</label><input class="f-input" placeholder="magnolia@email.com"/></div></div>
+            <button class="btn btn-solid btn-sm" onclick="showAlert2('al-comp')">Activar comprobantes</button>
+            <div class="alert alert-ok" role="status" aria-live="polite" id="al-comp" style="margin-top:10px;max-width:500px;margin:10px auto 0;">✓ Configurado.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════ GALERÍA ════ -->
+    <div class="panel" id="panel-galeria">
+      <div class="alert alert-ok" role="status" aria-live="polite" id="al-gal">✓ Galería actualizada.</div>
+      <div class="card"><div class="card-title">Agregar imagen</div>
+        <p style="font-size:13px;color:var(--mu);margin-bottom:14px;">Sube tus fotos reales a <a href="https://imgbb.com" target="_blank" style="color:var(--g);">ImgBB</a>, Google Drive (enlace público) o Instagram y pega la URL directa aquí.</p>
+        <div class="f-row"><div class="f-group"><label class="f-label">URL de la imagen</label><input class="f-input" id="g-url" placeholder="https://..."/></div><div class="f-group"><label class="f-label">Descripción (alt)</label><input class="f-input" id="g-alt" placeholder="Ej: Resultado manicura"/></div></div>
+        <button class="btn btn-solid btn-sm" onclick="addGal()">+ Agregar a galería</button>
+      </div>
+      <div class="prev-grid" id="gal-grid"></div>
+    </div>
+
+    <!-- ════ TESTIMONIOS ════ -->
+    <div class="panel" id="panel-testimonios">
+      <div class="card-row" style="margin-bottom:18px;"><span style="font-family:'Cormorant Garamond',serif;font-size:22px;">Testimonios</span><button class="btn btn-solid btn-sm" onclick="addTest()">+ Agregar reseña</button></div>
+      <div class="alert alert-ok" role="status" aria-live="polite" id="al-test">✓ Testimonio guardado.</div>
+      <div class="tbl-wrap"><table><thead><tr><th>Clienta</th><th>Servicio</th><th>Estrellas</th><th>Acciones</th></tr></thead><tbody id="test-tbody"></tbody></table></div>
+      <div class="card" style="margin-top:18px;" id="test-form">
+        <div class="card-title">Nueva reseña</div>
+        <div class="f-row"><div class="f-group"><label class="f-label">Nombre</label><input class="f-input" id="tf-nombre" placeholder="Ej: Valentina R."/></div><div class="f-group"><label class="f-label">Servicio</label><input class="f-input" id="tf-srv" placeholder="Nombre del servicio (ej: Manicura Rusa)"/></div></div>
+        <div class="f-group"><label class="f-label">Reseña</label><textarea class="f-textarea" id="tf-texto"></textarea></div>
+        <div class="f-row"><div class="f-group"><label class="f-label">Estrellas</label><select class="f-select" id="tf-stars"><option value="5">★★★★★</option><option value="4">★★★★☆</option><option value="3">★★★☆☆</option></select></div></div>
+        <button class="btn btn-solid btn-sm" onclick="saveTest()" style="margin-top:6px;">Guardar reseña</button>
+      </div>
+    </div>
+
+    <!-- ════ BLOG ════ -->
+    <div class="panel" id="panel-blog">
+      <div class="card-row" style="margin-bottom:18px;"><span style="font-family:'Cormorant Garamond',serif;font-size:22px;">Blog</span><button class="btn btn-solid btn-sm" onclick="addPost()">+ Nuevo artículo</button></div>
+      <div class="alert alert-ok" role="status" aria-live="polite" id="al-blog">✓ Artículo guardado.</div>
+      <div class="tbl-wrap"><table><thead><tr><th>Título</th><th>Categoría</th><th>Fecha</th><th>Estado</th><th>Acciones</th></tr></thead><tbody id="blog-tbody"></tbody></table></div>
+      <div class="card" style="margin-top:18px;" id="blog-form">
+        <div class="card-title" id="blog-form-title">Nuevo artículo</div>
+        <div class="f-row"><div class="f-group"><label class="f-label">Título</label><input class="f-input" id="bf-titulo" placeholder="Ej: 5 tips para uñas perfectas"/></div><div class="f-group"><label class="f-label">Categoría</label><select class="f-select" id="bf-cat"><option>Cuidado de Uñas</option><option>Pestañas</option><option>Cabello</option><option>Spa &amp; Bienestar</option><option>Moda &amp; Estilo</option></select></div></div>
+        <div class="f-row"><div class="f-group"><label class="f-label">URL imagen destacada</label><input class="f-input" id="bf-img" placeholder="https://..."/></div><div class="f-group"><label class="f-label">Extracto corto</label><input class="f-input" id="bf-ext" placeholder="Descripción breve..."/></div></div>
+        <div class="f-group"><label class="f-label">Contenido del artículo</label>
+          <div class="rich-toolbar">
+            <button class="rtool" onclick="fmt('bold')"><b>B</b></button>
+            <button class="rtool" onclick="fmt('italic')"><i>I</i></button>
+            <button class="rtool" onclick="fmt('underline')"><u>U</u></button>
+            <button class="rtool" onclick="fmt('insertUnorderedList')">• Lista</button>
+            <button class="rtool" onclick="fmt('formatBlock','h2')">H2</button>
+            <button class="rtool" onclick="fmt('formatBlock','h3')">H3</button>
+            <button class="rtool" onclick="fmt('formatBlock','p')">P</button>
+          </div>
+          <div class="rich-editor" id="bf-content" contenteditable="true"></div>
+        </div>
+        <button class="btn btn-solid btn-sm" onclick="savePost()" style="margin-top:8px;">Publicar artículo</button>
+      </div>
+    </div>
+
+    <!-- ════ EVENTOS ════ -->
+    <div class="panel" id="panel-eventos">
+      <div class="card"><div class="card-title">Sección de Eventos &amp; Cursos</div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;">
+          <div><p style="font-size:14px;color:var(--wh);margin-bottom:4px;">Mostrar sección de Eventos en el sitio</p><p style="font-size:12px;color:var(--mu);">Actívala cuando tengas un evento o curso. Desactívala cuando no haya actividades.</p></div>
+          <button class="tgl" id="events-tgl" onclick="toggleEvents(this)"><div class="tgl-track" id="events-track"><div class="tgl-thumb"></div></div><span class="tgl-label" id="events-label">Desactivada</span></button>
+        </div>
+      </div>
+      <div class="card-row" style="margin-bottom:18px;"><span style="font-family:'Cormorant Garamond',serif;font-size:20px;">Lista de Eventos</span><button class="btn btn-solid btn-sm" onclick="addEvent()">+ Agregar evento</button></div>
+      <div class="alert alert-ok" role="status" aria-live="polite" id="al-ev">✓ Evento guardado.</div>
+      <div class="tbl-wrap"><table><thead><tr><th>Título</th><th>Fecha</th><th>Tipo</th><th>Estado</th><th>Acciones</th></tr></thead><tbody id="ev-tbody"></tbody></table></div>
+      <div class="card" style="margin-top:18px;" id="ev-form">
+        <div class="card-title">Agregar / Editar Evento</div>
+        <div class="f-row"><div class="f-group"><label class="f-label">Título del evento</label><input class="f-input" id="ef-titulo" placeholder="Ej: Taller de Nail Art"/></div><div class="f-group"><label class="f-label">Tipo</label><select class="f-select" id="ef-tipo"><option>Taller</option><option>Curso</option><option>Evento</option><option>Promoción</option></select></div></div>
+        <div class="f-row"><div class="f-group"><label class="f-label">Día</label><input class="f-input" id="ef-dia" placeholder="Ej: 15"/></div><div class="f-group"><label class="f-label">Mes</label><input class="f-input" id="ef-mes" placeholder="Ej: Mayo"/></div></div>
+        <div class="f-group"><label class="f-label">Descripción</label><textarea class="f-textarea" id="ef-desc" style="min-height:60px;"></textarea></div>
+        <div class="f-group"><label class="f-label">Link para inscripción (WhatsApp u otro)</label><input class="f-input" id="ef-link" placeholder="https://wa.me/584125944627?text=..."/></div>
+        <button class="btn btn-solid btn-sm" onclick="saveEvent()" style="margin-top:6px;">Guardar evento</button>
+      </div>
+    </div>
+
+    <!-- ════ INFO ════ -->
+    <div class="panel" id="panel-info">
+      <div class="alert alert-ok" role="status" aria-live="polite" id="al-info">✓ Información actualizada.</div>
+      <div class="card"><div class="card-title">Datos del negocio</div>
+        <div class="f-row"><div class="f-group"><label class="f-label">Nombre del negocio</label><input class="f-input" id="i-nombre" value="Magnolia Beauty &amp; Fashion"/></div><div class="f-group"><label class="f-label">Slogan</label><input class="f-input" id="i-slogan" value="Donde la belleza encuentra su lugar."/></div></div>
+        <div class="f-row"><div class="f-group"><label class="f-label">WhatsApp (con código país)</label><input class="f-input" id="i-wa" value="584125944627"/></div><div class="f-group"><label class="f-label">Teléfono local</label><input class="f-input" id="i-tel" value="0412-7552659"/></div></div>
+        <div class="f-group"><label class="f-label">Dirección completa</label><input class="f-input" id="i-dir" value="CC Brisas del Valle, San Diego, Valencia, Venezuela"/></div>
+        <div class="f-row"><div class="f-group"><label class="f-label">Instagram Spa</label><input class="f-input" id="i-ig1" value="@_spamagnolia"/></div><div class="f-group"><label class="f-label">Instagram Fashion</label><input class="f-input" id="i-ig2" value="@magnoliabeautyfashion"/></div></div>
+        <div class="f-group"><label class="f-label">Linktree URL</label><input class="f-input" id="i-lt" value="https://linktr.ee/spabeautymagnolia"/></div>
+      </div>
+      <div class="card"><div class="card-title">Horarios de atención</div>
+        <div id="horarios-list"></div>
+        <button class="btn btn-sm" onclick="addHorario()" style="margin-top:12px;">+ Agregar fila</button>
+        <button class="btn btn-solid btn-sm" onclick="saveInfo()" style="margin-top:12px;margin-left:10px;">Guardar información</button>
+      </div>
+    </div>
+
+    <!-- ════ USUARIOS ════ -->
+    <div class="panel" id="panel-usuarios">
+      <div class="card-row" style="margin-bottom:18px;"><span style="font-family:'Cormorant Garamond',serif;font-size:22px;">Gestión de usuarios</span><button class="btn btn-solid btn-sm" onclick="addUser()">+ Crear usuario</button></div>
+      <div class="alert alert-ok" role="status" aria-live="polite" id="al-usr">✓ Usuario guardado.</div>
+      <div class="tbl-wrap"><table><thead><tr><th>Nombre</th><th>Email</th><th>Rol</th><th>Estado</th><th>Acciones</th></tr></thead><tbody id="usr-tbody"></tbody></table></div>
+      <div class="card" style="margin-top:18px;" id="usr-form">
+        <div class="card-title">Nuevo usuario</div>
+        <div class="f-row"><div class="f-group"><label class="f-label">Nombre</label><input class="f-input" id="uf-nombre" placeholder="Ej: María González"/></div><div class="f-group"><label class="f-label">Email / Usuario</label><input class="f-input" id="uf-email" placeholder="maria@magnolia.com"/></div></div>
+        <div class="f-row"><div class="f-group"><label class="f-label">Contraseña</label><input class="f-input" type="password" id="uf-pass" placeholder="Mínimo 8 caracteres"/></div><div class="f-group"><label class="f-label">Rol</label><select class="f-select" id="uf-rol"><option value="editor">Editor (puede editar contenido)</option><option value="admin">Admin (acceso total)</option><option value="cliente">Cliente (solo lectura)</option></select></div></div>
+        <div style="background:var(--d4);border:1px solid rgba(201,168,76,.1);padding:12px 14px;margin-bottom:14px;font-size:12px;color:var(--mu);">
+          <strong style="color:var(--g);">Roles:</strong><br/>
+          <strong style="color:var(--wh);">Admin</strong> — Acceso total (apariencia, usuarios, píxeles, deploy)<br/>
+          <strong style="color:var(--wh);">Editor</strong> — Puede editar servicios, tienda, blog, galería, testimonios<br/>
+          <strong style="color:var(--wh);">Cliente</strong> — Solo puede ver el dashboard (para dar acceso al cliente)
+        </div>
+        <button class="btn btn-solid btn-sm" onclick="saveUser()">Crear usuario</button>
+      </div>
+    </div>
+
+    <!-- ════ PÍXELES & SEO ════ -->
+    <div class="panel" id="panel-pixeles">
+      <div class="alert alert-ok" role="status" aria-live="polite" id="al-pix">✓ Configuración de píxeles guardada.</div>
+      <div class="card"><div class="card-title">Meta Pixel (Facebook / Instagram Ads)</div>
+        <p style="font-size:13px;color:var(--mu);margin-bottom:14px;">El píxel de Meta permite rastrear conversiones y crear audiencias para tus campañas en Facebook e Instagram. Encuéntralo en: Meta Business Suite → Events Manager → Crear píxel.</p>
+        <div class="f-row"><div class="f-group"><label class="f-label">Meta Pixel ID</label><input class="f-input" id="meta-pixel" placeholder="Ej: 1234567890123456"/></div><div class="f-group" style="display:flex;align-items:flex-end;"><button class="tgl"><div class="tgl-track"><div class="tgl-thumb"></div></div><span class="tgl-label">Desactivado</span></button></div></div>
+        <div class="f-group"><label class="f-label">Eventos a rastrear</label>
+          <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:6px;">
+            <label style="display:flex;align-items:center;gap:6px;font-size:13px;"><input type="checkbox" checked/> PageView</label>
+            <label style="display:flex;align-items:center;gap:6px;font-size:13px;"><input type="checkbox" checked/> ViewContent</label>
+            <label style="display:flex;align-items:center;gap:6px;font-size:13px;"><input type="checkbox" checked/> Lead (formulario)</label>
+            <label style="display:flex;align-items:center;gap:6px;font-size:13px;"><input type="checkbox"/> Purchase</label>
+            <label style="display:flex;align-items:center;gap:6px;font-size:13px;"><input type="checkbox"/> AddToCart</label>
+          </div>
+        </div>
+      </div>
+      <div class="card"><div class="card-title">Google Analytics 4</div>
+        <p style="font-size:13px;color:var(--mu);margin-bottom:14px;">GA4 te permite ver el tráfico, comportamiento de usuarios y conversiones de tu sitio. Encuéntralo en: analytics.google.com → Crear propiedad.</p>
+        <div class="f-row"><div class="f-group"><label class="f-label">Measurement ID (G-XXXXXXXXXX)</label><input class="f-input" id="ga4-id" placeholder="Ej: G-ABCD1234EF"/></div><div class="f-group" style="display:flex;align-items:flex-end;"><button class="tgl"><div class="tgl-track"><div class="tgl-thumb"></div></div><span class="tgl-label">Desactivado</span></button></div></div>
+      </div>
+      <div class="card"><div class="card-title">Google Tag Manager</div>
+        <p style="font-size:13px;color:var(--mu);margin-bottom:14px;">GTM permite gestionar todos tus píxeles y scripts sin tocar el código. Recomendado si vas a manejar múltiples herramientas.</p>
+        <div class="f-row"><div class="f-group"><label class="f-label">Container ID (GTM-XXXXXXX)</label><input class="f-input" id="gtm-id" placeholder="Ej: GTM-K2BC4X"/></div><div class="f-group" style="display:flex;align-items:flex-end;"><button class="tgl"><div class="tgl-track"><div class="tgl-thumb"></div></div><span class="tgl-label">Desactivado</span></button></div></div>
+      </div>
+      <div class="card"><div class="card-title">SEO básico</div>
+        <div class="f-group"><label class="f-label">Título de la página (title tag)</label><input class="f-input" value="Magnolia Beauty & Fashion — San Diego, Valencia"/></div>
+        <div class="f-group"><label class="f-label">Meta descripción</label><textarea class="f-textarea" style="min-height:60px;">Centro de belleza integral, spa y moda en San Diego, Valencia. Manicura, pestañas, alisado, masajes y más.</textarea></div>
+        <div class="f-group"><label class="f-label">Keywords</label><input class="f-input" value="belleza san diego, spa venezuela, manicura carabobo, lencería venezuela"/></div>
+      </div>
+      <button class="btn btn-solid btn-sm" onclick="saveSection('al-pix')">Guardar configuración</button>
+    </div>
+
+    <!-- ════ DEPLOY ════ -->
+    <div class="panel" id="panel-deploy" data-cache-panel="true">
+      <div class="card"><div class="card-title">Flujo de publicación</div>
+        <div style="display:flex;flex-direction:column;gap:14px;margin-bottom:22px;">
+          <div style="display:flex;gap:14px;align-items:flex-start;"><div style="width:30px;height:30px;background:var(--g);color:var(--bk);display:flex;align-items:center;justify-content:center;font-weight:600;font-size:13px;flex-shrink:0;">1</div><div><div style="font-size:14px;color:var(--wh);margin-bottom:3px;">Guarda los cambios</div><div style="font-size:12px;color:var(--mu);">Usa el botón "Guardar todo" del topbar para confirmar todos los cambios.</div></div></div>
+          <div style="display:flex;gap:14px;align-items:flex-start;"><div style="width:30px;height:30px;background:var(--g);color:var(--bk);display:flex;align-items:center;justify-content:center;font-weight:600;font-size:13px;flex-shrink:0;">2</div><div><div style="font-size:14px;color:var(--wh);margin-bottom:3px;">Exporta el JSON de configuración</div><div style="font-size:12px;color:var(--mu);">Descarga el archivo con todos los contenidos actualizados.</div></div></div>
+          <div style="display:flex;gap:14px;align-items:flex-start;"><div style="width:30px;height:30px;background:var(--g);color:var(--bk);display:flex;align-items:center;justify-content:center;font-weight:600;font-size:13px;flex-shrink:0;">3</div><div><div style="font-size:14px;color:var(--wh);margin-bottom:3px;">Sube a GitHub</div><div style="font-size:12px;color:var(--mu);">Reemplaza el archivo <code style="background:var(--d4);padding:1px 6px;font-size:11px;">data/content.json</code> en tu repositorio.</div></div></div>
+          <div style="display:flex;gap:14px;align-items:flex-start;"><div style="width:30px;height:30px;background:var(--g);color:var(--bk);display:flex;align-items:center;justify-content:center;font-weight:600;font-size:13px;flex-shrink:0;">4</div><div><div style="font-size:14px;color:var(--wh);margin-bottom:3px;">Netlify publica automáticamente</div><div style="font-size:12px;color:var(--mu);">En 1–2 minutos el sitio se actualiza sin hacer nada más.</div></div></div>
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;">
+          <button class="btn btn-solid btn-sm" onclick="exportJSON()">📥 Exportar content.json</button>
+          <a class="btn btn-sm" href="https://github.com/greixymm/web-magnolia" target="_blank">🐙 Ir a GitHub</a>
+          <a class="btn btn-green btn-sm" href="https://vercel.com/dashboard" target="_blank">🚀 Ir a Netlify</a>
+        </div>
+      </div>
+      <div class="card"><div class="card-title">URL del sitio publicado</div>
+        <div class="f-group"><label class="f-label">URL Netlify</label><input class="f-input" id="netlify-url" placeholder="https://tu-sitio.netlify.app" value="https://magnolia-beauty.netlify.app"/></div>
+        <a class="btn btn-sm btn-blue" id="visit-btn" href="https://magnolia-beauty.netlify.app" target="_blank">Visitar sitio →</a>
+      </div>
+    </div>
+
+    <!-- ════ BACKUP ════ -->
+    <div class="panel" id="panel-backup">
+      <div class="card"><div class="card-title">Exportar configuración completa</div>
+        <p style="font-size:13px;color:var(--mu);margin-bottom:18px;">Descarga un JSON con todos los contenidos: servicios, paquetes, productos, blog, eventos, info y configuración.</p>
+        <button class="btn btn-solid btn-sm" onclick="exportJSON()">📥 Descargar backup completo</button>
+      </div>
+      <div class="card"><div class="card-title">Importar configuración</div>
+        <p style="font-size:13px;color:var(--mu);margin-bottom:16px;">Sube un JSON previamente exportado para restaurar toda la configuración.</p>
+        <input type="file" id="import-file" accept=".json" style="display:none;" onchange="importJSON(event)"/>
+        <button class="btn btn-sm" onclick="document.getElementById('import-file').click()">📤 Importar JSON</button>
+      </div>
+    </div>
+
+
+    <!-- ════ NOSOTRAS / ABOUT ════ -->
+    <div class="panel" id="panel-nosotras">
+      <div class="alert alert-ok" role="status" aria-live="polite" id="al-nosotras">✓ Sección Nosotras actualizada.</div>
+      <div class="card"><div class="card-title">Texto de la sección "Nosotras"</div>
+        <div class="f-group"><label class="f-label">Eyebrow (texto pequeño)</label><input class="f-input" id="nos-eyebrow" value="Nosotras"/></div>
+        <div class="f-group"><label class="f-label">Título línea 1</label><input class="f-input" id="nos-h2-1" value="Magnolia nació para"/></div>
+        <div class="f-group"><label class="f-label">Título — Palabra resaltada en gold</label><input class="f-input" id="nos-h2-gold" value="que te sientas"/></div>
+        <div class="f-group"><label class="f-label">Título línea 3</label><input class="f-input" id="nos-h2-3" value="extraordinaria."/></div>
+        <div class="f-group"><label class="f-label">Párrafo 1</label><textarea class="f-textarea" id="nos-p1">Somos un centro de belleza integral ubicado en el CC Brisas del Valle, San Diego. Cada detalle de nuestro espacio fue pensado para que, desde el primer momento, sientas que estás exactamente donde mereces estar.</textarea></div>
+        <div class="f-group"><label class="f-label">Párrafo 2</label><textarea class="f-textarea" id="nos-p2">Nuestro equipo de especialistas certificadas trabaja con productos de primera calidad, técnicas actualizadas y una atención cálida y personalizada. Porque no sólo te embellecemos — te cuidamos.</textarea></div>
+        <div class="f-row">
+          <div class="f-group"><label class="f-label">Badge número / año</label><input class="f-input" id="nos-badge-n" value="2026"/></div>
+          <div class="f-group"><label class="f-label">Badge texto</label><input class="f-input" id="nos-badge-l" value="Tú primero"/></div>
+        </div>
+        <div class="f-group"><label class="f-label">Texto botón CTA</label><input class="f-input" id="nos-cta" value="Agenda tu primera cita"/></div>
+        <button class="btn btn-solid btn-sm" onclick="saveSection('al-nosotras')" style="margin-top:8px;">Guardar sección</button>
+      </div>
+      <div class="card"><div class="card-title">Pilares / Destacados (4 ítems)</div>
+        <div id="pilares-list"></div>
+        <button class="btn btn-sm" onclick="addPilar()" style="margin-top:10px;">+ Agregar pilar</button>
+        <button class="btn btn-solid btn-sm" onclick="savePilares()" style="margin-top:10px;margin-left:8px;">Guardar pilares</button>
+        <div class="alert alert-ok" role="status" aria-live="polite" id="al-pilares" style="margin-top:10px;">✓ Pilares guardados.</div>
+      </div>
+    </div>
+
+    <!-- ════ TICKER ════ -->
+    <div class="panel" id="panel-ticker">
+      <div class="alert alert-ok" role="status" aria-live="polite" id="al-ticker">✓ Ticker actualizado.</div>
+      <div class="card"><div class="card-title">Ítems del Ticker (marquee de servicios)</div>
+        <p style="font-size:13px;color:var(--mu);margin-bottom:16px;">Estos son los textos que aparecen en la banda horizontal animada entre el hero y la sección nosotras.</p>
+        <div id="ticker-list"></div>
+        <div style="display:flex;gap:10px;margin-top:14px;">
+          <input class="f-input" id="ticker-new" placeholder="Ej: Lifting de Pestañas" style="flex:1;"/>
+          <button class="btn btn-solid btn-sm" onclick="addTickerItem()">+ Agregar</button>
+        </div>
+        <button class="btn btn-solid btn-sm" onclick="saveTicker()" style="margin-top:14px;">Guardar ticker</button>
+      </div>
+    </div>
+
+    <!-- ════ FAQ ════ -->
+    <div class="panel" id="panel-faq">
+      <div class="card-row" style="margin-bottom:18px;"><span style="font-family:'Cormorant Garamond',serif;font-size:22px;">Preguntas Frecuentes (FAQ)</span><button class="btn btn-solid btn-sm" onclick="addFaq()">+ Agregar pregunta</button></div>
+      <div class="alert alert-ok" role="status" aria-live="polite" id="al-faq">✓ FAQ actualizado.</div>
+      <div id="faq-list"></div>
+      <div class="card" style="margin-top:18px;" id="faq-form">
+        <div class="card-title">Nueva pregunta</div>
+        <div class="f-group"><label class="f-label">Pregunta</label><input class="f-input" id="faq-q" placeholder="Ej: ¿Necesito cita previa?"/></div>
+        <div class="f-group"><label class="f-label">Respuesta</label><textarea class="f-textarea" id="faq-a" placeholder="Escribe la respuesta..."></textarea></div>
+        <button class="btn btn-solid btn-sm" onclick="saveFaqItem()" style="margin-top:6px;">Guardar pregunta</button>
+      </div>
+    </div>
+
+    <!-- ════ PROMOS / BANNERS ════ -->
+    <div class="panel" id="panel-promos">
+      <div class="card-row" style="margin-bottom:18px;"><span style="font-family:'Cormorant Garamond',serif;font-size:22px;">Banners Promocionales</span><button class="btn btn-solid btn-sm" onclick="addPromo()">+ Agregar banner</button></div>
+      <div class="alert alert-ok" role="status" aria-live="polite" id="al-promos">✓ Banners actualizados.</div>
+      <p style="font-size:13px;color:var(--mu);margin-bottom:16px;">Estos son los slides que aparecen en la sección de promociones del sitio principal.</p>
+      <div id="promos-list"></div>
+      <div class="card" style="margin-top:18px;" id="promo-form">
+        <div class="card-title" id="promo-form-title">Nuevo banner</div>
+        <div class="f-row">
+          <div class="f-group"><label class="f-label">Badge / Etiqueta</label><input class="f-input" id="pf-badge" placeholder="✦ Novedad 2026"/></div>
+          <div class="f-group"><label class="f-label">URL imagen de fondo</label><input class="f-input" id="pf-img" placeholder="https://images.unsplash.com/..."/></div>
+        </div>
+        <div class="f-group"><label class="f-label">Título (usa | para salto de línea)</label><input class="f-input" id="pf-title" placeholder="Ej: Manicura Rusa|con Nivelación"/></div>
+        <div class="f-group"><label class="f-label">Descripción</label><textarea class="f-textarea" id="pf-desc" style="min-height:70px;"></textarea></div>
+        <div class="f-row">
+          <div class="f-group"><label class="f-label">Texto del botón CTA</label><input class="f-input" id="pf-cta" placeholder="Reservar por $17 →"/></div>
+          <div class="f-group"><label class="f-label">Link del CTA</label><input class="f-input" id="pf-link" placeholder="https://wa.me/584127552659?text=..."/></div>
+        </div>
+        <button class="btn btn-solid btn-sm" onclick="savePromo()" style="margin-top:6px;">Guardar banner</button>
+      </div>
+    </div>
+
+    <!-- ════ CONTACTO ════ -->
+    <div class="panel" id="panel-contacto">
+      <div class="alert alert-ok" role="status" aria-live="polite" id="al-contacto">✓ Sección contacto actualizada.</div>
+      <div class="card"><div class="card-title">Textos de la sección Contacto</div>
+        <div class="f-group"><label class="f-label">Título de la sección</label><input class="f-input" id="ct-titulo" value="Agendá tu próxima cita."/></div>
+        <div class="f-group"><label class="f-label">Texto introductorio</label><textarea class="f-textarea" id="ct-subtitulo">¿Tenés preguntas o quieres reservar? Contáctanos para cualquier consulta — te respondemos en menos de 30 minutos. 🌸</textarea></div>
+        <div class="f-group"><label class="f-label">Nombre del campo 1 (formulario)</label><input class="f-input" id="ct-f1" value="Nombre *"/></div>
+        <div class="f-group"><label class="f-label">Nombre del campo 2 (formulario)</label><input class="f-input" id="ct-f2" value="WhatsApp *"/></div>
+        <div class="f-group"><label class="f-label">Texto botón enviar</label><input class="f-input" id="ct-btn" value="Enviar mi solicitud →"/></div>
+        <div class="f-group"><label class="f-label">Mensaje éxito del formulario</label><input class="f-input" id="ct-success" value="¡Solicitud recibida! Te escribimos por WhatsApp en menos de 30 minutos. 🌸"/></div>
+        <button class="btn btn-solid btn-sm" onclick="saveContacto()" style="margin-top:8px;">Guardar</button>
+      </div>
+      <div class="card"><div class="card-title">Información rápida de contacto</div>
+        <div class="f-row">
+          <div class="f-group"><label class="f-label">Label ubicación</label><input class="f-input" id="ct-loc-label" value="Ubicación"/></div>
+          <div class="f-group"><label class="f-label">Texto ubicación</label><input class="f-input" id="ct-loc-val" value="CC Brisas del Valle, San Diego · Valencia, Carabobo"/></div>
+        </div>
+        <div class="f-row">
+          <div class="f-group"><label class="f-label">Label horario</label><input class="f-input" id="ct-hr-label" value="Horario"/></div>
+          <div class="f-group"><label class="f-label">Texto horario (usa | para salto)</label><input class="f-input" id="ct-hr-val" value="Lun–Vie 10am–7pm|Sáb 9am–7pm · Dom cerrado"/></div>
+        </div>
+        <button class="btn btn-solid btn-sm" onclick="saveContacto()" style="margin-top:8px;">Guardar</button>
+      </div>
+    </div>
+
+    <!-- ════ SECCIONES — CONSTRUCTOR ════ -->
+    <div class="panel" id="panel-secciones">
+      <div class="alert alert-ok" role="status" aria-live="polite" id="al-secciones">✓ Configuración de secciones guardada.</div>
+      <div class="card"><div class="card-title">Visibilidad de secciones (activar / desactivar)</div>
+        <p style="font-size:13px;color:var(--mu);margin-bottom:16px;">Activa o desactiva secciones completas del sitio sin eliminarlas.</p>
+        <div id="sections-visibility"></div>
+        <button class="btn btn-solid btn-sm" onclick="saveSection('al-secciones')" style="margin-top:16px;">Guardar visibilidad</button>
+      </div>
+      <div class="card"><div class="card-title">Constructor de secciones — Añadir nueva sección</div>
+        <p style="font-size:13px;color:var(--mu);margin-bottom:16px;">Elige una plantilla ya diseñada con el estilo Magnolia. Cada sección generada mantiene la misma tipografía, colores y animaciones del sitio.</p>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;margin-bottom:20px;" id="section-templates">
+          <div class="sec-tpl" onclick="openSectionBuilder('texto-imagen')">
+            <div class="sec-tpl-icon">📝🖼️</div>
+            <div class="sec-tpl-name">Texto + Imagen</div>
+            <div class="sec-tpl-desc">Sección de dos columnas: texto a la izquierda, imagen a la derecha (o viceversa).</div>
+          </div>
+          <div class="sec-tpl" onclick="openSectionBuilder('tarjetas')">
+            <div class="sec-tpl-icon">🃏</div>
+            <div class="sec-tpl-name">Grid de tarjetas</div>
+            <div class="sec-tpl-desc">Grid de 3-4 tarjetas con imagen, título, descripción y botón. Ideal para servicios especiales.</div>
+          </div>
+          <div class="sec-tpl" onclick="openSectionBuilder('banner-full')">
+            <div class="sec-tpl-icon">🎯</div>
+            <div class="sec-tpl-name">Banner pantalla completa</div>
+            <div class="sec-tpl-desc">Sección hero secundario con imagen de fondo, título grande y CTA.</div>
+          </div>
+          <div class="sec-tpl" onclick="openSectionBuilder('estadisticas')">
+            <div class="sec-tpl-icon">📊</div>
+            <div class="sec-tpl-name">Estadísticas / Números</div>
+            <div class="sec-tpl-desc">Fila de 4 números destacados con animación. Ideal para logros del negocio.</div>
+          </div>
+          <div class="sec-tpl" onclick="openSectionBuilder('faq-extra')">
+            <div class="sec-tpl-icon">❓</div>
+            <div class="sec-tpl-name">FAQ Acordeón</div>
+            <div class="sec-tpl-desc">Sección de preguntas frecuentes adicional con el estilo acordeón del sitio.</div>
+          </div>
+          <div class="sec-tpl" onclick="openSectionBuilder('cta-grande')">
+            <div class="sec-tpl-icon">📣</div>
+            <div class="sec-tpl-name">CTA Grande</div>
+            <div class="sec-tpl-desc">Sección de llamada a la acción con fondo oscuro, título y botón de WhatsApp.</div>
+          </div>
+          <div class="sec-tpl" onclick="openSectionBuilder('galeria-extra')">
+            <div class="sec-tpl-icon">📸</div>
+            <div class="sec-tpl-name">Galería extra</div>
+            <div class="sec-tpl-desc">Grid de fotos con efecto hover. Puedes añadir fotos reales del salón.</div>
+          </div>
+          <div class="sec-tpl" onclick="openSectionBuilder('precio-tabla')">
+            <div class="sec-tpl-icon">💲</div>
+            <div class="sec-tpl-name">Tabla de precios</div>
+            <div class="sec-tpl-desc">Tres columnas de precios estilo "plan básico / medio / premium" con items incluidos.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Builder Modal -->
+      <div id="section-builder" style="display:none;" class="card">
+        <div class="card-title" id="builder-title">Configurar nueva sección</div>
+        <div id="builder-fields"></div>
+        <div style="display:flex;gap:10px;margin-top:16px;">
+          <button class="btn btn-solid btn-sm" onclick="generateSection()">Generar código HTML</button>
+          <button class="btn btn-sm" onclick="document.getElementById('section-builder').style.display='none'">Cancelar</button>
+        </div>
+        <div id="builder-output" style="display:none;margin-top:16px;">
+          <div class="card-title" style="margin-bottom:10px;">Código generado — copia y pega en tu index.html</div>
+          <div style="background:var(--bk);padding:16px;border:1px solid rgba(201,168,76,.15);position:relative;">
+            <pre id="builder-code" style="color:#C9A84C;font-size:11px;overflow-x:auto;white-space:pre-wrap;font-family:'Courier New',monospace;line-height:1.6;max-height:300px;overflow-y:auto;"></pre>
+            <button class="btn btn-solid btn-sm" onclick="copyBuilderCode()" style="margin-top:10px;">📋 Copiar código</button>
+          </div>
+          <div style="background:var(--d4);padding:14px;margin-top:12px;border-left:3px solid var(--g);">
+            <p style="font-size:12px;color:var(--mu);line-height:1.7;">
+              <strong style="color:var(--g);">Cómo usar:</strong><br/>
+              1. Copia el código de arriba<br/>
+              2. Abre <code style="background:var(--d3);padding:2px 6px;">index.html</code> en un editor de texto<br/>
+              3. Pégalo antes del cierre <code style="background:var(--d3);padding:2px 6px;">&lt;/main&gt;</code><br/>
+              4. Guarda el archivo y sube a Netlify
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /content -->
+</div><!-- /main -->
+</div><!-- /app -->
+
+<script>
+
+
+
+
+
+
+/* ─── AUTH ─── */
+const USERS_KEY='magnolia_users',STATE_KEY='magnolia_state';
+function getUsers(){const d=localStorage.getItem(USERS_KEY);return d?JSON.parse(d):[{id:1,nombre:'Admin',email:'admin',pass:'magnolia2026',rol:'admin',activo:true}];}
+function saveUsers(u){localStorage.setItem(USERS_KEY,JSON.stringify(u));}
+let currentUser=null;
+function doLogin(){
+  const email=document.getElementById('loginUser').value.trim();
+  const pass=document.getElementById('loginPass').value;
+  const users=getUsers();
+  const u=users.find(x=>x.email===email&&x.pass===pass&&x.activo);
+  const err=document.getElementById('loginError');
+  if(!u){err.classList.add('show');return;}
+  err.classList.remove('show');
+  currentUser=u;
+  document.getElementById('loginWrap').style.display='none';
+  document.getElementById('appWrap').classList.add('visible');
+  document.getElementById('suName').textContent=u.nombre;
+  document.getElementById('suRole').textContent=u.rol==='admin'?'Administrador':u.rol==='editor'?'Editor':'Cliente';
+  document.getElementById('suAvatar').textContent=u.nombre[0].toUpperCase();
+  applyRole(u.rol);
+  loadState();renderAll();updateStats();
+}
+document.getElementById('loginPass').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin();});
+function doLogout(){currentUser=null;document.getElementById('loginWrap').style.display='flex';document.getElementById('appWrap').classList.remove('visible');}
+function applyRole(rol){
+  if(rol!=='admin'){
+    ['apariencia','hero','usuarios','pixeles','deploy'].forEach(id=>{
+      const el=document.querySelector(`.slink[onclick*="'${id}'"]`);
+      if(el)el.style.display='none';
+    });
+  }
+}
+
+
+function saveHorarios(){
+  var rows=document.querySelectorAll('#horarios-list .hor-row');
+  S.horarios=[];
+  rows.forEach(function(r){
+    var d=r.querySelector('.hor-dia');
+    var h=r.querySelector('.hor-hora');
+    if(d&&h) S.horarios.push({dia:d.value,hora:h.value});
+  });
+  saveState();
+  showAlert2('al-horarios');
+}
+
+/* ─── STATE ─── */
+let S={
+  servicios:[{id:1,nombre:'Manicura & Pedicura',desc:'Tradicional, rusa, jelly, polly-gel y pedicure.',precio:'Desde $10',img:'uploads/post-03.jpg',activo:true},{id:2,nombre:'Pestañas & Cejas',desc:'Clásicas, wispy, griego, brasileño. Perfilado de cejas.',precio:'Desde $10',img:'uploads/post-05.jpg',activo:true},{id:3,nombre:'Spa & Masajes',desc:'Masajes relajantes, exfoliación, limpiezas faciales.',precio:'Desde $15',img:'uploads/mag-08.jpg',activo:true},{id:4,nombre:'Estilismo & Hair',desc:'Color, alisado sin formol, corte, ondas, peinados.',precio:'Desde $10',img:'uploads/mag-05.jpg',activo:true},{id:5,nombre:'Depilaciones',desc:'Rostro y cuerpo completo.',precio:'Desde $3',img:'uploads/post-09.jpg',activo:true},{id:6,nombre:'Maquillaje',desc:'Eventos, quinceañeras, bodas.',precio:'Consultar',img:'uploads/maqu-02.jpg',activo:true},{id:7,nombre:'Paquetes Corporales',desc:'Maderoterapia, aparatología, glúteos.',precio:'Desde $40',img:'uploads/post-14.jpg',activo:true},{id:8,nombre:'Tratamientos especiales',desc:'Próximamente...',precio:'',img:'',activo:false}],
+  paquetes:[{id:1,nombre:'Combo Mani+Pedi',precio:'$22',badge:'Más popular',img:'uploads/post-03.jpg',items:['Manicura rusa','Pedicure completo','Exfoliación + hidratación de obsequio'],activo:true},{id:2,nombre:'Masaje VIP',precio:'$150',badge:'★ Premium',img:'uploads/mag-12.jpg',items:['12 masajes moldeadores','Control peso y medidas','Maderoterapia','Exfoliación corporal','Sesión nutrientes'],activo:true},{id:3,nombre:'Reductivo Básico',precio:'$80',badge:'Corporal',img:'uploads/post-14.jpg',items:['6 sesiones masaje','Drenaje linfático','Aparatología'],activo:true}],
+  productos:[{id:1,nombre:'Set Encaje Rojo',cat:'Lencería',precio:'Consultar',img:'uploads/lenc-07.jpg',desc:'Conjunto de lencería de encaje rojo.',activo:true},{id:2,nombre:'Fragancia Premium',cat:'Perfumes',precio:'Consultar',img:'uploads/lenc-07.jpg',desc:'Perfume de larga duración.',activo:true},{id:3,nombre:'Set Deportivo',cat:'Ropa Deportiva',precio:'Consultar',img:'uploads/perf-04.jpg',desc:'Conjunto deportivo premium.',activo:true}],
+  galeria:[{id:1,url:'uploads/post-03.jpg',alt:'Manicura'},{id:2,url:'uploads/post-05.jpg',alt:'Pestañas'},{id:3,url:'uploads/mag-08.jpg',alt:'Spa'},{id:4,url:'uploads/mag-05.jpg',alt:'Estilismo'},{id:5,url:'uploads/lenc-09.jpg',alt:'Lencería'}],
+  testimonios:[{id:1,nombre:'Valentina R.',srv:'Manicura Rusa',texto:'Magnolia cambió completamente mi experiencia de belleza.',stars:5},{id:2,nombre:'María C.',srv:'Masaje VIP',texto:'El masaje VIP fue una experiencia increíble. Salí renovada.',stars:5},{id:3,nombre:'Sofía M.',srv:'Alisado sin Formol',texto:'Me hice el alisado estando embarazada y quedé maravillada.',stars:5}],
+  blog:[{id:1,titulo:'5 secretos para que tu manicura dure más',cat:'Cuidado de Uñas',ext:'Trucos que usan las profesionales.',fecha:'15 Abril 2026',img:'uploads/post-03.jpg',activo:true},{id:2,titulo:'¿Cuál extensión de pestañas es ideal para ti?',cat:'Pestañas',ext:'Guía completa por forma de ojos.',fecha:'10 Abril 2026',img:'uploads/post-05.jpg',activo:true},{id:3,titulo:'Alisado sin formol: la opción segura',cat:'Cabello',ext:'Por qué es la mejor opción para embarazadas.',fecha:'5 Abril 2026',img:'uploads/mag-05.jpg',activo:true}],
+  eventos:[{id:1,titulo:'Taller Nail Art — Principiantes',tipo:'Taller',dia:'15',mes:'Mayo',desc:'Aprende nail art con nuestras especialistas.',link:'https://wa.me/584125944627',activo:true}],
+  eventosActivo:false,
+  horarios:[{dia:'Lunes – Viernes',hora:'10:00 am – 7:00 pm'},{dia:'Sábados',hora:'9:00 am – 7:00 pm'},{dia:'Domingos',hora:'Cerrado'}],
+  info:{nombre:'Magnolia Beauty & Fashion',slogan:'Donde la belleza encuentra su lugar.',wa:'584125944627',tel:'0412-7552659',dir:'CC Brisas del Valle, San Diego, Valencia, Venezuela',ig1:'@_spamagnolia',ig2:'@magnoliabeautyfashion',lt:'https://linktr.ee/spabeautymagnolia'}
+};
+
+function loadState(){const d=localStorage.getItem(STATE_KEY);if(d)try{S=JSON.parse(d);}catch(e){}}
+function saveState(){localStorage.setItem(STATE_KEY,JSON.stringify(S));}
+function saveAll(){saveInfo();saveState();showAlert2('');alert('✓ Todo guardado correctamente.');}
+
+/* ─── PANELS ─── */
+function showP(id,el){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  const p=document.getElementById('panel-'+id);if(p)p.classList.add('active');
+  document.querySelectorAll('.slink').forEach(l=>l.classList.remove('active'));
+  if(el)el.classList.add('active');
+  const titles={dashboard:'Dashboard',apariencia:'Apariencia',hero:'Hero / Portada',servicios:'Servicios',paquetes:'Paquetes',tienda:'Tienda',galeria:'Galería',testimonios:'Testimonios',blog:'Blog',eventos:'Eventos / Cursos',info:'Info del negocio',usuarios:'Usuarios',pixeles:'Píxeles & SEO',deploy:'Publicar / Deploy',backup:'Backup',nosotras:'Nosotras / About',ticker:'Ticker',faq:'Preguntas Frecuentes',promos:'Banners Promocionales',contacto:'Sección Contacto',secciones:'Gestión de Secciones'};
+  const t=document.getElementById('topbarTitle');if(t)t.textContent=titles[id]||id;
+  renderAll();
+  document.getElementById('sidebar').classList.remove('open');
+}
+
+/* ─── TABS ─── */
+function switchTab(btn,targetId){
+  const wrap=btn.closest('.panel');
+  wrap.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  wrap.querySelectorAll('.tab-panel').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+  const tp=document.getElementById(targetId);if(tp)tp.classList.add('active');
+}
+
+/* ─── STATS ─── */
+function updateStats(){
+  const ss=document.getElementById('s-srv');if(ss)ss.textContent=S.servicios.filter(x=>x.activo).length;
+  const sp=document.getElementById('s-pkg');if(sp)sp.textContent=S.paquetes.length;
+  const sd=document.getElementById('s-prod');if(sd)sd.textContent=S.productos.length;
+  const sb=document.getElementById('s-blog');if(sb)sb.textContent=S.blog.length;
+  const su=document.getElementById('s-usr');if(su)su.textContent=getUsers().length;
+}
+
+/* ─── RENDER ALL ─── */
+function renderAll(){
+  renderSrv();renderPkg();renderProd();renderGal();renderTest();renderBlog();renderEvents();renderHorarios();renderInfo();renderUsers();
+  updateStats();
+  if(typeof renderPilares==='function') renderPilares();
+  if(typeof renderTicker==='function') renderTicker();
+  if(typeof renderFaqAdmin==='function') renderFaqAdmin();
+  if(typeof renderPromos==='function') renderPromos();
+  if(typeof renderSectionsVisibility==='function') renderSectionsVisibility();
+}
+
+/* SERVICIOS */
+let editSrvId=null;
+function renderSrv(){
+  var tb=document.getElementById('srv-tbody'); if(!tb)return;
+  var rows='';
+  for(var i=0;i<S.servicios.length;i++){
+    var s=S.servicios[i];
+    var thumb=s.img?'<img src="'+s.img+'" style="width:48px;height:48px;object-fit:cover;border-radius:3px;" onerror="this.style.display=\x27none\x27"/>'  :'';
+    rows+='<tr>'
+      +'<td><div style="display:flex;align-items:center;gap:10px;">'+thumb+'<strong>'+s.nombre+'</strong></div></td>'
+      +'<td><span class="badge bg-gold">'+(s.precio||'-')+'</span></td>'
+      +'<td>'+togBtn('srv',s.id,s.activo)+'</td>'
+      +'<td style="display:flex;gap:6px;">'
+        +'<button class="btn btn-sm" onclick="editSrv('+s.id+')">✏️</button>'
+        +'<button class="btn btn-sm btn-danger" onclick="delSrv('+s.id+')">🗑️</button>'
+      +'</td></tr>';
+  }
+  tb.innerHTML=rows;
+}
+function addServicio(){editSrvId=null;['sf-nombre','sf-precio','sf-desc','sf-img'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});document.getElementById('srv-form-title').textContent='Agregar servicio';}
+function editSrv(id){const s=S.servicios.find(x=>x.id===id);if(!s)return;editSrvId=id;document.getElementById('sf-nombre').value=s.nombre;document.getElementById('sf-precio').value=s.precio;document.getElementById('sf-desc').value=s.desc;document.getElementById('sf-img').value=s.img||'';document.getElementById('srv-form-title').textContent='Editando: '+s.nombre;document.getElementById('srv-form').scrollIntoView({behavior:'smooth'});}
+function saveSrv(){var n=document.getElementById('sf-nombre').value.trim();if(!n)return;var obj={nombre:n,precio:document.getElementById('sf-precio').value,desc:document.getElementById('sf-desc').value,img:document.getElementById('sf-img').value};if(editSrvId){var s=S.servicios.find(function(x){return x.id===editSrvId;});if(s)Object.assign(s,obj);editSrvId=null;}else{obj.id=Math.max.apply(null,S.servicios.map(function(x){return x.id;}).concat([0]))+1;obj.activo=true;S.servicios.push(obj);}saveState();renderSrv();showAlert2('al-srv');}
+function delSrv(id){if(confirm('¿Eliminar?')){S.servicios=S.servicios.filter(x=>x.id!==id);saveState();renderSrv();}}
+function cancelSrv(){editSrvId=null;document.getElementById('srv-form-title').textContent='Agregar servicio';}
+
+/* PAQUETES */
+function renderPkg(){
+  var tb=document.getElementById('pkg-tbody'); if(!tb)return;
+  var rows='';
+  for(var i=0;i<S.paquetes.length;i++){
+    var p=S.paquetes[i];
+    var thumb=p.img?'<img src="'+p.img+'" style="width:48px;height:48px;object-fit:cover;border-radius:3px;" onerror="this.style.display=\x27none\x27"/>'  :'';
+    rows+='<tr>'
+      +'<td><div style="display:flex;align-items:center;gap:10px;">'+thumb+'<strong>'+p.nombre+'</strong></div></td>'
+      +'<td><span class="badge bg-gold">'+(p.precio||'-')+'</span></td>'
+      +'<td><span class="badge bg-bl">'+(p.badge||'-')+'</span></td>'
+      +'<td>'+togBtn('pkg',p.id,p.activo)+'</td>'
+      +'<td style="display:flex;gap:6px;">'
+        +'<button class="btn btn-sm" onclick="editPkg('+p.id+')">✏️</button>'
+        +'<button class="btn btn-sm btn-danger" onclick="delPkg('+p.id+')">🗑️</button>'
+      +'</td></tr>';
+  }
+  tb.innerHTML=rows;
+}
+function addPkg(){_editPkgId=null;['pkf-nombre','pkf-precio','pkf-badge','pkf-img','pkf-items'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});document.getElementById('pkg-form').scrollIntoView({behavior:'smooth'});}
+var _editPkgId=null;
+function editPkg(id){_editPkgId=id;const p=S.paquetes.find(x=>x.id===id);if(!p)return;document.getElementById('pkf-nombre').value=p.nombre||'';document.getElementById('pkf-precio').value=p.precio||'';document.getElementById('pkf-badge').value=p.badge||'';document.getElementById('pkf-img').value=p.img||'';document.getElementById('pkf-items').value=(p.items||[]).join('\n');document.getElementById('pkg-form').scrollIntoView({behavior:'smooth'});}
+function savePkg(){const n=document.getElementById('pkf-nombre').value.trim();if(!n)return;const items=document.getElementById('pkf-items').value.split('\n').filter(x=>x.trim());const obj={nombre:n,precio:document.getElementById('pkf-precio').value,badge:document.getElementById('pkf-badge').value,img:document.getElementById('pkf-img').value,items};if(_editPkgId){const p=S.paquetes.find(x=>x.id===_editPkgId);if(p)Object.assign(p,obj);_editPkgId=null;}else{obj.id=Math.max(0,...S.paquetes.map(x=>x.id))+1;obj.activo=true;S.paquetes.push(obj);}saveState();renderPkg();showAlert2('al-pkg');}
+function delPkg(id){if(confirm('¿Eliminar?')){S.paquetes=S.paquetes.filter(x=>x.id!==id);saveState();renderPkg();}}
+
+/* PRODUCTOS */
+function renderProd(){
+  var tb=document.getElementById('prod-tbody'); if(!tb)return;
+  var rows='';
+  for(var i=0;i<S.productos.length;i++){
+    var p=S.productos[i];
+    var thumb=p.img?'<img src="'+p.img+'" style="width:48px;height:48px;object-fit:cover;border-radius:3px;" onerror="this.style.display=\x27none\x27"/>'  :'';
+    rows+='<tr>'
+      +'<td><div style="display:flex;align-items:center;gap:10px;">'+thumb+'<strong>'+p.nombre+'</strong></div></td>'
+      +'<td><span class="badge bg-gold">'+(p.cat||'-')+'</span></td>'
+      +'<td>'+(p.precio||'-')+'</td>'
+      +'<td>'+togBtn('prod',p.id,p.activo)+'</td>'
+      +'<td style="display:flex;gap:6px;">'
+        +'<button class="btn btn-sm" onclick="editProd('+p.id+')">✏️</button>'
+        +'<button class="btn btn-sm btn-danger" onclick="delProd('+p.id+')">🗑️</button>'
+      +'</td></tr>';
+  }
+  tb.innerHTML=rows;
+}
+function addProd(){_editProdId=null;['prf-nombre','prf-precio','prf-img','prf-desc'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});}
+var _editProdId=null;
+function editProd(id){_editProdId=id;const p=S.productos.find(x=>x.id===id);if(!p)return;document.getElementById('prf-nombre').value=p.nombre||'';document.getElementById('prf-precio').value=p.precio||'';document.getElementById('prf-img').value=p.img||'';document.getElementById('prf-desc').value=p.desc||'';const catEl=document.getElementById('prf-cat');if(catEl)catEl.value=p.cat||'';document.getElementById('prod-form').scrollIntoView({behavior:'smooth'});}
+function saveProd(){const n=document.getElementById('prf-nombre').value.trim();if(!n)return;const obj={nombre:n,precio:document.getElementById('prf-precio').value,cat:document.getElementById('prf-cat')?document.getElementById('prf-cat').value:'',img:document.getElementById('prf-img').value,desc:document.getElementById('prf-desc').value};if(_editProdId){const p=S.productos.find(x=>x.id===_editProdId);if(p)Object.assign(p,obj);_editProdId=null;}else{obj.id=Math.max(0,...S.productos.map(x=>x.id))+1;obj.activo=true;S.productos.push(obj);}saveState();renderProd();showAlert2('al-prod');}
+function delProd(id){if(confirm('¿Eliminar?')){S.productos=S.productos.filter(x=>x.id!==id);saveState();renderProd();}}
+
+/* GALERÍA */
+function renderGal(){const g=document.getElementById('gal-grid');if(!g)return;g.innerHTML=S.galeria.map(i=>`<div class="prev-item"><img src="${i.url}" alt="${i.alt}" onerror="this.src='https://via.placeholder.com/130x130/141414/C9A84C?text=?'"/><button class="prev-del" onclick="delGal(${i.id})">✕</button></div>`).join('');}
+function addGal(){const u=document.getElementById('g-url').value.trim(),a=document.getElementById('g-alt').value.trim()||'Magnolia';if(!u)return;const id=Math.max(0,...S.galeria.map(x=>x.id))+1;S.galeria.push({id,url:u,alt:a});document.getElementById('g-url').value='';document.getElementById('g-alt').value='';saveState();renderGal();showAlert2('al-gal');}
+function delGal(id){if(confirm('¿Eliminar?')){S.galeria=S.galeria.filter(x=>x.id!==id);saveState();renderGal();}}
+
+/* TESTIMONIOS */
+function renderTest(){
+  var tb=document.getElementById('test-tbody'); if(!tb)return;
+  var rows='';
+  for(var i=0;i<S.testimonios.length;i++){
+    var t=S.testimonios[i];
+    rows+='<tr>'
+      +'<td><strong>'+t.nombre+'</strong><div style="font-size:11px;color:var(--mu);">'+t.texto.substring(0,50)+'...</div></td>'
+      +'<td><span class="badge bg-gold">'+t.srv+'</span></td>'
+      +'<td style="color:#FFD700;">'+'★'.repeat(t.stars||5)+'</td>'
+      +'<td style="display:flex;gap:6px;">'
+        +'<button class="btn btn-sm" onclick="editTest('+t.id+')">✏️</button>'
+        +'<button class="btn btn-sm btn-danger" onclick="delTest('+t.id+')">🗑️</button>'
+      +'</td></tr>';
+  }
+  tb.innerHTML=rows;
+}
+function addTest(){_editTestId=null;['tf-nombre','tf-srv','tf-texto'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});const st=document.getElementById('tf-stars');if(st)st.value='5';document.getElementById('test-form').scrollIntoView({behavior:'smooth'});}
+var _editTestId=null;
+function editTest(id){_editTestId=id;const t=S.testimonios.find(x=>x.id===id);if(!t)return;document.getElementById('tf-nombre').value=t.nombre||'';document.getElementById('tf-srv').value=t.srv||'';document.getElementById('tf-texto').value=t.texto||'';const st=document.getElementById('tf-stars');if(st)st.value=t.stars||5;document.getElementById('test-form').scrollIntoView({behavior:'smooth'});}
+function saveTest(){const n=document.getElementById('tf-nombre').value.trim(),tx=document.getElementById('tf-texto').value.trim();if(!n||!tx)return;const obj={nombre:n,srv:document.getElementById('tf-srv').value,texto:tx,stars:parseInt(document.getElementById('tf-stars').value)||5};if(_editTestId){const t=S.testimonios.find(x=>x.id===_editTestId);if(t)Object.assign(t,obj);_editTestId=null;}else{obj.id=Math.max(0,...S.testimonios.map(x=>x.id))+1;S.testimonios.push(obj);}saveState();renderTest();showAlert2('al-test');['tf-nombre','tf-srv','tf-texto'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});}
+function delTest(id){if(confirm('¿Eliminar?')){S.testimonios=S.testimonios.filter(x=>x.id!==id);saveState();renderTest();}}
+
+/* BLOG */
+function renderBlog(){
+  var tb=document.getElementById('blog-tbody'); if(!tb)return;
+  var rows='';
+  for(var i=0;i<S.blog.length;i++){
+    var b=S.blog[i];
+    var thumb=b.img?'<img src="'+b.img+'" style="width:48px;height:48px;object-fit:cover;border-radius:3px;" onerror="this.style.display=\x27none\x27"/>'  :'';
+    rows+='<tr>'
+      +'<td><div style="display:flex;align-items:center;gap:10px;">'+thumb+'<div><strong>'+b.titulo+'</strong><div style="font-size:11px;color:var(--mu);">'+(b.ext||'')+'</div></div></div></td>'
+      +'<td><span class="badge bg-gold">'+b.cat+'</span></td>'
+      +'<td style="font-size:12px;">'+b.fecha+'</td>'
+      +'<td><span class="badge '+(b.activo?'bg-gr':'bg-re')+'">'+(b.activo?'Publicado':'Borrador')+'</span></td>'
+      +'<td style="display:flex;gap:6px;">'
+        +'<button class="btn btn-sm" onclick="editPost('+b.id+')">✏️</button>'
+        +'<button class="btn btn-sm" onclick="togglePost('+b.id+')">'+(b.activo?'📦':'🚀')+'</button>'
+        +'<button class="btn btn-sm btn-danger" onclick="delPost('+b.id+')">🗑️</button>'
+      +'</td></tr>';
+  }
+  tb.innerHTML=rows;
+}
+function addPost(){_editPostId=null;document.getElementById('bf-titulo').value='';document.getElementById('bf-cat').value='';document.getElementById('bf-ext').value='';document.getElementById('bf-img').value='';const bc=document.getElementById('bf-content');if(bc)bc.innerHTML='';document.getElementById('blog-form').scrollIntoView({behavior:'smooth'});}
+var _editPostId=null;
+function editPost(id){_editPostId=id;const b=S.blog.find(x=>x.id===id);if(!b)return;document.getElementById('bf-titulo').value=b.titulo||'';document.getElementById('bf-cat').value=b.cat||'';document.getElementById('bf-ext').value=b.ext||'';document.getElementById('bf-img').value=b.img||'';const bc=document.getElementById('bf-content');if(bc)bc.innerHTML=b.contenido||'';document.getElementById('blog-form').scrollIntoView({behavior:'smooth'});}
+function togglePost(id){const b=S.blog.find(x=>x.id===id);if(!b)return;b.activo=!b.activo;saveState();renderBlog();}
+function savePost(){const t=document.getElementById('bf-titulo').value.trim();if(!t)return;const bc=document.getElementById('bf-content');const obj={titulo:t,cat:document.getElementById('bf-cat').value,ext:document.getElementById('bf-ext').value,img:document.getElementById('bf-img').value,contenido:bc?bc.innerHTML:''};if(_editPostId){const b=S.blog.find(x=>x.id===_editPostId);if(b)Object.assign(b,obj);_editPostId=null;}else{obj.id=Math.max(0,...S.blog.map(x=>x.id))+1;const now=new Date();obj.fecha=now.toLocaleDateString('es-VE',{day:'numeric',month:'long',year:'numeric'});obj.activo=true;S.blog.push(obj);}saveState();renderBlog();showAlert2('al-blog');document.getElementById('bf-titulo').value='';if(bc)bc.innerHTML='';}
+function delPost(id){if(confirm('¿Eliminar?')){S.blog=S.blog.filter(x=>x.id!==id);saveState();renderBlog();}}
+function fmt(cmd,val){document.execCommand(cmd,false,val||null);}
+
+/* EVENTOS */
+function renderEvents(){
+  const tb=document.getElementById('ev-tbody');if(!tb)return;
+  tb.innerHTML=S.eventos.map(e=>`<tr>
+    <td><strong>${e.titulo}</strong><div style="font-size:11px;color:var(--mu);">${e.desc||''}</div></td>
+    <td style="font-size:13px;">${e.dia} ${e.mes}</td>
+    <td><span class="badge bg-bl">${e.tipo}</span></td>
+    <td>${togBtn('ev',e.id,e.activo)}</td>
+    <td style="display:flex;gap:6px;">
+      <button class="btn btn-sm" onclick="editEvent(${e.id})">✏️</button>
+      <button class="btn btn-sm btn-danger" onclick="delEvent(${e.id})">🗑️</button>
+    </td></tr>`).join('');
+  const track=document.getElementById('events-track'),lbl=document.getElementById('events-label');
+  if(track){track.classList.toggle('on',S.eventosActivo);if(lbl)lbl.textContent=S.eventosActivo?'Activa':'Desactivada';}
+}
+/* ── EVENTOS CRUD ── */
+var _editEventId = null;
+
+function addEvent(){
+  _editEventId = null;
+  var ids = ['ef-titulo','ef-tipo','ef-dia','ef-mes','ef-precio','ef-desc','ef-cta'];
+  ids.forEach(function(id){ var el=document.getElementById(id); if(el) el.value=''; });
+  var ef = document.getElementById('event-form');
+  if(ef) ef.scrollIntoView({behavior:'smooth'});
+}
+
+function editEvent(id){
+  _editEventId = id;
+  var e = S.eventos.find(function(x){ return x.id===id; });
+  if(!e) return;
+  var sv = function(eid, val){ var el=document.getElementById(eid); if(el) el.value=val||''; };
+  sv('ef-titulo', e.titulo);
+  sv('ef-tipo',   e.tipo);
+  sv('ef-dia',    e.dia);
+  sv('ef-mes',    e.mes);
+  sv('ef-precio', e.precio);
+  sv('ef-desc',   e.desc);
+  sv('ef-cta',    e.cta);
+  var ef = document.getElementById('event-form');
+  if(ef) ef.scrollIntoView({behavior:'smooth'});
+}
+
+function saveEvent(){
+  var t = (document.getElementById('ef-titulo').value||'').trim();
+  if(!t) return;
+  var gv = function(id){ var el=document.getElementById(id); return el?el.value:''; };
+  var obj = {
+    titulo:  t,
+    tipo:    gv('ef-tipo'),
+    dia:     gv('ef-dia'),
+    mes:     gv('ef-mes'),
+    precio:  gv('ef-precio'),
+    desc:    gv('ef-desc'),
+    cta:     gv('ef-cta')
+  };
+  if(_editEventId){
+    var ev = S.eventos.find(function(x){ return x.id===_editEventId; });
+    if(ev) Object.assign(ev, obj);
+    _editEventId = null;
+  } else {
+    obj.id = Math.max.apply(null, S.eventos.map(function(x){ return x.id; }).concat([0])) + 1;
+    obj.activo = true;
+    S.eventos.push(obj);
+  }
+  saveState();
+  renderEvents();
+  showAlert2('al-ev');
+}
+
+function delEvent(id){
+  if(!confirm('¿Eliminar este evento?')) return;
+  S.eventos = S.eventos.filter(function(x){ return x.id !== id; });
+  saveState();
+  renderEvents();
+}
+
+function toggleEventosSection(){
+  S.eventosActivo = !S.eventosActivo;
+  saveState();
+  renderEvents();
+}
+
+
+/* HORARIOS */
+function renderHorarios(){const l=document.getElementById('horarios-list');if(!l)return;l.innerHTML=S.horarios.map((h,i)=>`<div style="display:flex;gap:10px;margin-bottom:10px;align-items:center;"><input class="f-input" value="${h.dia}" onchange="S.horarios[${i}].dia=this.value" style="flex:1;"/><input class="f-input" value="${h.hora}" onchange="S.horarios[${i}].hora=this.value" style="flex:1;"/><button class="btn btn-sm btn-danger" onclick="S.horarios.splice(${i},1);renderHorarios()">🗑️</button></div>`).join('');}
+function addHorario(){S.horarios.push({dia:'Nuevo día',hora:'Horario'});renderHorarios();}
+
+/* INFO */
+function renderInfo(){const map={nombre:'i-nombre',slogan:'i-slogan',wa:'i-wa',tel:'i-tel',dir:'i-dir',ig1:'i-ig1',ig2:'i-ig2',lt:'i-lt'};Object.entries(map).forEach(([k,id])=>{const el=document.getElementById(id);if(el)el.value=S.info[k]||'';});}
+function saveInfo(){const map={nombre:'i-nombre',slogan:'i-slogan',wa:'i-wa',tel:'i-tel',dir:'i-dir',ig1:'i-ig1',ig2:'i-ig2',lt:'i-lt'};Object.entries(map).forEach(([k,id])=>{const el=document.getElementById(id);if(el)S.info[k]=el.value;});saveState();showAlert2('al-info');}
+
+/* USUARIOS */
+function renderUsers(){const tb=document.getElementById('usr-tbody');if(!tb)return;const users=getUsers();tb.innerHTML=users.map(u=>`<tr><td><strong>${u.nombre}</strong></td><td>${u.email}</td><td><span class="badge ${u.rol==='admin'?'bg-re':u.rol==='editor'?'bg-gold':'bg-bl'}">${u.rol}</span></td><td><span class="badge ${u.activo?'bg-gr':'bg-re'}">${u.activo?'Activo':'Inactivo'}</span></td><td style="display:flex;gap:6px;"><button class="btn btn-sm btn-danger" onclick="delUser(${u.id})" ${u.id===1?'disabled':''}>🗑️</button></td></tr>`).join('');}
+function addUser(){}
+function saveUser(){const n=document.getElementById('uf-nombre').value.trim(),e=document.getElementById('uf-email').value.trim(),p=document.getElementById('uf-pass').value,r=document.getElementById('uf-rol').value;if(!n||!e||!p){alert('Completa todos los campos.');return;}const users=getUsers();if(users.find(u=>u.email===e)){alert('Ese email ya existe.');return;}const id=Math.max(...users.map(u=>u.id))+1;users.push({id,nombre:n,email:e,pass:p,rol:r,activo:true});saveUsers(users);renderUsers();showAlert2('al-usr');updateStats();['uf-nombre','uf-email','uf-pass'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});}
+function delUser(id){if(id===1){alert('No puedes eliminar el usuario admin principal.');return;}if(confirm('¿Eliminar usuario?')){const users=getUsers().filter(u=>u.id!==id);saveUsers(users);renderUsers();updateStats();}}
+
+/* TOGGLE HELPER */
+function togBtn(prefix,id,active){return `<button class="tgl" onclick="tog('${prefix}',${id},this)"><div class="tgl-track ${active?'on':''}"><div class="tgl-thumb"></div></div><span class="tgl-label">${active?'Activo':'Oculto'}</span></button>`;}
+function tog(prefix,id,btn){
+  if(prefix==='faq'){const item=S.faqItems&&S.faqItems.find(x=>x.id===id);if(!item)return;item.activo=!item.activo;btn.querySelector('.tgl-track').classList.toggle('on',item.activo);btn.querySelector('.tgl-label').textContent=item.activo?'Activo':'Oculto';saveState();return;}
+  if(prefix==='promo'){const item=S.promos&&S.promos.find(x=>x.id===id);if(!item)return;item.activo=!item.activo;btn.querySelector('.tgl-track').classList.toggle('on',item.activo);btn.querySelector('.tgl-label').textContent=item.activo?'Activo':'Oculto';saveState();return;}
+  if(prefix==='sec'){if(!S.sectionsVisibility)S.sectionsVisibility={};const cur=S.sectionsVisibility[id]!==false;S.sectionsVisibility[id]=!cur;btn.querySelector('.tgl-track').classList.toggle('on',!cur);btn.querySelector('.tgl-label').textContent=(!cur)?'Activo':'Oculto';saveState();return;}
+  const arr={'srv':S.servicios,'pkg':S.paquetes,'prod':S.productos,'ev':S.eventos}[prefix];
+  const item=arr?.find(x=>x.id===id);if(!item)return;
+  item.activo=!item.activo;
+  btn.querySelector('.tgl-track').classList.toggle('on',item.activo);
+  btn.querySelector('.tgl-label').textContent=item.activo?'Activo':'Oculto';
+  saveState();updateStats();
+}
+
+/* COLORS */
+function updateColor(name,previewId,val){document.getElementById(previewId).style.background=val;document.getElementById('cv-'+name).value=val;}
+function updateColorText(name,previewId,inputId,val){document.getElementById(previewId).style.background=val;document.getElementById(inputId).value=val;}
+function setPreset(color){document.getElementById('cp-gold').style.background=color;document.getElementById('cv-gold').value=color;document.getElementById('ci-gold').value=color;}
+
+/* ALERTS */
+function saveSection(alertId){saveState();if(alertId)showAlert2(alertId);}
+function showAlert2(id){if(!id)return;const el=document.getElementById(id);if(!el)return;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),3000);}
+
+/* EXPORT / IMPORT */
+function exportJSON(){const blob=new Blob([JSON.stringify({state:S,users:getUsers(),exported:new Date().toISOString()},null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`magnolia-backup-${new Date().toISOString().slice(0,10)}.json`;a.click();}
+function importJSON(event){const file=event.target.files[0];if(!file)return;const reader=new FileReader();reader.onload=e=>{try{const d=JSON.parse(e.target.result);if(d.state)S=d.state;if(d.users)saveUsers(d.users);saveState();renderAll();alert('✓ Configuración importada.');}catch(err){alert('Error: archivo JSON inválido.');}};reader.readAsText(file);}
+
+/* HAMBURGER */
+document.getElementById('hamBtn').addEventListener('click',()=>{document.getElementById('sidebar').classList.toggle('open');});
+
+/* INIT */
+loadState();
+
+
+
+/* ═══ EXTENSIONES NUEVAS — cargadas después de todo ═══ */
+
+/* ── DATOS POR DEFECTO para nuevas secciones ── */
+function initNewSections(){
+  if(!S.pilares) S.pilares=[
+    {titulo:'Especialistas certificadas',sub:'Equipo profesional en constante formación'},
+    {titulo:'Productos premium',sub:'Solo materiales de máxima calidad'},
+    {titulo:'Atención personalizada',sub:'Cada cliente, un trato único y especial'},
+    {titulo:'Obsequio garantizado',sub:'Exfoliación + hidratación incluidas'}
+  ];
+  if(!S.ticker) S.ticker=['Manicura & Pedicura','Extensión de Pestañas','Alisado sin Formol','Masajes & Spa','Depilaciones','Lencería Premium','Perfumes','Ropa Deportiva'];
+  if(!S.faqItems) S.faqItems=[
+    {id:1,q:'¿Necesito cita previa?',a:'Sí, recomendamos reservar por WhatsApp al 0412-7552659.',activo:true},
+    {id:2,q:'¿Qué métodos de pago aceptan?',a:'Efectivo, transferencia, Zelle, pago móvil y Binance.',activo:true},
+    {id:3,q:'¿El alisado sin formol es seguro en el embarazo?',a:'Sí, 100% libre de formol, apto para embarazadas y niñas.',activo:true},
+    {id:4,q:'¿Cuánto duran las extensiones de pestañas?',a:'Clásicas 3-4 semanas. Wispy y volumen 3-5 semanas.',activo:true},
+    {id:5,q:'¿El obsequio tiene costo?',a:'No. Exfoliación e hidratación incluidas en manicura y pedicura.',activo:true}
+  ];
+  if(!S.promos) S.promos=[
+    {id:1,badge:'✦ Novedad',title:'Manicura Rusa',desc:'El acabado más duradero.',cta:'Reservar por $17 →',link:'https://wa.me/584127552659',img:'https://images.unsplash.com/photo-1604654894610-df63bc536371?w=800',activo:true},
+    {id:2,badge:'✦ Tendencia',title:'Pestañas Wispy',desc:'Sin rímel por semanas.',cta:'Reservar por $35 →',link:'https://wa.me/584127552659',img:'https://images.unsplash.com/photo-1583001931096-959e9a1a6223?w=800',activo:true}
+  ];
+}
+
+/* ── PILARES ── */
+function renderPilares(){
+  var l=document.getElementById('pilares-list'); if(!l)return;
+  var rows=''; 
+  for(var i=0;i<S.pilares.length;i++){
+    rows+='<div style="display:flex;gap:10px;margin-bottom:10px;align-items:center;">'
+      +'<input class="f-input" value="'+S.pilares[i].titulo+'" data-pi="'+i+'" data-pk="titulo" onchange="updatePilar(this)" style="flex:1;" placeholder="Título"/>'
+      +'<input class="f-input" value="'+S.pilares[i].sub+'" data-pi="'+i+'" data-pk="sub" onchange="updatePilar(this)" style="flex:1;" placeholder="Subtítulo"/>'
+      +'<button class="btn btn-sm btn-danger" onclick="delPilar('+i+')">🗑️</button>'
+      +'</div>';
+  }
+  l.innerHTML=rows;
+}
+function updatePilar(el){var i=parseInt(el.dataset.pi),k=el.dataset.pk;S.pilares[i][k]=el.value;}
+function delPilar(i){S.pilares.splice(i,1);renderPilares();}
+function addPilar(){S.pilares.push({titulo:'Nuevo pilar',sub:'Descripción'});renderPilares();}
+function savePilares(){saveState();showAlert2('al-pilares');}
+
+/* ── TICKER ── */
+function renderTicker(){
+  var l=document.getElementById('ticker-list'); if(!l)return;
+  var rows='';
+  for(var i=0;i<S.ticker.length;i++){
+    rows+='<div class="ticker-item-row">'
+      +'<input class="f-input" value="'+S.ticker[i]+'" data-ti="'+i+'" onchange="updateTicker(this)" style="flex:1;"/>'
+      +'<button class="btn btn-sm btn-danger" onclick="delTickerItem('+i+')">🗑️</button>'
+      +'</div>';
+  }
+  l.innerHTML=rows;
+}
+function updateTicker(el){S.ticker[parseInt(el.dataset.ti)]=el.value;}
+function delTickerItem(i){S.ticker.splice(i,1);renderTicker();}
+function addTickerItem(){var v=document.getElementById('ticker-new').value.trim();if(!v)return;S.ticker.push(v);document.getElementById('ticker-new').value='';renderTicker();}
+function saveTicker(){saveState();showAlert2('al-ticker');}
+
+/* ── FAQ ── */
+function renderFaqAdmin(){
+  var l=document.getElementById('faq-list'); if(!l)return;
+  var rows='';
+  for(var i=0;i<S.faqItems.length;i++){
+    var f=S.faqItems[i];
+    rows+='<div class="faq-admin-item">'
+      +'<div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;">'
+      +'<div style="flex:1;"><div class="faq-admin-q">'+f.q+'</div><div class="faq-admin-a">'+f.a+'</div></div>'
+      +'<div style="display:flex;gap:6px;flex-shrink:0;">'
+      +togBtn('faq',f.id,f.activo)
+      +'<button class="btn btn-sm" onclick="editFaqItem('+f.id+')">✏️</button>'
+      +'<button class="btn btn-sm btn-danger" onclick="delFaqItem('+f.id+')">🗑️</button>'
+      +'</div></div></div>';
+  }
+  l.innerHTML=rows;
+}
+var _editFaqId=null;
+function editFaqItem(id){var f=S.faqItems.find(function(x){return x.id===id;});if(!f)return;_editFaqId=id;document.getElementById('faq-q').value=f.q;document.getElementById('faq-a').value=f.a;document.getElementById('faq-form').scrollIntoView({behavior:'smooth'});}
+function saveFaqItem(){var q=(document.getElementById('faq-q').value||'').trim(),a=(document.getElementById('faq-a').value||'').trim();if(!q||!a)return;if(_editFaqId){var f=S.faqItems.find(function(x){return x.id===_editFaqId;});if(f){f.q=q;f.a=a;}_editFaqId=null;}else{var id=Math.max.apply(null,S.faqItems.map(function(x){return x.id;}))+1;S.faqItems.push({id:id,q:q,a:a,activo:true});}saveState();renderFaqAdmin();showAlert2('al-faq');document.getElementById('faq-q').value='';document.getElementById('faq-a').value='';}
+function delFaqItem(id){if(!confirm('¿Eliminar?'))return;S.faqItems=S.faqItems.filter(function(x){return x.id!==id;});saveState();renderFaqAdmin();}
+function addFaq(){_editFaqId=null;document.getElementById('faq-q').value='';document.getElementById('faq-a').value='';document.getElementById('faq-form').scrollIntoView({behavior:'smooth'});}
+
+/* ── PROMOS ── */
+var _editPromoId=null;
+function renderPromos(){
+  var l=document.getElementById('promos-list'); if(!l)return;
+  var rows='';
+  for(var i=0;i<S.promos.length;i++){
+    var p=S.promos[i];
+    rows+='<div class="promo-admin-item">'
+      +'<img class="promo-thumb" src="'+p.img+'" alt="promo" onerror="this.style.display=\'none\'"/>'
+      +'<div class="promo-info"><div class="promo-badge-tag">'+p.badge+'</div><div class="promo-title">'+p.title+'</div><div style="font-size:12px;color:var(--mu);">'+p.desc.substring(0,60)+'...</div></div>'
+      +'<div style="display:flex;gap:6px;flex-shrink:0;">'
+      +togBtn('promo',p.id,p.activo)
+      +'<button class="btn btn-sm" onclick="editPromo('+p.id+')">✏️</button>'
+      +'<button class="btn btn-sm btn-danger" onclick="delPromo('+p.id+')">🗑️</button>'
+      +'</div></div>';
+  }
+  l.innerHTML=rows;
+}
+function editPromo(id){var p=S.promos.find(function(x){return x.id===id;});if(!p)return;_editPromoId=id;document.getElementById('pf-badge').value=p.badge;document.getElementById('pf-img').value=p.img;document.getElementById('pf-title').value=p.title;document.getElementById('pf-desc').value=p.desc;document.getElementById('pf-cta').value=p.cta;document.getElementById('pf-link').value=p.link;document.getElementById('promo-form-title').textContent='Editando banner';document.getElementById('promo-form').scrollIntoView({behavior:'smooth'});}
+function addPromo(){_editPromoId=null;['pf-badge','pf-img','pf-title','pf-desc','pf-cta','pf-link'].forEach(function(id){var el=document.getElementById(id);if(el)el.value='';});document.getElementById('promo-form-title').textContent='Nuevo banner';}
+function savePromo(){var t=(document.getElementById('pf-title').value||'').trim();if(!t)return;var obj={badge:document.getElementById('pf-badge').value,title:t,desc:document.getElementById('pf-desc').value,cta:document.getElementById('pf-cta').value,link:document.getElementById('pf-link').value,img:document.getElementById('pf-img').value,activo:true};if(_editPromoId){var p=S.promos.find(function(x){return x.id===_editPromoId;});if(p)Object.assign(p,obj);_editPromoId=null;}else{obj.id=Math.max.apply(null,S.promos.map(function(x){return x.id;}))+1;S.promos.push(obj);}saveState();renderPromos();showAlert2('al-promos');}
+function delPromo(id){if(!confirm('¿Eliminar?'))return;S.promos=S.promos.filter(function(x){return x.id!==id;});saveState();renderPromos();}
+
+/* ── SECCIONES VISIBILITY ── */
+var SITE_SECTIONS=[
+  {id:'nosotras',name:'Nosotras (About)',hint:'Presentación del salón.'},
+  {id:'servicios-preview',name:'Servicios preview',hint:'Grid de servicios en home.'},
+  {id:'paquetes',name:'Paquetes',hint:'Carrusel de paquetes.'},
+  {id:'galeria',name:'Galería',hint:'Fotos del salón.'},
+  {id:'tienda-preview',name:'Tienda preview',hint:'Vista previa tienda.'},
+  {id:'testimonios',name:'Testimonios',hint:'Reseñas de clientas.'},
+  {id:'faq-section',name:'FAQ',hint:'Preguntas frecuentes.'},
+  {id:'contacto',name:'Contacto',hint:'Formulario de contacto.'}
+];
+function renderSectionsVisibility(){
+  var l=document.getElementById('sections-visibility'); if(!l)return;
+  if(!S.sectionsVisibility) S.sectionsVisibility={};
+  var rows='';
+  for(var i=0;i<SITE_SECTIONS.length;i++){
+    var s=SITE_SECTIONS[i];
+    var active=S.sectionsVisibility[s.id]!==false;
+    rows+='<div class="sections-row">'
+      +'<div><div class="sections-row-name">'+s.name+'</div><div class="sections-row-hint">'+s.hint+'</div></div>'
+      +togBtn('sec',s.id,active)
+      +'</div>';
+  }
+  l.innerHTML=rows;
+}
+
+/* ── SECTION BUILDER (simplified) ── */
+function openSectionBuilder(type){
+  var templates={
+    'texto-imagen':['si-eyebrow:Eyebrow','si-titulo:Título','si-texto:Párrafo:textarea','si-cta:Botón CTA','si-link:Link del botón','si-img:URL imagen'],
+    'tarjetas':['tc-eyebrow:Eyebrow','tc-titulo:Título sección','tc-c1t:Tarjeta 1 — Título','tc-c1d:Tarjeta 1 — Descripción','tc-c1i:Tarjeta 1 — Imagen URL','tc-c2t:Tarjeta 2 — Título','tc-c2d:Tarjeta 2 — Descripción','tc-c2i:Tarjeta 2 — Imagen URL','tc-c3t:Tarjeta 3 — Título','tc-c3d:Tarjeta 3 — Descripción','tc-c3i:Tarjeta 3 — Imagen URL'],
+    'banner-full':['bf-eyebrow:Eyebrow','bf-titulo:Título','bf-desc:Descripción:textarea','bf-cta:Botón','bf-link:Link','bf-img:Imagen fondo URL'],
+    'estadisticas':['st-titulo:Título','st-n1:Número 1','st-l1:Label 1','st-n2:Número 2','st-l2:Label 2','st-n3:Número 3','st-l3:Label 3','st-n4:Número 4','st-l4:Label 4'],
+    'cta-grande':['cg-eyebrow:Eyebrow','cg-titulo:Título','cg-desc:Descripción:textarea','cg-cta:Botón','cg-link:Link WhatsApp'],
+    'galeria-extra':['ge-titulo:Título','ge-img1:Imagen 1 URL','ge-alt1:Imagen 1 descripción','ge-img2:Imagen 2 URL','ge-alt2:Imagen 2 descripción','ge-img3:Imagen 3 URL','ge-alt3:Imagen 3 descripción','ge-img4:Imagen 4 URL','ge-alt4:Imagen 4 descripción'],
+    'precio-tabla':['pt-titulo:Título','pt-c1t:Col 1 Nombre','pt-c1p:Col 1 Precio','pt-c1i:Col 1 Items (separar con |)','pt-c2t:Col 2 Nombre','pt-c2p:Col 2 Precio','pt-c2i:Col 2 Items','pt-c3t:Col 3 Nombre','pt-c3p:Col 3 Precio','pt-c3i:Col 3 Items','pt-cta:Botón CTA']
+  };
+  var fields=templates[type]||[];
+  var html='';
+  for(var i=0;i<fields.length;i++){
+    var parts=fields[i].split(':');
+    var id=parts[0],label=parts[1],isTA=parts[2]==='textarea';
+    html+='<div class="f-group"><label class="f-label">'+label+'</label>';
+    html+=isTA?'<textarea class="f-textarea" id="'+id+'" style="min-height:70px;"></textarea>':'<input class="f-input" id="'+id+'"/>';
+    html+='</div>';
+  }
+  document.getElementById('builder-title').textContent='Configurar: '+type;
+  document.getElementById('builder-fields').innerHTML=html;
+  document.getElementById('builder-output').style.display='none';
+  document.getElementById('section-builder').style.display='block';
+  document.getElementById('section-builder').setAttribute('data-type',type);
+  document.getElementById('section-builder').scrollIntoView({behavior:'smooth'});
+}
+
+function fv(id){var el=document.getElementById(id);return el?el.value.trim():'';}
+
+function generateSection(){
+  var t=document.getElementById('section-builder').getAttribute('data-type');
+  var WA='https://wa.me/584127552659';
+  var html='';
+  if(t==='texto-imagen'){
+    html='<!-- SECCIÓN: TEXTO + IMAGEN -->\n<section class="section">\n  <div class="container">\n    <div class="about-grid">\n      <div class="about-img-wrap reveal"><img src="'+fv('si-img')+'" alt="'+fv('si-titulo')+'" class="about-img" loading="lazy"/></div>\n      <div class="about-text">\n        <div class="eyebrow reveal">'+fv('si-eyebrow')+'</div>\n        <h2 class="reveal delay-1">'+fv('si-titulo')+'</h2>\n        <p class="reveal delay-2">'+fv('si-texto')+'</p>\n        '+(fv('si-cta')?'<a href="'+fv('si-link')+'" class="btn reveal delay-3">'+fv('si-cta')+' <span class="arr">→</span></a>':'')+'</div>\n    </div>\n  </div>\n</section>';
+  } else if(t==='cta-grande'){
+    html='<!-- SECCIÓN: CTA GRANDE -->\n<section class="section" style="text-align:center;">\n  <div class="container">\n    <div class="eyebrow reveal" style="justify-content:center;">'+fv('cg-eyebrow')+'</div>\n    <h2 class="reveal delay-1">'+fv('cg-titulo')+'</h2>\n    <p class="reveal delay-2" style="max-width:500px;margin:0 auto 36px;">'+fv('cg-desc')+'</p>\n    <a href="'+fv('cg-link')+'" class="btn btn-solid reveal delay-3" target="_blank" rel="noopener">'+fv('cg-cta')+' <span class="arr">→</span></a>\n  </div>\n</section>';
+  } else if(t==='estadisticas'){
+    var stats='';
+    for(var n=1;n<=4;n++){stats+='<div style="text-align:center;padding:32px 20px;"><div style="font-family:var(--font-d);font-size:clamp(48px,6vw,72px);color:var(--gold,#C9A84C);">'+fv('st-n'+n)+'</div><div style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.5);margin-top:10px;">'+fv('st-l'+n)+'</div></div>';}
+    html='<!-- SECCIÓN: ESTADÍSTICAS -->\n<section class="section" style="background:var(--d1,#0E0E0E);">\n  <div class="container">\n    <h2 class="reveal" style="text-align:center;margin-bottom:40px;">'+fv('st-titulo')+'</h2>\n    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));">'+stats+'</div>\n  </div>\n</section>';
+  } else if(t==='galeria-extra'){
+    var imgs='';
+    for(var n=1;n<=4;n++){if(fv('ge-img'+n))imgs+='<div class="gal-item reveal"><img src="'+fv('ge-img'+n)+'" alt="'+fv('ge-alt'+n)+'" loading="lazy"/><div class="gal-overlay" aria-hidden="true"></div></div>';}
+    html='<!-- SECCIÓN: GALERÍA EXTRA -->\n<section class="gallery-section section">\n  <div class="container">\n    <h2 class="reveal" style="text-align:center;margin-bottom:40px;">'+fv('ge-titulo')+'</h2>\n    <div class="gallery-grid" role="list">'+imgs+'</div>\n  </div>\n</section>';
+  } else if(t==='precio-tabla'){
+    var cols='';
+    for(var n=1;n<=3;n++){
+      var items=fv('pt-c'+n+'i').split('|').filter(function(x){return x;}).map(function(x){return '<li>'+x+'</li>';}).join('');
+      cols+='<div class="pkg-card">'+(n===2?'<div class="pkg-badge">Más popular</div>':'')+'<div class="pkg-title">'+fv('pt-c'+n+'t')+'</div><div class="pkg-price">'+fv('pt-c'+n+'p')+'</div><ul class="pkg-list">'+items+'</ul><a href="'+WA+'" class="btn btn-solid" style="width:100%;justify-content:center;" target="_blank" rel="noopener">'+fv('pt-cta')+'</a></div>';
+    }
+    html='<!-- SECCIÓN: TABLA DE PRECIOS -->\n<section class="packages-section section">\n  <div class="container">\n    <h2 class="reveal" style="text-align:center;margin-bottom:48px;">'+fv('pt-titulo')+'</h2>\n    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;max-width:900px;margin:0 auto;">'+cols+'</div>\n  </div>\n</section>';
+  } else {
+    html='<!-- Sección generada -->\n<section class="section">\n  <div class="container"><h2>'+fv('bf-titulo')||fv('si-titulo')+' </h2></div>\n</section>';
+  }
+  document.getElementById('builder-code').textContent=html;
+  document.getElementById('builder-output').style.display='block';
+  document.getElementById('builder-output').scrollIntoView({behavior:'smooth'});
+}
+function copyBuilderCode(){var c=document.getElementById('builder-code').textContent;if(navigator.clipboard){navigator.clipboard.writeText(c).then(function(){alert('Código copiado. Pégalo antes de </main> en tu index.html');});}else{var el=document.createElement('textarea');el.value=c;document.body.appendChild(el);el.select();document.execCommand('copy');document.body.removeChild(el);alert('Código copiado.');}}
+
+/* ── EXTEND tog() for new types ── */
+var _baseTog=tog;
+function tog(prefix,id,btn){
+  if(prefix==='faq'||prefix==='promo'||prefix==='sec'){
+    var arr=prefix==='faq'?S.faqItems:(prefix==='promo'?S.promos:null);
+    if(arr){
+      var item=arr.find(function(x){return x.id===id;});
+      if(!item)return;
+      item.activo=!item.activo;
+      btn.querySelector('.tgl-track').classList.toggle('on',item.activo);
+      btn.querySelector('.tgl-label').textContent=item.activo?'Activo':'Oculto';
+      saveState();
+    } else if(prefix==='sec'){
+      if(!S.sectionsVisibility)S.sectionsVisibility={};
+      var cur=S.sectionsVisibility[id]!==false;
+      S.sectionsVisibility[id]=!cur;
+      btn.querySelector('.tgl-track').classList.toggle('on',!cur);
+      btn.querySelector('.tgl-label').textContent=(!cur)?'Activo':'Oculto';
+      saveState();
+    }
+    return;
+  }
+  _baseTog(prefix,id,btn);
+}
+
+/* ── EXTEND renderAll() ── */
+var _baseRenderAll=renderAll;
+function renderAll(){
+  _baseRenderAll();
+  if(S.pilares)renderPilares();
+  if(S.ticker)renderTicker();
+  if(S.faqItems)renderFaqAdmin();
+  if(S.promos)renderPromos();
+  renderSectionsVisibility();
+  if(typeof loadContacto==='function')loadContacto();
+}
+
+/* ── INIT new sections (runs after loadState) ── */
+(function(){
+  var _origLoadState=loadState;
+  loadState=function(){
+    _origLoadState();
+    initNewSections();
+  };
+  // If already loaded (page init ran before this), init now
+  if(typeof S!=='undefined') initNewSections();
+})();
+
+
+
+/* ══ CACHE BUSTING ══ */
+function clearSiteCache(){
+  if('serviceWorker' in navigator){
+    navigator.serviceWorker.getRegistrations().then(regs=>{
+      regs.forEach(r=>r.unregister());
+    });
+  }
+  if('caches' in window){
+    caches.keys().then(keys=>{
+      keys.forEach(k=>caches.delete(k));
+    });
+  }
+  // Force reload bypassing cache
+  const ok = confirm('Cache limpiado. ¿Recargar la página ahora?');
+  if(ok) window.location.reload(true);
+}
+
+
+/* ══ CONTACTO ══ */
+function saveContacto(){
+  if(!S.contacto)S.contacto={};
+  const gv=id=>{const el=document.getElementById(id);return el?el.value:'';};
+  S.contacto.titulo   = gv('ct-titulo');
+  S.contacto.subtitulo= gv('ct-subtitulo');
+  S.contacto.campo1   = gv('ct-f1');
+  S.contacto.campo2   = gv('ct-f2');
+  S.contacto.btnText  = gv('ct-btn');
+  S.contacto.success  = gv('ct-success');
+  S.contacto.locLabel = gv('ct-loc-label');
+  S.contacto.locVal   = gv('ct-loc-val');
+  S.contacto.hrLabel  = gv('ct-hr-label');
+  S.contacto.hrVal    = gv('ct-hr-val');
+  saveState();
+  showAlert2('al-contacto');
+}
+function loadContacto(){
+  if(!S.contacto)return;
+  const sv=(id,v)=>{const el=document.getElementById(id);if(el&&v)el.value=v;};
+  sv('ct-titulo',   S.contacto.titulo);
+  sv('ct-subtitulo',S.contacto.subtitulo);
+  sv('ct-f1',       S.contacto.campo1);
+  sv('ct-f2',       S.contacto.campo2);
+  sv('ct-btn',      S.contacto.btnText);
+  sv('ct-success',  S.contacto.success);
+  sv('ct-loc-label',S.contacto.locLabel);
+  sv('ct-loc-val',  S.contacto.locVal);
+  sv('ct-hr-label', S.contacto.hrLabel);
+  sv('ct-hr-val',   S.contacto.hrVal);
+}
+
+/* ══ VIDEO HERO ══ */
+function setHeroVideo(url){
+  document.getElementById('hero-video-url').value = url;
+  previewHeroMedia();
+}
+function previewHeroMedia(){
+  var url = (document.getElementById('hero-video-url').value||'').trim();
+  if(!url) return;
+  var wrap = document.getElementById('hero-media-preview');
+  var vid = document.getElementById('hero-vid-prev');
+  wrap.style.display = 'block';
+  vid.src = url;
+  vid.load();
+}
+function applyHeroVideo(){
+  var videoUrl = (document.getElementById('hero-video-url').value||'').trim();
+  var imgUrl   = (document.getElementById('hero-img').value||'').trim();
+  // Apply to main site video element if in same domain (won't work cross-origin but saves to state)
+  if(!window.S) return;
+  S.heroVideo = videoUrl;
+  S.heroImg   = imgUrl;
+  saveState();
+  // Try to update live if admin is on same page
+  var siteVid = document.querySelector('.hero-video-wrap video, #heroVideo, video.hero-video');
+  if(siteVid){ siteVid.src = videoUrl; siteVid.load(); }
+  showAlert2('al-hero');
+}
+
+/* ══ CATEGORIES ══ */
+function initCategories(){
+  if(!S.categories) S.categories = [
+    {id:1,nombre:'Lencería',tag:'Colección',activo:true},
+    {id:2,nombre:'Perfumes',tag:'Premium',activo:true},
+    {id:3,nombre:'Ropa Deportiva',tag:'Sport',activo:true},
+    {id:4,nombre:'Accesorios',tag:'Moda',activo:true},
+    {id:5,nombre:'Skincare',tag:'Belleza',activo:true}
+  ];
+}
+function renderCats(){
+  var l = document.getElementById('cat-tbody'); if(!l) return;
+  initCategories();
+  var rows = '';
+  for(var i=0; i<S.categories.length; i++){
+    var c = S.categories[i];
+    rows += '<tr>'
+      +'<td><input class="f-input" value="'+c.nombre+'" data-ci="'+i+'" data-ck="nombre" onchange="updateCat(this)" style="max-width:140px;"/></td>'
+      +'<td><input class="f-input" value="'+(c.tag||'')+'" data-ci="'+i+'" data-ck="tag" onchange="updateCat(this)" style="max-width:90px;"/></td>'
+      +'<td>'+togBtn('cat',c.id,c.activo)+'<button class="btn btn-sm btn-danger" onclick="delCat('+i+')" style="margin-left:6px;">🗑️</button></td>'
+      +'</tr>';
+  }
+  l.innerHTML = rows;
+}
+function updateCat(el){var i=parseInt(el.dataset.ci),k=el.dataset.ck;S.categories[i][k]=el.value;}
+function addCategory(){
+  initCategories();
+  var n=(document.getElementById('new-cat-name').value||'').trim();
+  var t=(document.getElementById('new-cat-tag').value||'').trim();
+  if(!n) return;
+  var id=Math.max.apply(null,S.categories.map(function(x){return x.id;}))+1;
+  S.categories.push({id:id,nombre:n,tag:t,activo:true});
+  document.getElementById('new-cat-name').value='';
+  document.getElementById('new-cat-tag').value='';
+  renderCats();
+}
+function delCat(i){if(!confirm('¿Eliminar categoría?'))return;S.categories.splice(i,1);renderCats();}
+function saveCats(){saveState();showAlert2('al-cats');}
+
+/* ══ MARGINS ══ */
+function saveMargenes(){
+  var mw = document.getElementById('ap-max-width').value;
+  var pm = document.getElementById('ap-pad-mobile').value;
+  var sg = document.getElementById('ap-section-gap').value;
+  var pd = document.getElementById('ap-pad-desktop').value;
+  var br = document.getElementById('ap-radius').value;
+  var fs = document.getElementById('ap-font-size').value;
+  // Inject a style tag into the main page (only works if admin is on same domain)
+  var styleId = 'magnolia-margins';
+  var el = document.getElementById(styleId);
+  if(!el){ el=document.createElement('style'); el.id=styleId; document.head.appendChild(el); }
+  el.textContent = [
+    '.container{max-width:'+mw+' !important;}',
+    'body{font-size:'+fs+' !important;}',
+    '.section,.services-section,.gallery-section,.packages-section,.faq-section,.about-section{padding-top:'+sg+' !important;padding-bottom:'+sg+' !important;}',
+    '.container{padding-left:'+pd+';padding-right:'+pd+';}',
+    '@media(max-width:768px){.container{padding-left:'+pm+' !important;padding-right:'+pm+' !important;}}',
+    '.srv-card,.pkg-card,.product-card,.gal-item,.blog-card{border-radius:'+br+' !important;}'
+  ].join('\n');
+  // Save to state
+  if(!S.margenes)S.margenes={};
+  S.margenes = {maxWidth:mw,padMobile:pm,sectionGap:sg,padDesktop:pd,radius:br,fontSize:fs};
+  saveState();
+  showAlert2('al-margenes');
+}
+function loadMargenes(){
+  if(!S.margenes) return;
+  var m=S.margenes;
+  var set = function(id,v){var el=document.getElementById(id);if(el&&v){el.value=v;}};
+  set('ap-max-width', m.maxWidth);
+  set('ap-pad-mobile', m.padMobile);
+  set('ap-section-gap', m.sectionGap);
+  set('ap-pad-desktop', m.padDesktop);
+  set('ap-radius', m.radius);
+  set('ap-font-size', m.fontSize);
+}
+
+/* ══ EXTEND tog for categories ══ */
+var _margTog = tog;
+function tog(prefix,id,btn){
+  if(prefix==='cat'){
+    initCategories();
+    var item=S.categories.find(function(x){return x.id===id;});
+    if(!item)return;
+    item.activo=!item.activo;
+    btn.querySelector('.tgl-track').classList.toggle('on',item.activo);
+    btn.querySelector('.tgl-label').textContent=item.activo?'Activo':'Oculto';
+    saveState(); return;
+  }
+  _margTog(prefix,id,btn);
+}
+
+/* ══ EXTEND renderAll for categories + margins ══ */
+var _margRenderAll = renderAll;
+function renderAll(){
+  _margRenderAll();
+  initCategories();
+  renderCats();
+  loadMargenes();
+  if(S.heroVideo) document.getElementById('hero-video-url') && (document.getElementById('hero-video-url').value=S.heroVideo);
+}
+
+
+/* ══ EMPTY STATES (ux-copy skill) ══ */
+function setEmptyState(tbodyId, msg){
+  var tb=document.getElementById(tbodyId);
+  if(tb&&tb.innerHTML.trim()===''){
+    tb.innerHTML='<tr><td colspan="10" style="text-align:center;padding:32px 20px;color:var(--mu);font-size:14px;">'+msg+'</td></tr>';
+  }
+}
+function applyEmptyStates(){
+  setEmptyState('srv-tbody',  'No hay servicios. Haz clic en <strong style="color:var(--g)">+ Agregar</strong> para crear el primero.');
+  setEmptyState('pkg-tbody',  'No hay paquetes. Haz clic en <strong style="color:var(--g)">+ Agregar</strong> para crear el primero.');
+  setEmptyState('prod-tbody', 'No hay productos. Haz clic en <strong style="color:var(--g)">+ Agregar</strong> para crear el primero.');
+  setEmptyState('test-tbody', 'No hay testimonios todavía. Agrega el primero con el formulario de abajo.');
+  setEmptyState('blog-tbody', 'No hay posts. Crea tu primer artículo con el formulario de abajo.');
+  setEmptyState('ev-tbody',   'No hay eventos. Agrega cursos, talleres o eventos especiales.');
+  setEmptyState('cat-tbody',  'No hay categorías. Agrega la primera con el campo de arriba.');
+}
+
+</script>
+</body>
+</html>
